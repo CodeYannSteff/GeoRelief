@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Structural Relief Gallery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.1);
+        }
+        
+        .geo-gradient {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e7eb 100%);
+        }
+        
+        .modal-overlay {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        
+        .modal-content {
+            animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .geo-pattern {
+            background-image: 
+                radial-gradient(circle at 1px 1px, #e2e8f0 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+        
+        .word-chip {
+            transition: all 0.2s ease;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        }
+        
+        .word-chip:hover {
+            background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+        }
+        
+        .nav-pill {
+            position: relative;
+        }
+        
+        .nav-pill::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #3b82f6;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-pill:hover::after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="min-h-screen geo-gradient">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Modern header with navigation -->
+        <header class="mb-12">
+            <nav class="flex flex-col md:flex-row justify-between items-center mb-8">
+                <div class="flex items-center mb-4 md:mb-0">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold mr-3">SR</div>
+                    <h1 class="text-2xl font-bold text-slate-800">Structural Relief</h1>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="nav-pill text-slate-600 hover:text-slate-900 font-medium">Gallery</a>
+                </div>
+            </nav>
+            
+            <div class="glass-card rounded-2xl p-8 md:p-12 text-center max-w-4xl mx-auto">
+                <h1 class="text-3xl md:text-4xl font-bold text-slate-800 mb-4">Geological Structures Explorer</h1>
+                <p class="text-slate-600 text-lg max-w-2xl mx-auto">Tap on any term to visualize key structural geology formations with modern 3D representations</p>
+            </div>
+        </header>
+        
+        <!-- Modern gallery grid -->
+        <main class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+            <!-- Word chip 1 -->
+            <div class="word-chip rounded-xl p-5 cursor-pointer shadow-sm border border-slate-100"
+                 onclick="openModal('Anticline', 'https://images.unsplash.com/photo-1604404866591-bb40d8b8cc6c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center text-white font-bold mr-4">A</div>
+                    <div>
+                        <h3 class="font-semibold text-slate-800">Anticline</h3>
+                        <p class="text-sm text-slate-500">Upward-arching fold</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Word chip 2 -->
+            <div class="word-chip rounded-xl p-5 cursor-pointer shadow-sm border border-slate-100"
+                 onclick="openModal('Syncline', 'https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-bold mr-4">S</div>
+                    <div>
+                        <h3 class="font-semibold text-slate-800">Syncline</h3>
+                        <p class="text-sm text-slate-500">Downward-arching fold</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Word chip 3 -->
+            <div class="word-chip rounded-xl p-5 cursor-pointer shadow-sm border border-slate-100"
+                 onclick="openModal('Fault', 'https://images.unsplash.com/photo-1605540436563-5bca919ae766?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-red-500 to-red-600 flex items-center justify-center text-white font-bold mr-4">F</div>
+                    <div>
+                        <h3 class="font-semibold text-slate-800">Fault</h3>
+                        <p class="text-sm text-slate-500">Fracture with displacement</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Word chip 4 -->
+            <div class="word-chip rounded-xl p-5 cursor-pointer shadow-sm border border-slate-100"
+                 onclick="openModal('Monocline', 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center text-white font-bold mr-4">M</div>
+                    <div>
+                        <h3 class="font-semibold text-slate-800">Monocline</h3>
+                        <p class="text-sm text-slate-500">Step-like fold</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Word chip 5 -->
+            <div class="word-chip rounded-xl p-5 cursor-pointer shadow-sm border border-slate-100"
+                 onclick="openModal('Overthrust', 'https://images.unsplash.com/photo-1509316785289-025f5b8b7393?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center text-white font-bold mr-4">O</div>
+                    <div>
+                        <h3 class="font-semibold text-slate-800">Overthrust</h3>
+                        <p class="text-sm text-slate-500">Low-angle reverse fault</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Word chip 6 -->
+            <div class="word-chip rounded-xl p-5 cursor-pointer shadow-sm border border-slate-100"
+                 onclick="openModal('Dome', 'https://images.unsplash.com/photo-1470115636492-6d2b56f9146d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-500 to-cyan-600 flex items-center justify-center text-white font-bold mr-4">D</div>
+                    <div>
+                        <h3 class="font-semibold text-slate-800">Dome</h3>
+                        <p class="text-sm text-slate-500">Circular anticlinal structure</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Word chip 7 -->
+            <div class="word-chip rounded-xl p-5 cursor-pointer shadow-sm border border-slate-100"
+                 onclick="openModal('Basin', 'https://images.unsplash.com/photo-1476231682828-37e571bc172f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-violet-500 to-violet-600 flex items-center justify-center text-white font-bold mr-4">B</div>
+                    <div>
+                        <h3 class="font-semibold text-slate-800">Basin</h3>
+                        <p class="text-sm text-slate-500">Circular synclinal structure</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Word chip 8 -->
+            <div class="word-chip rounded-xl p-5 cursor-pointer shadow-sm border border-slate-100"
+                 onclick="openModal('Horst', 'https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-rose-500 to-rose-600 flex items-center justify-center text-white font-bold mr-4">H</div>
+                    <div>
+                        <h3 class="font-semibold text-slate-800">Horst</h3>
+                        <p class="text-sm text-slate-500">Upthrown fault block</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Modern footer -->
+        <footer class="mt-16 text-center">
+            <div class="geo-pattern rounded-xl p-6">
+                <p class="text-slate-600 mb-4">Need help identifying geological structures?</p>
+                <button class="bg-gradient-to-br from-blue-500 to-blue-600 text-white px-6 py-2 rounded-lg font-medium shadow hover:shadow-md transition-all">
+                    Contact an Expert
+                </button>
+                <div class="mt-6 flex justify-center space-x-6">
+                    <a href="#" class="text-slate-400 hover:text-blue-500"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-slate-400 hover:text-blue-800"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="text-slate-400 hover:text-gray-900"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+            <p class="text-sm text-slate-500 mt-8">© 2023 Structural Relief Gallery. Educational purpose only.</p>
+        </footer>
+    </div>
+    
+    <!-- Modern modal for displaying images -->
+    <div id="imageModal" class="fixed inset-0 z-50 hidden modal-overlay flex items-center justify-center p-4">
+        <div class="modal-content bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-xl">
+            <div class="flex justify-between items-center bg-slate-900 text-white p-5">
+                <div>
+                    <h3 id="modalTitle" class="text-xl font-bold"></h3>
+                    <p id="modalSubtitle" class="text-sm text-slate-300"></p>
+                </div>
+                <button onclick="closeModal()" class="text-slate-300 hover:text-white text-2xl">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="p-5 overflow-y-auto max-h-[80vh]">
+                <div class="aspect-w-16 aspect-h-9 mb-5">
+                    <img id="modalImage" src="" alt="" class="w-full h-auto rounded-lg shadow">
+                </div>
+                <div class="bg-slate-50 rounded-lg p-4">
+                    <p id="modalDescription" class="text-slate-700"></p>
+                    <div class="mt-4 flex items-center text-sm text-slate-500">
+                        <i class="fas fa-info-circle mr-2"></i>
+                        <span>Tap outside this window or press ESC to close</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Function to open modal with image
+        function openModal(title, imageUrl) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalImage').src = imageUrl;
+            document.getElementById('modalImage').alt = title;
+            
+            // Set different descriptions based on the title
+            let description = "";
+            let subtitle = "";
+            switch(title) {
+                case 'Anticline':
+                    subtitle = "Upward-arching fold";
+                    description = "An anticline is an arch-shaped fold in rock layers where the oldest rocks are found in the center of the fold. These structures form through compressional forces that cause the crust to buckle and fold. Anticlines are important in petroleum geology as they can form structural traps for hydrocarbons.";
+                    break;
+                case 'Syncline':
+                    subtitle = "Downward-arching fold";
+                    description = "A syncline is a trough-shaped fold where the youngest rocks are located in the center. These folds form in conjunction with anticlines under compressional stress regimes. Synclines often form valleys in eroded fold mountain ranges and can be important for groundwater storage.";
+                    break;
+                case 'Fault':
+                    subtitle = "Fracture with displacement";
+                    description = "A fault is a fracture or zone of fractures in Earth's crust where rocks on either side have moved relative to one another. Faults are classified by their movement: normal faults (tensional), reverse/thrust faults (compressional), and strike-slip faults (shear). Major faults often mark tectonic plate boundaries.";
+                    break;
+                case 'Monocline':
+                    subtitle = "Step-like fold";
+                    description = "A monocline is a step-like fold in rock layers where the dip is steeper on one side. These structures often form over underlying faults where crustal blocks have moved vertically. Monoclines are common in regions experiencing tectonic compression and can extend for hundreds of kilometers.";
+                    break;
+                case 'Overthrust':
+                    subtitle = "Low-angle reverse fault";
+                    description = "An overthrust is a low-angle reverse fault where older rocks are pushed up and over younger rocks. These form under intense compressional stress and can transport rock units tens to hundreds of kilometers horizontally. Major overthrust belts are found in mountain ranges like the Alps and Himalayas.";
+                    break;
+                case 'Dome':
+                    subtitle = "Circular anticlinal structure";
+                    description = "A dome is a circular anticline where rocks dip away from a central point in all directions. Domes can form through various processes including salt diapirism, igneous intrusion, or compressional folding. They are important in petroleum geology as potential hydrocarbon traps.";
+                    break;
+                case 'Basin':
+                    subtitle = "Circular synclinal structure";
+                    description = "A basin is a circular syncline where rocks dip toward a central point from all directions. Basins form through subsidence of the crust and are important depositional centers for sediments. Many major sedimentary basins contain significant fossil fuel resources.";
+                    break;
+                case 'Horst':
+                    subtitle = "Upthrown fault block";
+                    description = "A horst is an uplifted block of crust bounded by normal faults. These form in extensional tectonic regimes where the crust is being pulled apart. Horsts are typically flanked by down-dropped blocks called grabens. The Basin and Range Province in western North America contains numerous horst and graben structures.";
+                    break;
+                default:
+                    subtitle = "Structural geological formation";
+                    description = "This image shows a characteristic example of a structural geological formation. These features result from tectonic forces that deform Earth's crust through folding, faulting, or other deformation processes.";
+            }
+            
+            document.getElementById('modalSubtitle').textContent = subtitle;
+            document.getElementById('modalDescription').textContent = description;
+            document.getElementById('imageModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Function to close modal
+        function closeModal() {
+            document.getElementById('imageModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Close modal when clicking outside
+        document.getElementById('imageModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+        
+        // Close modal with ESC key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
