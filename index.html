@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoRelief</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Quicksand:wght@300;400;600&display=swap');
+        
+        :root {
+            --primary: #d4a017;
+            --secondary: #8b5a2b;
+            --dark: #2c1a0a;
+            --light: #f5e7d0;
+        }
+        
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: var(--dark);
+            color: var(--light);
+            min-height: 100vh;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+        
+        .archeo-font {
+            font-family: 'Cinzel', serif;
+        }
+        
+        .section {
+            min-height: 100vh;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .glow {
+            text-shadow: 0 0 10px rgba(212, 160, 23, 0.5);
+        }
+        
+        /* Image Placeholder */
+        .image-placeholder {
+            width: 100%;
+            height: 300px;
+            background-color: #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 18px;
+            border: 2px dashed #999;
+            border-radius: 10px;
+        }
+        
+        /* Carousel */
+        .home-carousel {
+            display: flex;
+            overflow-x: auto;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .home-carousel img {
+            width: 800px;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        
+        /* Popup Images */
+        .popup-images {
+            display: flex;
+            overflow-x: auto;
+            gap: 10px;
+            margin-bottom: 20px;
+            max-height: 200px;
+        }
+        
+        .popup-images img {
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+            flex-shrink: 0;
+        }
+        
+        /* Interactive Elements */
+        .interactive-card {
+            position: relative;
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        
+        .interactive-card:hover {
+            transform: translateY(-5px) scale(1.02);
+        }
+        
+        .interactive-card:active {
+            transform: translateY(0) scale(0.98);
+        }
+        
+        .card-front, .card-back {
+            backface-visibility: hidden;
+            transition: all 0.6s ease;
+        }
+        
+        .card-back {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform: rotateY(180deg);
+        }
+        
+        .interactive-card:hover .card-front {
+            transform: rotateY(180deg);
+        }
+        
+        .interactive-card:hover .card-back {
+            transform: rotateY(0deg);
+        }
+        
+        /* Popup Modal */
+        .popup-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .popup-modal.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .popup-content {
+            background: linear-gradient(135deg, #3a2a0f 0%, #1a1206 100%);
+            border: 1px solid var(--primary);
+            border-radius: 10px;
+            max-width: 600px;
+            width: 90%;
+            padding: 30px;
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+        
+        .popup-modal.active .popup-content {
+            transform: translateY(0);
+        }
+        
+        .close-popup {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        
+        .close-popup:hover {
+            transform: rotate(90deg);
+        }
+        
+        /* Tooltips */
+        .tooltip {
+            position: relative;
+        }
+        
+        .tooltip-text {
+            visibility: hidden;
+            width: 200px;
+            background-color: var(--dark);
+            color: var(--light);
+            text-align: center;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            border: 1px solid var(--primary);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        /* Animated buttons */
+        .explore-btn {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .explore-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: all 0.5s ease;
+        }
+        
+        .explore-btn:hover::before {
+            left: 100%;
+        }
+        
+        /* Floating elements */
+        .floating {
+            animation: floating 6s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        /* Progress indicator */
+        .progress-container {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            z-index: 90;
+        }
+        
+        .progress-bar {
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+        
+        /* Navigation highlight */
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        /* Section transition animation */
+        .section-content {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out;
+        }
+        
+        .section.active .section-content {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Mobile menu */
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        .mobile-menu.open {
+            max-height: 500px;
+        }
+        
+        /* Interactive earth controls */
+        .earth-controls {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .earth-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(44, 26, 10, 0.7);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .earth-btn:hover {
+            background: var(--primary);
+            color: var(--dark);
+            transform: scale(1.1);
+        }
+        
+        /* Info hotspots */
+        .hotspot {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(212, 160, 23, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(212, 160, 23, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(212, 160, 23, 0); }
+        }
+        
+        .hotspot-tooltip {
+            position: absolute;
+            background: rgba(44, 26, 10, 0.9);
+            border: 1px solid var(--primary);
+            border-radius: 5px;
+            padding: 10px;
+            width: 200px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        
+        .hotspot:hover .hotspot-tooltip {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- 3D Earth Canvas -->
+    <canvas id="earthCanvas"></canvas>
+    
+    <!-- Earth Controls -->
+    <div class="earth-controls">
+        <div class="earth-btn tooltip" id="rotateEarth">
+            <i class="fas fa-sync-alt"></i>
+            <span class="tooltip-text">Rotire Automata</span>
+        </div>
+        <div class="earth-btn tooltip" id="zoomIn">
+            <i class="fas fa-search-plus"></i>
+            <span class="tooltip-text">Zoom In</span>
+        </div>
+        <div class="earth-btn tooltip" id="zoomOut">
+            <i class="fas fa-search-minus"></i>
+            <span class="tooltip-text">Zoom Out</span>
+        </div>
+    </div>
+    
+    <!-- Progress indicator -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+    
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 w-full z-50 bg-gradient-to-b from-black to-transparent py-4 px-6 shadow-lg">
+        <div class="flex justify-between items-center">
+            <div class="flex items-center">
+                <i class="fas fa-fossil text-amber-200 text-3xl mr-3"></i>
+                <div>
+                    <h1 class="archeo-font text-xl md:text-2xl text-amber-200 glow">Proiect Geografic</h1>
+                    <p class="text-xs text-amber-100">Serban David</p>
+                    <p class="text-xs text-amber-100">Udrea Yannis Andrei</p>
+                </div>
+            </div>
+            
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex space-x-6" id="desktopNav">
+                <a href="#home" class="nav-link text-amber-100 hover:text-amber-300 transition">Acasa</a>
+                <a href="#introduction" class="nav-link text-amber-100 hover:text-amber-300 transition">Introducere</a>
+                <a href="#fold-mountains" class="nav-link text-amber-100 hover:text-amber-300 transition">Fold Mountains</a>
+                <a href="#fault-mountains" class="nav-link text-amber-100 hover:text-amber-300 transition">Fault-Block</a>
+                <a href="#volcanic" class="nav-link text-amber-100 hover:text-amber-300 transition">Volcanic</a>
+                <a href="#plateaus" class="nav-link text-amber-100 hover:text-amber-300 transition">Plateaus</a>
+                <a href="#conclusion" class="nav-link text-amber-100 hover:text-amber-300 transition">Conclusion</a>
+            </div>
+            
+            <!-- Mobile menu button -->
+            <button class="md:hidden text-amber-200 text-2xl" id="mobileMenuButton">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        
+        <!-- Mobile Navigation -->
+        <div class="mobile-menu bg-black bg-opacity-90 mt-4 rounded-lg" id="mobileNav">
+            <div class="flex flex-col space-y-3 p-4">
+                <a href="#home" class="nav-link text-amber-100 hover:text-amber-300 transition">Acasa</a>
+                <a href="#introduction" class="nav-link text-amber-100 hover:text-amber-300 transition">Introducere</a>
+                <a href="#fold-mountains" class="nav-link text-amber-100 hover:text-amber-300 transition">Fold Mountains</a>
+                <a href="#fault-mountains" class="nav-link text-amber-100 hover:text-amber-300 transition">Fault-Block</a>
+                <a href="#volcanic" class="nav-link text-amber-100 hover:text-amber-300 transition">Volcanic</a>
+                <a href="#plateaus" class="nav-link text-amber-100 hover:text-amber-300 transition">Plateaus</a>
+                <a href="#conclusion" class="nav-link text-amber-100 hover:text-amber-300 transition">Conclusion</a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Popup Modal -->
+    <div class="popup-modal" id="infoPopup">
+        <div class="popup-content">
+            <button class="close-popup" id="closePopup">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="popup-images">
+                <!-- Imaginile vor fi adăugate dinamic -->
+            </div>
+            <h3 class="archeo-font text-2xl text-amber-200 mb-4" id="popupTitle">Informatii</h3>
+            <div class="text-amber-100" id="popupContent">
+                Se incarca....
+            </div>
+            <div class="mt-6 flex justify-end">
+                <button class="bg-amber-800 hover:bg-amber-700 text-white px-4 py-2 rounded transition" id="popupAction">
+                    Afla mai multe
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Sections Container -->
+    <div class="sections-container">
+        <!-- Home Section -->
+        <section class="section flex items-center justify-center active" id="home">
+            <div class="section-content text-center px-6 max-w-4xl mx-auto">
+                <div class="floating mb-8">
+                    <img src="image.png" alt="Relieful Structural" class="image-placeholder">
+                </div>
+                <h1 class="archeo-font text-4xl md:text-6xl text-amber-200 mb-6 glow">Relieful Structural</h1>
+                <h2 class="text-xl md:text-2xl text-amber-100 mb-8">O expeditie interactiva in lumea geografica</h2>
+                <p class="text-lg text-amber-100 mb-10 max-w-2xl mx-auto">
+                    Un proiect realizat de către Serban David și Udrea Yannis Andrei
+                </p>
+                <div class="home-carousel">
+                    <img src="structura-monoclinala.jpg" alt="Fold Mountains">
+                    <img src="image copy.png" alt="Fault-Block Mountains">
+                    <img src="image copy 2.png" alt="Volcanic Mountains">
+                    <img src="image copy 3.png" alt="Plateaus">
+                </div>
+                <a href="#introduction" class="explore-btn bg-gradient-to-r from-amber-600 to-amber-800 hover:from-amber-700 hover:to-amber-900 text-white px-8 py-3 rounded-lg font-medium transition duration-300 archeo-font shadow-lg inline-block">
+                    Incepe Aventura<i class="fas fa-chevron-right ml-2"></i>
+                </a>
+                <div class="mt-12 text-amber-100 text-sm animate-pulse">
+                    <p>Derulați, apăsați, sau faceți clic pentru a interacționa</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Introduction Section -->
+        <section class="section flex items-center" id="introduction">
+            <div class="container mx-auto px-6">
+                <div class="section-content grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h2 class="archeo-font text-3xl text-amber-200 mb-6 gradient-text">Ce este relieful structural?</h2>
+                        <div class="bg-amber-50 text-gray-900 p-6 rounded-lg shadow-lg mb-8">
+                            <p class="mb-4">
+                                Relieful structural reprezintă topografia Pământului modelată în principal de structurile geologice, cum ar fi stratificarea rocilor, cutele, faliile și alte caracteristici tectonice. Spre deosebire de relieful sculptural, care este format predominant prin procese de suprafață precum eroziunea cauzată de apă, vânt sau gheață, relieful structural reflectă direct istoria geologică și compoziția scoarței terestre
+                            </p>
+                            <p>
+                                <span class="text-amber-800 font-medium cursor-pointer hover:underline" id="learnMoreTectonic">Apasa</span> pentru a invata despre compozitia scoartei terestre.
+                            </p>
+                        </div>
+                        <div class="flex flex-wrap gap-4 mb-8">
+                            <div class="interactive-card bg-gray-800 rounded-lg overflow-hidden p-4 cursor-pointer shadow-lg" id="geologyFact1">
+                                <div class="card-front">
+                                    <h3 class="text-xl text-amber-200 mb-2">Stiai ca?</h3>
+                                    <p class="text-amber-100 text-sm">Scoarta pamantului este intr-o constanta miscare si schimbare datorita fortelor tectonice</p>
+                                </div>
+                                <div class="card-back bg-gray-700 p-4 rounded-lg">
+                                    <p class="text-amber-100 text-sm">Placile tectonice se mișcă cu o viteză aproximativ egală cu creșterea unghilor umane! Fortele interne ale pamantului cauzeaza deplasarea scoartei terestre.</p>
+                                </div>
+                            </div>
+                            <div class="interactive-card bg-gray-800 rounded-lg overflow-hidden p-4 cursor-pointer shadow-lg" id="geologyFact2">
+                                <div class="card-front">
+                                    <h3 class="text-xl text-amber-200 mb-2">Informatie fulger</h3>
+                                    <p class="text-amber-100 text-sm">Cresterea montanelor este încă în curs</p>
+                                </div>
+                                <div class="card-back bg-gray-700 p-4 rounded-lg">
+                                    <p class="text-amber-100 text-sm">Muntii Himalayas cresc cu aproximativ 1 cm pe an, datorită coliziunilor tectonice!</p>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#fold-mountains" class="explore-btn bg-gradient-to-r from-amber-700 to-amber-900 hover:from-amber-800 hover:to-amber-950 text-white px-6 py-2 rounded transition shadow inline-flex items-center">
+                            <i class="fas fa-chevron-right mr-2"></i> Exploreaza Muntii de tip cutat
+                        </a>
+                    </div>
+                    <div class="relative">
+                        <div class="bg-gray-800 rounded-lg overflow-hidden transform hover:scale-105 transition duration-300 shadow-xl h-96">
+                            <img src="image copy 4.png" alt="Structural Relief" class="image-placeholder">
+                        </div>
+                        <div class="text-center mt-4 text-amber-100 text-sm">
+                            <p>Imagine ilustrativă pentru relieful structural</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Fold Mountains Section -->
+        <section class="section" id="fold-mountains">
+            <div class="container mx-auto px-6 py-20">
+                <div class="section-content">
+                    <h2 class="archeo-font text-3xl text-amber-200 mb-2 text-center gradient-text">Tipuri de Relief Structural</h2>
+                    <p class="text-center text-amber-100 mb-12 max-w-2xl mx-auto">Apasa Pentru A Explora</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                        <div class="interactive-card bg-gray-800 rounded-lg overflow-hidden cursor-pointer shadow-lg" id="himalayasCard">
+                            <div class="h-48">
+                                <img src="image copy 6.png" alt="Tubulare" class="image-placeholder">
+                            </div>
+                            <div class="p-4" style="background-color:rgb(54, 37, 15);opacity: 0.8;">
+                                <h3 class="text-xl text-amber-200 mb-2"  >Relieful pe structuri tubulare(orizontale)</h3>
+                                <p class="text-amber-100 text-sm">Stratele de roci sunt aproape orizontale</p>
+                                <div class="mt-2 text-xs text-amber-500">
+                                    <i class="fas fa-info-circle mr-1"></i> Click for details
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="interactive-card bg-gray-800 rounded-lg overflow-hidden cursor-pointer shadow-lg" id="alpsCard">
+                            <div class="h-48">
+                                <img src="image copy 7.png" alt="Monocline" class="image-placeholder">
+                            </div>
+                            <div class="p-4" style="background-color:rgb(54, 37, 15);opacity: 0.8;">
+                                <h3 class="text-xl text-amber-200 mb-2" >Relieful pe structuri monoclinale</h3>
+                                <p class="text-amber-100 text-sm">Stratele de roci sunt inclinate pe o singura directie</p>
+                                <div class="mt-2 text-xs text-amber-500">
+                                    <i class="fas fa-info-circle mr-1"></i> Click for details
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="interactive-card bg-gray-800 rounded-lg overflow-hidden cursor-pointer shadow-lg" id="appalachiansCard">
+                            <div class="h-48">
+                                <img src="image copy 8.png" alt="Cutate" class="image-placeholder">
+                            </div>
+                            <div class="p-4" style="background-color:rgb(54, 37, 15);opacity: 0.8;">
+                                <h3 class="text-xl text-amber-200 mb-2" >Relieful dezvoltat pe structuri cutate</h3>
+                                <p class="text-amber-100 text-sm">Stratele de roci sunt sub forma de cute</p>
+                                <div class="mt-2 text-xs text-amber-500">
+                                    <i class="fas fa-info-circle mr-1"></i> Click for details
+                                </div>
+                            </div>
+                        </div>
+                        <div class="interactive-card bg-gray-800 rounded-lg overflow-hidden cursor-pointer shadow-lg" id="newCard">
+                            <div class="h-48">
+                                <img src="image copy 9.png" alt="Falate" class="image-placeholder">
+                            </div>
+                            <div class="p-4" style="background-color:rgb(54, 37, 15);opacity: 0.8;">
+                                <h3 class="text-xl text-amber-200 mb-2" >Relieful dezvoltat pe structuri faliate</h3>
+                                <p class="text-amber-100 text-sm"  style="font-weight: bolder;">Structura geologică este fragmentată de falii,</p>
+                                <div class="mt-2 text-xs text-amber-500">
+                                    <i class="fas fa-info-circle mr-1"></i> Click for details
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <a href="#fault-mountains" class="explore-btn bg-gradient-to-r from-amber-700 to-amber-900 hover:from-amber-800 hover:to-amber-950 text-white px-6 py-2 rounded transition shadow inline-flex items-center">
+                            <i class="fas fa-chevron-right mr-2"></i> Discover Fault-Block Mountains
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Fault-Block Mountains Section -->
+        <section class="section" id="fault-mountains">
+            <div class="container mx-auto px-6 py-20">
+                <div class="section-content">
+                    <h2 class="archeo-font text-3xl text-amber-200 mb-12 text-center gradient-text">Fault-Block Mountains</h2>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-12">
+                        <div>
+                            <div class="bg-amber-50 text-gray-900 p-6 rounded-lg shadow-lg mb-8">
+                                <p class="mb-4">
+                                    Fault-block mountains form when large crustal blocks move along faults in response to tectonic stress. These mountains typically have steep, rugged fronts and gentler back slopes.
+                                </p>
+                                <p>
+                                    <span class="text-amber-800 font-medium cursor-pointer hover:underline" id="learnMoreFaults">Click here</span> to see an animation of fault formation.
+                                </p>
+                            </div>
+                            <div class="mb-8">
+                                <h3 class="text-xl text-amber-200 mb-4">Interactive Quiz</h3>
+                                <div class="bg-gray-800 p-4 rounded-lg">
+                                    <p class="text-amber-100 mb-3">Which famous mountain range is an example of fault-block mountains?</p>
+                                    <div class="space-y-2">
+                                        <button class="quiz-option w-full text-left bg-gray-700 hover:bg-gray-600 text-amber-100 px-4 py-2 rounded transition">
+                                            A) Sierra Nevada
+                                        </button>
+                                        <button class="quiz-option w-full text-left bg-gray-700 hover:bg-gray-600 text-amber-100 px-4 py-2 rounded transition">
+                                            B) Rocky Mountains
+                                        </button>
+                                        <button class="quiz-option w-full text-left bg-gray-700 hover:bg-gray-600 text-amber-100 px-4 py-2 rounded transition">
+                                            C) Appalachian Mountains
+                                        </button>
+                                    </div>
+                                    <div class="mt-3 text-sm text-amber-500 hidden" id="quizFeedback">
+                                        Feedback will appear here
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-800 rounded-lg overflow-hidden transform hover:scale-105 transition duration-300 shadow-xl">
+                            <div class="h-96">
+                                <div class="image-placeholder">Imagine cu Fault-Block Mountains</div>
+                            </div>
+                            <div class="p-4">
+                                <h3 class="text-xl text-amber-200 mb-2">Interactive Fault Model</h3>
+                                <p class="text-amber-100 text-sm">Click the play button to see how fault-block mountains form</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <a href="#volcanic" class="explore-btn bg-gradient-to-r from-amber-700 to-amber-900 hover:from-amber-800 hover:to-amber-950 text-white px-6 py-2 rounded transition shadow inline-flex items-center">
+                            <i class="fas fa-chevron-right mr-2"></i> Explore Volcanic Mountains
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Volcanic Mountains Section -->
+        <section class="section" id="volcanic">
+            <div class="container mx-auto px-6 py-20">
+                <div class="section-content">
+                    <h2 class="archeo-font text-3xl text-amber-200 mb-12 text-center gradient-text">Volcanic Mountains</h2>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
+                        <div class="bg-gray-800 rounded-lg overflow-hidden p-6 transform hover:scale-105 transition duration-300 shadow-lg">
+                            <h3 class="text-xl text-amber-200 mb-4">Types of Volcanic Mountains</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-start cursor-pointer group" id="shieldVolcano">
+                                    <div class="bg-amber-900 p-3 rounded-lg mr-4 group-hover:bg-amber-800 transition shadow">
+                                        <i class="fas fa-volcano text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-amber-300 group-hover:text-amber-200 transition">Shield Volcanoes</h4>
+                                        <p class="text-amber-100 text-sm">Broad, gently sloping mountains</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start cursor-pointer group" id="stratovolcano">
+                                    <div class="bg-amber-900 p-3 rounded-lg mr-4 group-hover:bg-amber-800 transition shadow">
+                                        <i class="fas fa-mountain text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-amber-300 group-hover:text-amber-200 transition">Stratovolcanoes</h4>
+                                        <p class="text-amber-100 text-sm">Steep, conical mountains</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start cursor-pointer group" id="cinderCone">
+                                    <div class="bg-amber-900 p-3 rounded-lg mr-4 group-hover:bg-amber-800 transition shadow">
+                                        <i class="fas fa-hill-rockslide text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-amber-300 group-hover:text-amber-200 transition">Cinder Cones</h4>
+                                        <p class="text-amber-100 text-sm">Small, steep-sided volcanic cones</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-8">
+                                <h3 class="text-xl text-amber-200 mb-4">Volcanic Quiz</h3>
+                                <div class="bg-gray-800 p-4 rounded-lg">
+                                    <p class="text-amber-100 mb-3">Which type of volcano has the gentlest slopes?</p>
+                                    <div class="space-y-2">
+                                        <button class="volcanic-quiz-option w-full text-left bg-gray-700 hover:bg-gray-600 text-amber-100 px-4 py-2 rounded transition">
+                                            A) Shield Volcano
+                                        </button>
+                                        <button class="volcanic-quiz-option w-full text-left bg-gray-700 hover:bg-gray-600 text-amber-100 px-4 py-2 rounded transition">
+                                            B) Stratovolcano
+                                        </button>
+                                        <button class="volcanic-quiz-option w-full text-left bg-gray-700 hover:bg-gray-600 text-amber-100 px-4 py-2 rounded transition">
+                                            C) Cinder Cone
+                                        </button>
+                                    </div>
+                                    <div class="mt-3 text-sm text-amber-500 hidden" id="volcanicQuizFeedback">
+                                        Feedback will appear here
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-800 rounded-lg overflow-hidden transform hover:scale-105 transition duration-300 shadow-xl">
+                            <div class="h-96">
+                                <div class="image-placeholder">Imagine cu Volcanic Mountains</div>
+                            </div>
+                            <div class="p-4">
+                                <h3 class="text-xl text-amber-200 mb-2">Volcanic Formation Process</h3>
+                                <p class="text-amber-100 text-sm">Click buttons to interact with the simulation</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <a href="#plateaus" class="explore-btn bg-gradient-to-r from-amber-700 to-amber-900 hover:from-amber-800 hover:to-amber-950 text-white px-6 py-2 rounded transition shadow inline-flex items-center">
+                            <i class="fas fa-chevron-right mr-2"></i> Discover Plateaus
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Plateaus Section -->
+        <section class="section" id="plateaus">
+            <div class="container mx-auto px-6 py-20">
+                <div class="section-content">
+                    <h2 class="archeo-font text-3xl text-amber-200 mb-12 text-center gradient-text">Plateau Uplifts</h2>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+                        <div class="interactive-card bg-gray-800 rounded-lg overflow-hidden p-6 cursor-pointer shadow-lg" id="tibetanPlateau">
+                            <div class="flex items-center mb-4">
+                                <div class="bg-amber-800 p-3 rounded-lg mr-4 shadow">
+                                    <i class="fas fa-cloud text-xl"></i>
+                                </div>
+                                <h3 class="text-xl text-amber-200">Tibetan Plateau</h3>
+                            </div>
+                            <p class="text-amber-100 text-sm">"The Roof of the World" - highest plateau on Earth</p>
+                            <div class="mt-4">
+                                <div class="h-32">
+                                    <div class="image-placeholder">Imagine cu Tibetan Plateau</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="interactive-card bg-gray-800 rounded-lg overflow-hidden p-6 cursor-pointer shadow-lg" id="coloradoPlateau">
+                            <div class="flex items-center mb-4">
+                                <div class="bg-amber-800 p-3 rounded-lg mr-4 shadow">
+                                    <i class="fas fa-canyon text-xl"></i>
+                                </div>
+                                <h3 class="text-xl text-amber-200">Colorado Plateau</h3>
+                            </div>
+                            <p class="text-amber-100 text-sm">Home to the Grand Canyon and Monument Valley</p>
+                            <div class="mt-4">
+                                <div class="h-32">
+                                    <div class="image-placeholder">Imagine cu Colorado Plateau</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="interactive-card bg-gray-800 rounded-lg overflow-hidden p-6 cursor-pointer shadow-lg" id="deccanPlateau">
+                            <div class="flex items-center mb-4">
+                                <div class="bg-amber-800 p-3 rounded-lg mr-4 shadow">
+                                    <i class="fas fa-lava text-xl"></i>
+                                </div>
+                                <h3 class="text-xl text-amber-200">Deccan Plateau</h3>
+                            </div>
+                            <p class="text-amber-100 text-sm">Volcanic plateau covering much of southern India</p>
+                            <div class="mt-4">
+                                <div class="h-32">
+                                    <div class="image-placeholder">Imagine cu Deccan Plateau</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gray-800 rounded-lg p-6 mb-12">
+                        <h3 class="text-xl text-amber-200 mb-4">Plateau Formation Comparison</h3>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full bg-gray-700 rounded-lg overflow-hidden">
+                                <thead>
+                                    <tr class="bg-gray-900">
+                                        <th class="px-4 py-2 text-left text-amber-200">Type</th>
+                                        <th class="px-4 py-2 text-left text-amber-200">Formation Process</th>
+                                        <th class="px-4 py-2 text-left text-amber-200">Example</th>
+                                        <th class="px-4 py-2 text-left text-amber-200">Elevation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="border-b border-gray-600 hover:bg-gray-600 cursor-pointer" id="tibetanRow">
+                                        <td class="px-4 py-3">Tibetan</td>
+                                        <td class="px-4 py-3">Continental collision</td>
+                                        <td class="px-4 py-3">Tibetan Plateau</td>
+                                        <td class="px-4 py-3">4,500-5,000m</td>
+                                    </tr>
+                                    <tr class="border-b border-gray-600 hover:bg-gray-600 cursor-pointer" id="coloradoRow">
+                                        <td class="px-4 py-3">Intermontane</td>
+                                        <td class="px-4 py-3">Uplift between mountains</td>
+                                        <td class="px-4 py-3">Colorado Plateau</td>
+                                        <td class="px-4 py-3">1,500-3,500m</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-600 cursor-pointer" id="deccanRow">
+                                        <td class="px-4 py-3">Volcanic</td>
+                                        <td class="px-4 py-3">Lava flows accumulation</td>
+                                        <td class="px-4 py-3">Deccan Plateau</td>
+                                        <td class="px-4 py-3">600-900m</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <a href="#conclusion" class="explore-btn bg-gradient-to-r from-amber-700 to-amber-900 hover:from-amber-800 hover:to-amber-950 text-white px-6 py-2 rounded transition shadow inline-flex items-center">
+                            <i class="fas fa-chevron-right mr-2"></i> Continue to Conclusion
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Conclusion Section -->
+        <section class="section flex items-center justify-center" id="conclusion">
+            <div class="container mx-auto px-6 text-center">
+                <div class="section-content max-w-3xl mx-auto">
+                    <div class="floating mb-8">
+                        <div class="image-placeholder">Imagine reprezentativă pentru relieful structural</div>
+                    </div>
+                    <h1 class="archeo-font text-4xl md:text-5xl text-amber-200 mb-6 glow">Exploration Complete</h1>
+                    <div class="bg-amber-50 text-gray-900 p-6 rounded-lg shadow-lg mb-8 text-left">
+                        <p class="mb-4">
+                            Through this interactive journey, we've explored the magnificent structural relief features that shape our planet's surface. From the towering fold mountains to the expansive plateaus, each formation tells a story of Earth's dynamic geological history.
+                        </p>
+                        <p>
+                            These features not only create breathtaking landscapes but also influence climate patterns, water resources, and human civilization. Understanding structural relief helps us appreciate the forces that have shaped, and continue to shape, our world.
+                        </p>
+                    </div>
+                    
+                    <div class="mb-12">
+                        <h3 class="text-xl text-amber-200 mb-4">Which feature interested you most?</h3>
+                        <div class="flex flex-wrap justify-center gap-4 max-w-lg mx-auto">
+                            <button class="feature-feedback bg-gray-800 hover:bg-gray-700 text-amber-100 px-4 py-2 rounded-full transition">
+                                <i class="fas fa-mountain mr-2"></i> Fold Mountains
+                            </button>
+                            <button class="feature-feedback bg-gray-800 hover:bg-gray-700 text-amber-100 px-4 py-2 rounded-full transition">
+                                <i class="fas fa-layer-group mr-2"></i> Fault-Block
+                            </button>
+                            <button class="feature-feedback bg-gray-800 hover:bg-gray-700 text-amber-100 px-4 py-2 rounded-full transition">
+                                <i class="fas fa-volcano mr-2"></i> Volcanic
+                            </button>
+                            <button class="feature-feedback bg-gray-800 hover:bg-gray-700 text-amber-100 px-4 py-2 rounded-full transition">
+                                <i class="fas fa-map mr-2"></i> Plateaus
+                            </button>
+                        </div>
+                        <div class="mt-3 text-sm text-amber-500 hidden" id="feedbackThankYou">
+                            Thank you for your feedback!
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+                        <a href="#home" class="explore-btn bg-gradient-to-r from-amber-800 to-amber-950 hover:from-amber-900 hover:to-amber-900 text-white px-6 py-3 rounded-lg font-medium transition duration-300 shadow-lg inline-flex items-center justify-center">
+                            <i class="fas fa-home mr-2"></i> Return Home
+                        </a>
+                        <a href="#introduction" class="explore-btn bg-gradient-to-r from-amber-600 to-amber-800 hover:from-amber-700 hover:to-amber-900 text-white px-6 py-3 rounded-lg font-medium transition duration-300 shadow-lg inline-flex items-center justify-center">
+                            <i class="fas fa-redo mr-2"></i> Start Again
+                        </a>
+                    </div>
+                    <div class="mt-12 text-amber-100 text-sm">
+                        <p>An interactive experience by Serban David & Udrea Yannis Andrei</p>
+                        <p class="mt-2">GeoRelief Explorer Project © 2023</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <script>
+        // 3D Earth Visualization with Interactive Controls
+        let earthControls;
+        let autoRotate = true;
+        
+        function initEarth() {
+            const canvas = document.getElementById('earthCanvas');
+            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 3;
+            
+            earthControls = new THREE.OrbitControls(camera, renderer.domElement);
+            earthControls.enableZoom = true;
+            earthControls.enablePan = false;
+            earthControls.autoRotate = autoRotate;
+            earthControls.autoRotateSpeed = 0.5;
+            earthControls.minDistance = 1.5;
+            earthControls.maxDistance = 5;
+            
+            const geometry = new THREE.SphereGeometry(1, 32, 32);
+            const texture = new THREE.TextureLoader().load('https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg');
+            const bumpMap = new THREE.TextureLoader().load('https://threejs.org/examples/textures/planets/earth_normal_2048.jpg');
+            const material = new THREE.MeshPhongMaterial({
+                map: texture,
+                bumpMap: bumpMap,
+                bumpScale: 0.05,
+                specular: new THREE.Color('grey'),
+                shininess: 5
+            });
+            
+            const earth = new THREE.Mesh(geometry, material);
+            scene.add(earth);
+            
+            const ambientLight = new THREE.AmbientLight(0x404040);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+            directionalLight.position.set(5, 3, 5);
+            scene.add(directionalLight);
+            
+            // Add marker for Himalayas
+            const himalayasMarker = createMarker(0.4, 0.1, 0.9, 0xff0000);
+            earth.add(himalayasMarker);
+            
+            // Add marker for Andes
+            const andesMarker = createMarker(-0.3, 0.2, -0.9, 0x00ff00);
+            earth.add(andesMarker);
+            
+            function createMarker(x, y, z, color) {
+                const markerGeometry = new THREE.SphereGeometry(0.02, 16, 16);
+                const markerMaterial = new THREE.MeshBasicMaterial({ color: color });
+                const marker = new THREE.Mesh(markerGeometry, markerMaterial);
+                marker.position.set(x, y, z);
+                return marker;
+            }
+            
+            function animate() {
+                requestAnimationFrame(animate);
+                earthControls.update();
+                renderer.render(scene, camera);
+            }
+            
+            animate();
+            
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+            
+            // Earth control buttons
+            document.getElementById('rotateEarth').addEventListener('click', () => {
+                autoRotate = !autoRotate;
+                earthControls.autoRotate = autoRotate;
+                const icon = document.querySelector('#rotateEarth i');
+                if (autoRotate) {
+                    icon.classList.remove('fa-pause');
+                    icon.classList.add('fa-sync-alt');
+                } else {
+                    icon.classList.remove('fa-sync-alt');
+                    icon.classList.add('fa-pause');
+                }
+            });
+            
+            document.getElementById('zoomIn').addEventListener('click', () => {
+                earthControls.dollyIn(0.5);
+            });
+            
+            document.getElementById('zoomOut').addEventListener('click', () => {
+                earthControls.dollyOut(0.5);
+            });
+        }
+        
+        // Popup Modal System
+        function setupPopupSystem() {
+            const popupModal = document.getElementById('infoPopup');
+            const closePopup = document.getElementById('closePopup');
+            const popupTitle = document.getElementById('popupTitle');
+            const popupContent = document.getElementById('popupContent');
+            const popupAction = document.getElementById('popupAction');
+            const popupImages = document.querySelector('.popup-images');
+            
+            // Close popup when clicking close button or outside content
+            closePopup.addEventListener('click', () => {
+                popupModal.classList.remove('active');
+            });
+            
+            popupModal.addEventListener('click', (e) => {
+                if (e.target === popupModal) {
+                    popupModal.classList.remove('active');
+                }
+            });
+            
+            // Set up popup triggers
+            const popupTriggers = {
+                // Introduction section
+                'learnMoreTectonic': {
+                    title: 'Compoziția terestră',
+                    content: 'La modul general, scoarța terestră este alcătuită din roci și este stratul solid exterior al Pământului. Compoziția sa chimică este dominată de oxigen (aproximativ 47% din masă) și siliciu (aproximativ 28% din masă). Împreună, aceștia formează mineralele silicate, care sunt componentele principale ale majorității rocilor din scoarță. Alte elemente importante includ aluminiu (Al), fier (Fe), calciu (Ca), sodiu (Na), potasiu (K) și magneziu (Mg).',
+                    images: ['image copy 5.png'],
+                    action: 'Explore More'
+                },
+                'learnMoreFaults': {
+                    title: 'Fault Formation',
+                    content: 'Faults are fractures in Earth\'s crust where blocks of rock have moved relative to each other. Fault-block mountains form when large blocks of crust are uplifted along normal faults during crustal extension.',
+                    images: ['https://via.placeholder.com/300x200?text=Fault+1', 'https://via.placeholder.com/300x200?text=Fault+2'],
+                    action: 'View Fault Animation'
+                },
+                
+                // Fold mountains cards
+                'himalayasCard': {
+                    title: 'Relieful pe structuri tubulare(orizontale)',
+                    content: "Relieful structural se formează pe diferite structuri geologice, fiecare având caracteristici specifice:\n\n- Relief pe structuri tabulare (orizontale): straturi aproape orizontale, relieful este plat sau domol, cu văi largi și simetrice.\n  Exemplu: podișuri tabulare.\n\n- Relief pe structuri monoclinale: straturi înclinate într-o singură direcție, formează cuesta cu față abruptă și față domoală.\n  Exemple: cuestele din zone carstice.\n\n- Relief pe structuri cutate: straturi ondulate, cu anticlinale (culmi) și sinclinale (văi).\n  Exemplu: Munții Apuseni.\n\n- Relief pe structuri faliate: scoarța fracturată cu blocuri ridicate (horsturi) și coborâte (grabene).\n  Exemple: Depresiunea Brașov (graben) înconjurată de munți horsturi.",
+                    images: ['https://via.placeholder.com/300x200?text=Himalaya+1', 'https://via.placeholder.com/300x200?text=Himalaya+2', 'https://via.placeholder.com/300x200?text=Himalaya+3'],
+                    action: 'I'
+                },
+                'alpsCard': {
+                    title: 'Alps',
+                    content: "**Relieful pe structuri monoclinale (homoclinale):**\n\n* **Definiție științifică:** Acest tip de relief se formează pe strate de roci sedimentare care sunt înclinate ușor (în general sub 10-15 grade) într-o singură direcție, ca urmare a unor mișcări tectonice epirogenetice sau a influenței unei structuri majore (dom, cută largă). Eroziunea diferențială (acțiunea selectivă a apei și a altor agenți externi asupra rocilor cu duritate diferită) este procesul dominant, sculptând forme asimetrice caracteristice.\n* **Forme specifice:** Principala formă este **cuesta**, un deal sau podiș asimetric cu o pantă lină numită **spinare** (suprafața structurală, care urmărește înclinarea stratului dur) și o pantă abruptă numită **frunte** (abruptul de eroziune, orientat în sens opus înclinării stratelor). Între frunțile cuestelor se dezvoltă **depresiuni subsecvente**. Când înclinarea stratelor devine mai mare (peste 40-45°), se formează **hogback**-uri (creste mai simetrice).\n* **Exemple reale (pentru imagini):**\n    * **Podișul Someșan (România):** Cuestele dezvoltate la contactul cu Depresiunea Colinară a Transilvaniei (ex: Dealurile Clujului, Cuesta Someșană).\n    * **Bazinul Parisului (Franța):** O structură clasică de bazin sedimentar cu numeroase cueste concentrice (ex: Cuesta Île-de-France).\n    * **Escarpamentul Niagara (SUA/Canada):** O cuestă proeminentă, faimoasă pentru Cascada Niagara, formată pe roci siluriene rezistente.",
+                    images: ['https://via.placeholder.com/300x200?text=Alps+1', 'https://via.placeholder.com/300x200?text=Alps+2'],
+                    action: 'II'
+                },
+                'appalachiansCard': {
+                    title: 'Appalachians',
+                    content: 'The Appalachian Mountains are much older than the Himalayas, forming about 480 million years ago. They were once as tall as the Alps but have been significantly eroded over time. These mountains are rich in coal deposits.',
+                    images: ['https://via.placeholder.com/300x200?text=Appalachians+1', 'https://via.placeholder.com/300x200?text=Appalachians+2'],
+                    action: 'III'
+                },
+                'newCard': {
+                    title: 'Appalachians',
+                    content: 'The Appalachian Mountains are much older than the Himalayas, forming about 480 million years ago. They were once as tall as the Alps but have been significantly eroded over time. These mountains are rich in coal deposits.',
+                    images: ['https://via.placeholder.com/300x200?text=Appalachians+1', 'https://via.placeholder.com/300x200?text=Appalachians+2'],
+                    action: 'IV'
+                },
+                
+                // Volcanic types
+                'shieldVolcano': {
+                    title: 'Shield Volcanoes',
+                    content: 'Shield volcanoes are broad, gently sloping mountains formed by the eruption of low-viscosity lava that can flow long distances. The Hawaiian Islands are classic examples of shield volcanoes.',
+                    images: ['https://via.placeholder.com/300x200?text=Shield+Volcano+1', 'https://via.placeholder.com/300x200?text=Shield+Volcano+2'],
+                    action: 'View Examples'
+                },
+                'stratovolcano': {
+                    title: 'Stratovolcanoes',
+                    content: 'Also called composite volcanoes, these are steep-sided, symmetrical cones built of alternating layers of lava flows, volcanic ash, and other volcanic debris. Mount Fuji and Mount St. Helens are examples.',
+                    images: ['https://via.placeholder.com/300x200?text=Stratovolcano+1', 'https://via.placeholder.com/300x200?text=Stratovolcano+2'],
+                    action: 'View Examples'
+                },
+                'cinderCone': {
+                    title: 'Cinder Cones',
+                    content: 'The simplest type of volcano, cinder cones are steep conical hills made of volcanic fragments that have been ejected from a central vent. They are usually small and form quickly during a single eruption.',
+                    images: ['https://via.placeholder.com/300x200?text=Cinder+Cone+1', 'https://via.placeholder.com/300x200?text=Cinder+Cone+2'],
+                    action: 'View Examples'
+                },
+                
+                // Plateaus
+                'tibetanPlateau': {
+                    title: 'Tibetan Plateau',
+                    content: 'Often called "the Roof of the World," this plateau averages 4,500 meters above sea level and covers about 2.5 million square kilometers. It was formed by the collision of the Indian and Eurasian plates.',
+                    images: ['https://via.placeholder.com/300x200?text=Tibetan+Plateau+1', 'https://via.placeholder.com/300x200?text=Tibetan+Plateau+2'],
+                    action: 'Explore Tibet'
+                },
+                'coloradoPlateau': {
+                    title: 'Colorado Plateau',
+                    content: 'This plateau covers 337,000 square kilometers in the southwestern United States. Known for its spectacular canyons, mesas, and buttes, it has been uplifted without significant folding or faulting.',
+                    images: ['https://via.placeholder.com/300x200?text=Colorado+Plateau+1', 'https://via.placeholder.com/300x200?text=Colorado+Plateau+2'],
+                    action: 'Explore Colorado'
+                },
+                'deccanPlateau': {
+                    title: 'Deccan Plateau',
+                    content: 'Covering most of southern India, this volcanic plateau was formed by massive lava flows between 60 and 68 million years ago. The lava covers an area of 500,000 square kilometers in places up to 2,000 meters thick.',
+                    images: ['https://via.placeholder.com/300x200?text=Deccan+Plateau+1', 'https://via.placeholder.com/300x200?text=Deccan+Plateau+2'],
+                    action: 'Explore Deccan'
+                },
+                
+                // Table rows
+                'tibetanRow': {
+                    title: 'Tibetan Plateau Details',
+                    content: 'The Tibetan Plateau is the highest and largest plateau in the world, with an average elevation of 4,500 meters. It was formed by the ongoing collision between the Indian and Eurasian tectonic plates.',
+                    images: ['https://via.placeholder.com/300x200?text=Tibetan+Details+1', 'https://via.placeholder.com/300x200?text=Tibetan+Details+2'],
+                    action: 'View Map'
+                },
+                'coloradoRow': {
+                    title: 'Colorado Plateau Details',
+                    content: 'The Colorado Plateau is a semi-arid region with remarkable sedimentary rock formations. It has been relatively undisturbed by tectonic activity, allowing rivers to carve spectacular canyons like the Grand Canyon.',
+                    images: ['https://via.placeholder.com/300x200?text=Colorado+Details+1', 'https://via.placeholder.com/300x200?text=Colorado+Details+2'],
+                    action: 'View Map'
+                },
+                'deccanRow': {
+                    title: 'Deccan Plateau Details',
+                    content: 'The Deccan Traps are one of the largest volcanic features on Earth, consisting of multiple layers of solidified flood basalt. These eruptions may have contributed to the Cretaceous-Paleogene extinction event.',
+                    images: ['https://via.placeholder.com/300x200?text=Deccan+Details+1', 'https://via.placeholder.com/300x200?text=Deccan+Details+2'],
+                    action: 'View Map'
+                }
+            };
+            
+            // Set up event listeners for all popup triggers
+            Object.keys(popupTriggers).forEach(key => {
+                const element = document.getElementById(key);
+                if (element) {
+                    element.addEventListener('click', () => {
+                        const data = popupTriggers[key];
+                        popupTitle.textContent = data.title;
+                        popupContent.textContent = data.content;
+                        popupAction.textContent = data.action;
+                        
+                        // Populate images
+                        popupImages.innerHTML = '';
+                        if (data.images && data.images.length > 0) {
+                            data.images.forEach(src => {
+                                const img = document.createElement('img');
+                                img.src = src;
+                                img.alt = data.title;
+                                popupImages.appendChild(img);
+                            });
+                        } else {
+                            popupImages.innerHTML = '<p>No images available</p>';
+                        }
+                        
+                        popupModal.classList.add('active');
+                    });
+                }
+            });
+            
+            // Fault-Block Quiz functionality
+            const quizOptions = document.querySelectorAll('.quiz-option');
+            const quizFeedback = document.getElementById('quizFeedback');
+            
+            quizOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    quizOptions.forEach(opt => {
+                        opt.classList.remove('bg-amber-800', 'text-white');
+                        opt.classList.add('bg-gray-700', 'hover:bg-gray-600');
+                    });
+                    
+                    if (option.textContent.includes('Sierra Nevada')) {
+                        option.classList.remove('bg-gray-700', 'hover:bg-gray-600');
+                        option.classList.add('bg-amber-800', 'text-white');
+                        quizFeedback.textContent = 'Correct! The Sierra Nevada in California is a classic example of fault-block mountains.';
+                    } else {
+                        option.classList.remove('bg-gray-700', 'hover:bg-gray-600');
+                        option.classList.add('bg-red-900', 'text-white');
+                        quizFeedback.textContent = 'Not quite. The correct answer is Sierra Nevada. The Rocky Mountains are folded mountains, and the Appalachians are also folded mountains, though much older.';
+                    }
+                    
+                    quizFeedback.classList.remove('hidden');
+                });
+            });
+            
+            // Volcanic Quiz functionality
+            const volcanicQuizOptions = document.querySelectorAll('.volcanic-quiz-option');
+            const volcanicQuizFeedback = document.getElementById('volcanicQuizFeedback');
+            
+            volcanicQuizOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    volcanicQuizOptions.forEach(opt => {
+                        opt.classList.remove('bg-amber-800', 'text-white');
+                        opt.classList.add('bg-gray-700', 'hover:bg-gray-600');
+                    });
+                    
+                    if (option.textContent.includes('Shield Volcano')) {
+                        option.classList.remove('bg-gray-700', 'hover:bg-gray-600');
+                        option.classList.add('bg-amber-800', 'text-white');
+                        volcanicQuizFeedback.textContent = 'Correct! Shield volcanoes have gentle slopes due to their fluid lava.';
+                    } else {
+                        option.classList.remove('bg-gray-700', 'hover:bg-gray-600');
+                        option.classList.add('bg-red-900', 'text-white');
+                        volcanicQuizFeedback.textContent = 'Not quite. The correct answer is Shield Volcano. They have the gentlest slopes among the three types.';
+                    }
+                    
+                    volcanicQuizFeedback.classList.remove('hidden');
+                });
+            });
+            
+            // Feedback buttons
+            const featureFeedbackButtons = document.querySelectorAll('.feature-feedback');
+            const feedbackThankYou = document.getElementById('feedbackThankYou');
+            
+            featureFeedbackButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    feedbackThankYou.classList.remove('hidden');
+                    setTimeout(() => {
+                        feedbackThankYou.classList.add('hidden');
+                    }, 3000);
+                });
+            });
+        }
+        
+        // Navigation and Scrolling
+        function setupNavigation() {
+            const sections = document.querySelectorAll('.section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const mobileMenuButton = document.getElementById('mobileMenuButton');
+            const mobileNav = document.getElementById('mobileNav');
+            const progressBar = document.getElementById('progressBar');
+            
+            // Mobile menu toggle
+            mobileMenuButton.addEventListener('click', () => {
+                mobileNav.classList.toggle('open');
+            });
+            
+            // Close mobile menu when clicking a link
+            document.querySelectorAll('#mobileNav a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileNav.classList.remove('open');
+                });
+            });
+            
+            // Smooth scrolling for all links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Update active section and navigation
+            function updateActiveSection() {
+                const scrollPosition = window.scrollY + 100;
+                
+                // Update progress bar
+                const totalHeight = document.body.scrollHeight - window.innerHeight;
+                const progress = (window.scrollY / totalHeight) * 100;
+                progressBar.style.width = progress + '%';
+                
+                // Update active section and nav links
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.offsetHeight;
+                    
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                        section.classList.add('active');
+                        
+                        // Update navigation
+                        const id = section.getAttribute('id');
+                        navLinks.forEach(link => {
+                            if (link.getAttribute('href') === '#' + id) {
+                                link.classList.add('active');
+                            } else {
+                                link.classList.remove('active');
+                            }
+                        });
+                    } else {
+                        section.classList.remove('active');
+                    }
+                });
+            }
+            
+            // Initialize first section as active
+            sections[0].classList.add('active');
+            navLinks[0].classList.add('active');
+            
+            // Add scroll event listener
+            window.addEventListener('scroll', updateActiveSection);
+            
+            // Add hash change listener for direct links
+            window.addEventListener('hashchange', () => {
+                const hash = window.location.hash;
+                if (hash) {
+                    const target = document.querySelector(hash);
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        }
+        
+        // Initialize everything when the page loads
+        window.onload = function() {
+            initEarth();
+            setupNavigation();
+            setupPopupSystem();
+            
+            // Add hover effects to interactive cards
+            const interactiveCards = document.querySelectorAll('.interactive-card');
+            interactiveCards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.transform = 'translateY(-5px) scale(1.02)';
+                    card.style.boxShadow = '0 15px 30px rgba(0,0,0,0.3)';
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = '';
+                    card.style.boxShadow = '';
+                });
+                
+                card.addEventListener('mousedown', () => {
+                    card.style.transform = 'translateY(0) scale(0.98)';
+                });
+                
+                card.addEventListener('mouseup', () => {
+                    card.style.transform = 'translateY(-5px) scale(1.02)';
+                });
+            });
+        };
+    </script>
+</body>
+</html>
