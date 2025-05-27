@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Optică Geometrică: Simulare Interactivă</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --primary-color: #3b82f6; /* blue-500 */
+            --secondary-color: #1e40af; /* blue-800 */
+            --accent-color: #ec4899; /* pink-500 */
+            --bg-color: #f3f4f6; /* gray-100 */
+            --text-color: #1f2937; /* gray-800 */
+            --canvas-bg: #ffffff;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        .tab-button {
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 4px solid transparent;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        .tab-button.active {
+            border-bottom-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        .tab-button:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+        .simulation-container {
+            background-color: var(--canvas-bg);
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        label {
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+            display: block;
+        }
+        input[type="range"], select, input[type="number"] {
+            width: 100%;
+            padding: 0.5rem;
+            border-radius: 0.375rem;
+            border: 1px solid #d1d5db; /* gray-300 */
+            transition: border-color 0.3s ease;
+        }
+        input[type="range"]:focus, select:focus, input[type="number"]:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+        }
+        .theory-button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-weight: 600;
+            border: none;
+        }
+        .theory-button:hover {
+            background-color: var(--secondary-color);
+        }
+        .theory-content {
+            background-color: #e9efff; /* lighter blue */
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            border-left: 5px solid var(--primary-color);
+            line-height: 1.6;
+        }
+        canvas {
+            display: block;
+            width: 100%;
+            height: 400px; /* Default height, can be adjusted */
+            background-color: var(--canvas-bg);
+            border-radius: 0.5rem;
+            border: 1px solid #e5e7eb; /* gray-200 */
+        }
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            width: 90%;
+            max-width: 700px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+        }
+        .close-modal-button {
+            background-color: #ef4444; /* red-500 */
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-weight: 600;
+            border: none;
+            float: right;
+            margin-top: -1rem;
+        }
+        .close-modal-button:hover {
+            background-color: #dc2626; /* red-600 */
+        }
+        h2 {
+            font-size: 1.875rem; /* text-3xl */
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+        h3 {
+            font-size: 1.5rem; /* text-2xl */
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+         /* Custom scrollbar for modal content */
+        .modal-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        .modal-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        .modal-content::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 10px;
+        }
+        .modal-content::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary-color);
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <header class="text-center mb-8">
+        <h1 class="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-pink-500 to-purple-600">
+            Optică Geometrică: Simulare Interactivă
+        </h1>
+        <p class="text-lg text-gray-600 mt-2">Explorați fenomenele fascinante ale luminii.</p>
+    </header>
+
+    <div class="tabs flex justify-center border-b border-gray-300 mb-6">
+        <button class="tab-button active" onclick="openTab('dispersion')">Dispersia Luminii</button>
+        <button class="tab-button" onclick="openTab('refraction')">Refracția Luminii</button>
+        <button class="tab-button" onclick="openTab('totalReflection')">Reflexia Totală Internă</button>
+    </div>
+
+    <div id="dispersion" class="tab-content simulation-container">
+        <h2 class="text-center">Dispersia Luminii printr-o Prismă și Curcubeul Dublu</h2>
+        
+        <div class="mb-8 p-4 border border-gray-200 rounded-lg">
+            <h3 class="text-xl font-semibold mb-3 text-center">Dispersia prin Prismă</h3>
+            <div class="controls-grid">
+                <div>
+                    <label for="prismAngle">Unghiul prismei (°): <span id="prismAngleValue">60</span></label>
+                    <input type="range" id="prismAngle" min="30" max="90" value="60" step="1">
+                </div>
+                <div>
+                    <label for="prismIncidentAngle">Unghi de incidență la prismă (°): <span id="prismIncidentAngleValue">30</span></label>
+                    <input type="range" id="prismIncidentAngle" min="0" max="89" value="30" step="1">
+                </div>
+                <div>
+                    <label for="prismMaterial">Materialul prismei:</label>
+                    <select id="prismMaterial">
+                        <option value="glass_bk7">Sticlă (BK7)</option>
+                        <option value="glass_flint">Sticlă Flint</option>
+                        <option value="quartz">Cuarț</option>
+                    </select>
+                </div>
+            </div>
+            <canvas id="dispersionCanvasPrism" height="450"></canvas>
+        </div>
+
+        <div class="p-4 border border-gray-200 rounded-lg">
+            <h3 class="text-xl font-semibold mb-3 text-center">Formarea Curcubeului Dublu</h3>
+             <div class="controls-grid">
+                <div>
+                    <label for="sunAngleRainbow">Înălțimea Soarelui (unghi relativ) (°): <span id="sunAngleRainbowValue">20</span></label>
+                    <input type="range" id="sunAngleRainbow" min="0" max="50" value="20" step="1">
+                </div>
+            </div>
+            <canvas id="dispersionCanvasRainbow" height="500"></canvas>
+        </div>
+        
+        <div class="text-center mt-6">
+            <button class="theory-button" onclick="showTheory('dispersionTheory')">Afișează Teorie - Dispersia</button>
+        </div>
+    </div>
+
+    <div id="refraction" class="tab-content simulation-container" style="display:none;">
+        <h2 class="text-center">Refracția Luminii</h2>
+        <div class="controls-grid">
+            <div>
+                <label for="refractionAngle">Unghi de incidență (°): <span id="refractionAngleValue">30</span></label>
+                <input type="range" id="refractionAngle" min="0" max="89" value="30" step="1">
+            </div>
+            <div>
+                <label for="n1Refraction">Indice de refracție mediu 1 (n1): <span id="n1RefractionValue">1.00</span></label>
+                <input type="range" id="n1Refraction" min="1.00" max="3.00" value="1.00" step="0.01">
+            </div>
+            <div>
+                <label for="n2Refraction">Indice de refracție mediu 2 (n2): <span id="n2RefractionValue">1.33</span></label>
+                <input type="range" id="n2Refraction" min="1.00" max="3.00" value="1.33" step="0.01">
+            </div>
+             <div>
+                <label for="materialN1Refraction">Material Mediu 1:</label>
+                <select id="materialN1Refraction">
+                    <option value="1.0003">Aer</option>
+                    <option value="1.333">Apă</option>
+                    <option value="1.517">Sticlă (Crown)</option>
+                    <option value="2.417">Diamant</option>
+                </select>
+            </div>
+            <div>
+                <label for="materialN2Refraction">Material Mediu 2:</label>
+                <select id="materialN2Refraction">
+                    <option value="1.333">Apă</option>
+                    <option value="1.0003">Aer</option>
+                    <option value="1.517">Sticlă (Crown)</option>
+                    <option value="1.655">Sticlă (Flint)</option>
+                    <option value="2.417">Diamant</option>
+                </select>
+            </div>
+        </div>
+        <canvas id="refractionCanvas" height="450"></canvas>
+        <div class="text-center mt-6">
+            <button class="theory-button" onclick="showTheory('refractionTheory')">Afișează Teorie - Refracția</button>
+        </div>
+    </div>
+
+    <div id="totalReflection" class="tab-content simulation-container" style="display:none;">
+        <h2 class="text-center">Reflexia Totală Internă</h2>
+        <div class="controls-grid">
+            <div>
+                <label for="tirAngle">Unghi de incidență (°): <span id="tirAngleValue">30</span></label>
+                <input type="range" id="tirAngle" min="0" max="89" value="30" step="1">
+            </div>
+            <div>
+                <label for="n1TIR">Indice de refracție mediu 1 (dens, n1): <span id="n1TIRValue">1.50</span></label>
+                <input type="range" id="n1TIR" min="1.01" max="3.00" value="1.50" step="0.01">
+            </div>
+            <div>
+                <label for="n2TIR">Indice de refracție mediu 2 (rar, n2): <span id="n2TIRValue">1.00</span></label>
+                <input type="range" id="n2TIR" min="1.00" max="2.99" value="1.00" step="0.01">
+            </div>
+            <div>
+                <label for="materialN1TIR">Material Mediu 1 (Sursa de lumină):</label>
+                <select id="materialN1TIR">
+                    <option value="1.333">Apă</option>
+                    <option value="1.517">Sticlă (Crown)</option>
+                    <option value="1.655">Sticlă (Flint)</option>
+                    <option value="2.417">Diamant</option>
+                </select>
+            </div>
+            <div>
+                <label for="materialN2TIR">Material Mediu 2:</label>
+                <select id="materialN2TIR">
+                     <option value="1.0003">Aer</option>
+                    <option value="1.333">Apă</option>
+                </select>
+            </div>
+        </div>
+        <canvas id="totalReflectionCanvas" height="450"></canvas>
+         <p id="criticalAngleInfo" class="text-center font-semibold mt-4 text-lg"></p>
+        <div class="text-center mt-6">
+            <button class="theory-button" onclick="showTheory('totalReflectionTheory')">Afișează Teorie - Reflexia Totală</button>
+        </div>
+    </div>
+
+    <div id="theoryModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal-button" onclick="closeTheoryModal()">Închide</button>
+            <div id="theoryModalBody">
+                </div>
+        </div>
+    </div>
+    
+    <div id="dispersionTheory" style="display:none;">
+        <h3>Teoria Dispersiei Luminii</h3>
+        <p>Dispersia luminii este fenomenul de separare a luminii albe în componentele sale monocromatice (culorile spectrului vizibil) la trecerea printr-un mediu transparent (de exemplu, o prismă optică). Acest fenomen apare deoarece indicele de refracție al materialului depinde de lungimea de undă a luminii (relația lui Cauchy). Lumina violetă (lungime de undă mai mică) este deviată mai mult decât lumina roșie (lungime de undă mai mare).</p>
+        <h4>Formula lui Cauchy (simplificată):</h4>
+        <p><code>n(λ) = A + B/λ²</code>, unde <code>n</code> este indicele de refracție, <code>λ</code> este lungimea de undă, iar <code>A</code> și <code>B</code> sunt constante specifice materialului.</p>
+        
+        <h3>Curcubeul</h3>
+        <p>Curcubeul este un fenomen optic și meteorologic care se manifestă prin apariția pe cer a unui spectru de forma unui arc colorat atunci când lumina Soarelui se refractă și se reflectă în picăturile de apă din atmosferă. Culorile curcubeului sunt, în ordine: roșu, portocaliu, galben, verde, albastru, indigo și violet (ROGVAIV).</p>
+        
+        <h4>Curcubeul Primar:</h4>
+        <p>Se formează prin refracția luminii la intrarea în picătura de apă, o reflexie totală internă pe partea opusă a picăturii și o a doua refracție la ieșirea din picătură. Unghiul sub care se vede curcubeul primar este de aproximativ 40-42° față de direcția opusă Soarelui. Roșul este la exteriorul arcului.</p>
+        
+        <h4>Curcubeul Secundar (Dublu):</h4>
+        <p>Se formează printr-un proces similar, dar cu două reflexii totale interne în interiorul picăturii de apă. Acesta apare la un unghi mai mare, de aproximativ 50-53°, este mai palid și are culorile inversate față de curcubeul primar (violet la exterior, roșu la interior). Între cele două curcubee se află o zonă mai întunecată numită "banda lui Alexandru".</p>
+        <p>Simularea arată traiectoriile simplificate ale razelor pentru a ilustra aceste reflexii și refracții.</p>
+    </div>
+
+    <div id="refractionTheory" style="display:none;">
+        <h3>Teoria Refracției Luminii</h3>
+        <p>Refracția este schimbarea direcției de propagare a unei unde (în acest caz, lumina) la trecerea dintr-un mediu transparent în altul, cu densități optice diferite. Acest fenomen este guvernat de Legea lui Snell.</p>
+        <h4>Legea lui Snell:</h4>
+        <p><code>n₁ * sin(θ₁) = n₂ * sin(θ₂)</code></p>
+        <p>Unde:</p>
+        <ul>
+            <li><code>n₁</code> este indicele de refracție al primului mediu.</li>
+            <li><code>θ₁</code> este unghiul de incidență (unghiul dintre raza incidentă și normala la suprafață).</li>
+            <li><code>n₂</code> este indicele de refracție al celui de-al doilea mediu.</li>
+            <li><code>θ₂</code> este unghiul de refracție (unghiul dintre raza refractată și normala la suprafață).</li>
+        </ul>
+        <p>Indicele de refracție (<code>n</code>) al unui mediu este raportul dintre viteza luminii în vid (<code>c</code>) și viteza luminii în acel mediu (<code>v</code>): <code>n = c/v</code>. Un indice de refracție mai mare indică un mediu optic mai dens.</p>
+        <p>Dacă lumina trece dintr-un mediu mai rar optic (<code>n₁ < n₂</code>) într-un mediu mai dens optic, raza refractată se apropie de normală (<code>θ₂ < θ₁</code>). Invers, dacă trece dintr-un mediu mai dens într-unul mai rar (<code>n₁ > n₂</code>), raza refractată se depărtează de normală (<code>θ₂ > θ₁</code>).</p>
+    </div>
+
+    <div id="totalReflectionTheory" style="display:none;">
+        <h3>Teoria Reflexiei Totale Interne</h3>
+        <p>Reflexia totală internă este un fenomen optic care apare atunci când o rază de lumină care se propagă într-un mediu mai dens optic (cu indice de refracție <code>n₁</code>) lovește suprafața de separare cu un mediu mai puțin dens optic (cu indice de refracție <code>n₂</code>, unde <code>n₁ > n₂</code>) sub un unghi de incidență mai mare decât un anumit unghi critic (<code>θc</code>).</p>
+        <p>În aceste condiții, întreaga cantitate de lumină este reflectată înapoi în primul mediu; nicio parte a luminii nu este refractată în al doilea mediu.</p>
+        <h4>Unghiul Critic (<code>θc</code>):</h4>
+        <p>Unghiul critic este unghiul de incidență pentru care unghiul de refracție este de 90°. Acesta poate fi calculat folosind Legea lui Snell:</p>
+        <p><code>n₁ * sin(θc) = n₂ * sin(90°)</code></p>
+        <p>Deoarece <code>sin(90°) = 1</code>, formula devine:</p>
+        <p><code>sin(θc) = n₂ / n₁</code></p>
+        <p>Deci, <code>θc = arcsin(n₂ / n₁)</code>.</p>
+        <h4>Condiții pentru Reflexia Totală Internă:</h4>
+        <ol>
+            <li>Lumina trebuie să se propage dintr-un mediu optic mai dens către unul mai puțin dens (<code>n₁ > n₂</code>).</li>
+            <li>Unghiul de incidență (<code>θ₁</code>) trebuie să fie mai mare decât unghiul critic (<code>θ₁ > θc</code>).</li>
+        </ol>
+        <p>Aplicațiile reflexiei totale interne includ fibrele optice, prismele din binocluri și periscoape, și diamantele (care strălucesc datorită multiplelor reflexii interne).</p>
+    </div>
+
+
+<script>
+    // Helper functions
+    const degToRad = (degrees) => degrees * Math.PI / 180;
+    const radToDeg = (radians) => radians * 180 / Math.PI;
+
+    // Tab switching logic
+    function openTab(tabName) {
+        const tabContents = document.querySelectorAll('.tab-content');
+        tabContents.forEach(content => content.style.display = 'none');
+        document.getElementById(tabName).style.display = 'block';
+
+        const tabButtons = document.querySelectorAll('.tab-button');
+        tabButtons.forEach(button => button.classList.remove('active'));
+        event.currentTarget.classList.add('active');
+
+        // Initialize or re-initialize the active simulation
+        switch(tabName) {
+            case 'dispersion':
+                initDispersionSim();
+                break;
+            case 'refraction':
+                initRefractionSim();
+                break;
+            case 'totalReflection':
+                initTotalReflectionSim();
+                break;
+        }
+    }
+
+    // Theory modal logic
+    const theoryModal = document.getElementById('theoryModal');
+    const theoryModalBody = document.getElementById('theoryModalBody');
+    function showTheory(theoryId) {
+        const theoryContent = document.getElementById(theoryId).innerHTML;
+        theoryModalBody.innerHTML = theoryContent;
+        theoryModal.classList.add('active');
+    }
+    function closeTheoryModal() {
+        theoryModal.classList.remove('active');
+    }
+    window.onclick = function(event) {
+        if (event.target == theoryModal) {
+            closeTheoryModal();
+        }
+    }
+
+    // --- Simulation: Dispersia Luminii ---
+    const dispersionCanvasPrism = document.getElementById('dispersionCanvasPrism');
+    const ctxPrism = dispersionCanvasPrism.getContext('2d');
+    const dispersionCanvasRainbow = document.getElementById('dispersionCanvasRainbow');
+    const ctxRainbow = dispersionCanvasRainbow.getContext('2d');
+
+    const prismAngleSlider = document.getElementById('prismAngle');
+    const prismIncidentAngleSlider = document.getElementById('prismIncidentAngle');
+    const prismMaterialSelect = document.getElementById('prismMaterial');
+    const sunAngleRainbowSlider = document.getElementById('sunAngleRainbow');
+
+    // Refractive indices for different wavelengths (approximate for visualization)
+    // n = A + B/lambda^2. Higher B means more dispersion.
+    // Values are for n_violet, n_green, n_red
+    const materialProperties = {
+        glass_bk7: { A: 1.5046, B: 0.00420 * 1e4, name: "Sticlă (BK7)" }, // B is scaled for effect
+        glass_flint: { A: 1.6000, B: 0.00900 * 1e4, name: "Sticlă Flint" },
+        quartz: { A: 1.5330, B: 0.00550 * 1e4, name: "Cuarț" }
+    };
+    
+    // Wavelengths (nm) - not used directly in n calculation here, but for color
+    const wavelengths = {
+        red: 650, orange: 600, yellow: 580, green: 550, blue: 470, indigo: 440, violet: 410
+    };
+    const colors = ['#FF0000', '#FF7F00', '#FFFF00', '#00FF00', '#0000FF', '#4B0082', '#8F00FF']; // ROYGBIV
+
+    function getRefractiveIndex(materialKey, wavelengthCategory) {
+        const props = materialProperties[materialKey];
+        // Simplified: assign slightly different n based on color category for visual dispersion
+        // Real dispersion is continuous. This is a discrete approximation.
+        let lambda_eff_sq; // Effective lambda squared for Cauchy-like behavior
+        switch (wavelengthCategory) {
+            case 'red':    lambda_eff_sq = 700*700; break;
+            case 'orange': lambda_eff_sq = 600*600; break;
+            case 'yellow': lambda_eff_sq = 580*580; break;
+            case 'green':  lambda_eff_sq = 530*530; break;
+            case 'blue':   lambda_eff_sq = 470*470; break;
+            case 'indigo': lambda_eff_sq = 440*440; break;
+            case 'violet': lambda_eff_sq = 400*400; break;
+            default:       lambda_eff_sq = 550*550; // Mid-range
+        }
+        return props.A + props.B / lambda_eff_sq;
+    }
+
+
+    function drawPrismSimulation() {
+        const P_WIDTH = dispersionCanvasPrism.width;
+        const P_HEIGHT = dispersionCanvasPrism.height;
+        ctxPrism.clearRect(0, 0, P_WIDTH, P_HEIGHT);
+
+        const prismAngle = parseFloat(prismAngleSlider.value);
+        document.getElementById('prismAngleValue').textContent = prismAngle;
+        const incidentAngleDeg = parseFloat(prismIncidentAngleSlider.value);
+        document.getElementById('prismIncidentAngleValue').textContent = incidentAngleDeg;
+        const materialKey = prismMaterialSelect.value;
+
+        // Prism geometry
+        const prismHeight = P_HEIGHT * 0.6;
+        const prismBase = prismHeight / Math.tan(degToRad(prismAngle / 2)); // This is not quite right for isosceles
+        
+        // Isosceles prism centered
+        const apexAngle = degToRad(prismAngle);
+        const baseAngles = degToRad((180 - prismAngle) / 2);
+        
+        const prismSideLength = P_HEIGHT * 0.5 / Math.sin(baseAngles); // Adjust for visual
+        const pBase = 2 * prismSideLength * Math.cos(baseAngles);
+
+
+        const apexX = P_WIDTH / 2;
+        const apexY = P_HEIGHT * 0.2;
+        const pLeftX = apexX - pBase / 2;
+        const pLeftY = apexY + prismSideLength * Math.sin(baseAngles); // This is actually the height
+        const pRightX = apexX + pBase / 2;
+        const pRightY = pLeftY;
+
+        // Corrected prism points for isosceles based on apex angle and a chosen height
+        const prismDrawHeight = P_HEIGHT * 0.5;
+        const prismHalfBase = prismDrawHeight / Math.tan(baseAngles);
+
+        const pApex = { x: P_WIDTH / 2, y: P_HEIGHT * 0.25 };
+        const pBaseLeft = { x: pApex.x - prismHalfBase, y: pApex.y + prismDrawHeight };
+        const pBaseRight = { x: pApex.x + prismHalfBase, y: pApex.y + prismDrawHeight };
+
+        ctxPrism.beginPath();
+        ctxPrism.moveTo(pApex.x, pApex.y);
+        ctxPrism.lineTo(pBaseLeft.x, pBaseLeft.y);
+        ctxPrism.lineTo(pBaseRight.x, pBaseRight.y);
+        ctxPrism.closePath();
+        ctxPrism.strokeStyle = '#333';
+        ctxPrism.lineWidth = 2;
+        ctxPrism.stroke();
+        ctxPrism.fillStyle = 'rgba(173, 216, 230, 0.3)'; // Light blue, semi-transparent
+        ctxPrism.fill();
+
+        // Incident white light
+        const incidentAngleRad = degToRad(incidentAngleDeg);
+        const startX = P_WIDTH * 0.1;
+        const startY = P_HEIGHT * 0.5;
+        
+        // Calculate intersection with left face of prism
+        // Line of prism: y - pApex.y = tan(PI/2 - baseAngles) * (x - pApex.x) for left face
+        // Normal to left face: angle is PI - baseAngles
+        const leftFaceAngle = Math.PI - baseAngles; // Angle of the face itself from horizontal
+        const normalAngle1 = leftFaceAngle - Math.PI / 2; // Angle of the normal to the left face
+
+        // Find entry point on the prism's left face
+        // Ray: y = startY + tan(incidentAngleRad)*(x-startX)
+        // Left face of prism: (pApex) to (pBaseLeft)
+        // Simplified: aim ray towards center of left face
+        const entryPointY = pApex.y + prismDrawHeight / 2;
+        const entryPointX = pApex.x - prismHalfBase / 2; // Approx
+        
+        // Better: calculate entry point for a ray starting far left and hitting mid-height of left face
+        const targetY = pApex.y + prismDrawHeight * 0.5; // Mid-point of left face height
+        const targetX = pApex.x - (prismDrawHeight * 0.5) / Math.tan(baseAngles);
+
+        const rayStartX = P_WIDTH * 0.05;
+        const rayStartY = targetY - Math.tan(incidentAngleRad) * (targetX - rayStartX);
+
+        ctxPrism.beginPath();
+        ctxPrism.moveTo(rayStartX, rayStartY);
+        ctxPrism.lineTo(targetX, targetY);
+        ctxPrism.strokeStyle = 'black';
+        ctxPrism.lineWidth = 3;
+        ctxPrism.stroke();
+
+        // Calculate refraction for each color
+        const n_air = 1.0;
+        const incidentAngleToNormal = incidentAngleRad + normalAngle1; // This needs to be angle wrt normal
+
+        // Angle of left face from vertical: (90 - baseAngle)
+        // Normal to left face from horizontal: baseAngle
+        // Let's use vector math or simpler angle definitions for clarity
+        // Angle of left surface of prism (from horizontal, pointing up-left) = PI - baseAngles
+        // Normal to left surface (pointing out, up-right) = PI - baseAngles - PI/2 = PI/2 - baseAngles
+        
+        const angleOfLeftSurface = Math.atan2(pApex.y - pBaseLeft.y, pApex.x - pBaseLeft.x);
+        const normalToLeftSurface = angleOfLeftSurface + Math.PI / 2;
+        
+        let theta_i_prism = incidentAngleRad - normalToLeftSurface; // Angle between incident ray and normal
+                                                                    // incidentAngleRad is angle of ray from horizontal
+                                                                    // normalToLeftSurface is angle of normal from horizontal
+        
+        // Ensure theta_i_prism is acute angle with normal
+        // Incident ray direction vector: (cos(incidentAngleRad), sin(incidentAngleRad))
+        // Normal vector: (cos(normalToLeftSurface), sin(normalToLeftSurface))
+        // cos(alpha) = (v1 . v2) / (|v1| |v2|)
+        // theta_i_prism = Math.acos(Math.cos(incidentAngleRad)*Math.cos(normalToLeftSurface) + Math.sin(incidentAngleRad)*Math.sin(normalToLeftSurface));
+        // This is absolute angle between. We need to consider side.
+        // Simpler: angle of incidence = angle of ray - angle of normal
+        // Angle of incident ray from horizontal = incidentAngleRad
+        // Angle of normal (pointing outwards) = (PI - baseAngles) - PI/2 = PI/2 - baseAngles
+        let alpha_inc = incidentAngleRad; // Angle of ray wrt horizontal
+        let normal_1_angle = (Math.PI / 2) - baseAngles; // Angle of normal to left face wrt horizontal
+        
+        theta_i_prism = alpha_inc - normal_1_angle;
+        
+        // Draw normal at entry point
+        ctxPrism.beginPath();
+        ctxPrism.moveTo(targetX, targetY);
+        ctxPrism.lineTo(targetX + 50 * Math.cos(normal_1_angle), targetY + 50 * Math.sin(normal_1_angle));
+        ctxPrism.setLineDash([2, 2]);
+        ctxPrism.strokeStyle = 'gray';
+        ctxPrism.lineWidth = 1;
+        ctxPrism.stroke();
+        ctxPrism.setLineDash([]);
+
+
+        Object.keys(wavelengths).forEach((colorKey, index) => {
+            const n_prism = getRefractiveIndex(materialKey, colorKey);
+            const sin_theta_r1 = (n_air / n_prism) * Math.sin(theta_i_prism);
+            if (Math.abs(sin_theta_r1) > 1) return; // TIR inside, shouldn't happen for typical entry
+            const theta_r1 = Math.asin(sin_theta_r1); // Angle of refracted ray wrt normal_1
+
+            const refractedAngleAbs = normal_1_angle + theta_r1; // Angle of refracted ray wrt horizontal
+
+            // Find exit point on right face or base
+            // For simplicity, assume it exits the right face.
+            // Right face: (pApex) to (pBaseRight)
+            const angleOfRightSurface = Math.atan2(pBaseRight.y - pApex.y, pBaseRight.x - pApex.x);
+            const normalToRightSurface = angleOfRightSurface - Math.PI / 2;
+
+            // Line of refracted ray: y - targetY = tan(refractedAngleAbs) * (x - targetX)
+            // Line of right face: y - pApex.y = (pBaseRight.y - pApex.y)/(pBaseRight.x - pApex.x) * (x - pApex.x)
+            // Solve for intersection (exitPointX, exitPointY) - this is complex.
+            // Simplified: trace for a fixed length inside, then calculate exit.
+            const lengthInsidePrism = prismHalfBase * 1.5; // Approximate
+            const midPointX = targetX + lengthInsidePrism * Math.cos(refractedAngleAbs);
+            const midPointY = targetY + lengthInsidePrism * Math.sin(refractedAngleAbs);
+
+            // For now, just draw a segment inside, then calculate exit based on geometry
+            // Angle of incidence on the second surface (theta_i2)
+            // theta_i2 = apexAngle - theta_r1 (for isosceles prism, if ray hits apex-base line)
+            // More general: theta_i2 = refractedAngleAbs - normalToRightSurface
+            let theta_i2_prism = refractedAngleAbs - normalToRightSurface;
+
+            const sin_theta_r2 = (n_prism / n_air) * Math.sin(theta_i2_prism);
+            
+            let exitAngleAbs;
+            if (Math.abs(sin_theta_r2) > 1) { // TIR on second surface
+                // Reflect internally. For simplicity, we'll just show it exiting if possible.
+                // This case needs more complex handling. For now, assume it exits.
+                // If TIR, it would reflect at angle theta_i2_prism wrt normalToRightSurface
+                exitAngleAbs = normalToRightSurface - theta_i2_prism; // Reflection
+            } else {
+                 const theta_r2 = Math.asin(sin_theta_r2); // Angle of exiting ray wrt normal_2
+                 exitAngleAbs = normalToRightSurface + theta_r2; // Angle of exiting ray wrt horizontal
+            }
+
+            // Approximate exit point on right face
+            const exitPointY = pApex.y + prismDrawHeight * 0.5 + index * 2; // Stagger for visual
+            const exitPointX = pApex.x + (prismDrawHeight * 0.5) / Math.tan(baseAngles);
+
+
+            ctxPrism.beginPath();
+            ctxPrism.moveTo(targetX, targetY);
+            // Draw to an approximate midpoint inside, then to an approximate exit point
+            // This part is tricky without full ray-polygon intersection.
+            // Let's assume exit from right face for simplicity of visualization
+            const approxInternalEndX = (pApex.x + pBaseRight.x) / 2 + Math.random()*10 - 5; // Center of right face approx
+            const approxInternalEndY = (pApex.y + pBaseRight.y) / 2 + Math.random()*10 - 5;
+            ctxPrism.lineTo(approxInternalEndX, approxInternalEndY);
+            ctxPrism.strokeStyle = colors[index];
+            ctxPrism.lineWidth = 1.5;
+            ctxPrism.stroke();
+            
+            ctxPrism.beginPath();
+            ctxPrism.moveTo(approxInternalEndX, approxInternalEndY);
+            ctxPrism.lineTo(approxInternalEndX + P_WIDTH * 0.3 * Math.cos(exitAngleAbs), 
+                            approxInternalEndY + P_WIDTH * 0.3 * Math.sin(exitAngleAbs));
+            ctxPrism.strokeStyle = colors[index];
+            ctxPrism.lineWidth = 1.5;
+            ctxPrism.stroke();
+        });
+        // The prism dispersion logic is complex due to ray-polygon intersection and accurate angle tracking.
+        // The above is a simplification for visual effect. A full ray tracer is needed for accuracy.
+        // For now, it shows the principle.
+        ctxPrism.fillStyle = 'black';
+        ctxPrism.font = '12px Arial';
+        ctxPrism.fillText(`Unghi normală N1: ${radToDeg(normal_1_angle).toFixed(1)}°`, 10, 20);
+        ctxPrism.fillText(`Unghi incidență θi: ${radToDeg(theta_i_prism).toFixed(1)}°`, 10, 40);
+
+    }
+
+    function drawRainbowSimulation() {
+        const R_WIDTH = dispersionCanvasRainbow.width;
+        const R_HEIGHT = dispersionCanvasRainbow.height;
+        ctxRainbow.clearRect(0, 0, R_WIDTH, R_HEIGHT);
+
+        const sunAngleDeg = parseFloat(sunAngleRainbowSlider.value);
+        document.getElementById('sunAngleRainbowValue').textContent = sunAngleDeg;
+        const sunAngleRad = degToRad(sunAngleDeg);
+
+        const raindropRadius = Math.min(R_WIDTH, R_HEIGHT) * 0.15;
+        const dropCenterX = R_WIDTH / 2;
+        const dropCenterY = R_HEIGHT / 2.5;
+
+        // Draw raindrop
+        ctxRainbow.beginPath();
+        ctxRainbow.arc(dropCenterX, dropCenterY, raindropRadius, 0, 2 * Math.PI);
+        ctxRainbow.fillStyle = 'rgba(100, 150, 255, 0.3)';
+        ctxRainbow.fill();
+        ctxRainbow.strokeStyle = 'rgba(50, 100, 200, 0.7)';
+        ctxRainbow.stroke();
+
+        // Incident sunlight (parallel rays)
+        const numRays = 7; // For visualization
+        const n_water_approx = 1.333; // Average for water
+
+        for (let i = 0; i < numRays; i++) {
+            const rayOffsetY = (i - (numRays - 1) / 2) * (raindropRadius / (numRays * 0.8)); // Spread rays
+            const incidentY = dropCenterY + rayOffsetY;
+            if (Math.abs(rayOffsetY) > raindropRadius * 0.8) continue; // Rays missing most of the drop
+
+            const incidentX_start = R_WIDTH * 0.1;
+            
+            // Entry point on raindrop
+            // (x - dropCenterX)^2 + (y - dropCenterY)^2 = raindropRadius^2
+            // y = incidentY. Solve for x.
+            const dx_sq = raindropRadius*raindropRadius - (incidentY - dropCenterY)*(incidentY - dropCenterY);
+            if (dx_sq < 0) continue;
+            const entryX = dropCenterX - Math.sqrt(dx_sq);
+
+            // Draw incident ray
+            ctxRainbow.beginPath();
+            ctxRainbow.moveTo(incidentX_start, incidentY);
+            ctxRainbow.lineTo(entryX, incidentY);
+            ctxRainbow.strokeStyle = 'rgba(255, 255, 0, 0.7)'; // Yellowish sunlight
+            ctxRainbow.lineWidth = 1;
+            ctxRainbow.stroke();
+
+            // Normal at entry point
+            const normalAngle = Math.atan2(incidentY - dropCenterY, entryX - dropCenterX);
+            const angle_i = Math.abs(normalAngle); // Incident angle wrt normal, ray is horizontal
+
+            // Refraction into drop (simplified, not showing dispersion here, but for path)
+            const angle_r = Math.asin(Math.sin(angle_i) / n_water_approx);
+            const refractedRayAngle = normalAngle - Math.sign(normalAngle) * angle_r; // Angle inside drop
+
+            // First reflection point
+            const internalPathLength = 2 * raindropRadius * Math.cos(angle_r);
+            const reflect1X = entryX + internalPathLength * Math.cos(refractedRayAngle);
+            const reflect1Y = incidentY + internalPathLength * Math.sin(refractedRayAngle);
+            
+            // Check if reflection point is on far side of drop
+            const distToCenterSq = (reflect1X - dropCenterX)**2 + (reflect1Y - dropCenterY)**2;
+            // This simplified pathing is hard. Let's use Descartes' ray tracing approach for angles.
+            // For primary rainbow: 42 deg (red), 40 deg (violet) exit angle from original sun direction
+            // For secondary rainbow: 50 deg (red), 53 deg (violet)
+
+            // --- Primary Rainbow Path (1 reflection) ---
+            // Simplified angles for red and violet
+            const n_red_water = 1.330;
+            const n_violet_water = 1.342;
+
+            // Red ray (primary)
+            let currentAngle = 0; // Incident ray horizontal
+            let currentPos = { x: entryX, y: incidentY };
+            let normal = Math.atan2(currentPos.y - dropCenterY, currentPos.x - dropCenterX);
+            let theta_inc_red = Math.abs(currentAngle - normal);
+            let theta_ref_red = Math.asin(Math.sin(theta_inc_red) / n_red_water);
+            let angleInDropRed = normal + ( (currentAngle > normal) ? -theta_ref_red : theta_ref_red);
+
+            let p1_red = {
+                x: currentPos.x + 2 * raindropRadius * Math.cos(angle_r) * Math.cos(angleInDropRed), // This is not right
+                y: currentPos.y + 2 * raindropRadius * Math.cos(angle_r) * Math.sin(angleInDropRed)
+            };
+            // This requires proper ray tracing through sphere.
+            // For now, illustrate the concept:
+            // 1. Refract in
+            // 2. Reflect once
+            // 3. Refract out
+            // The exit angle for primary rainbow is around 138 degrees from forward, so 180-138 = 42 degrees from anti-solar point.
+            
+            // Draw conceptual primary path (e.g., red)
+            ctxRainbow.beginPath();
+            ctxRainbow.moveTo(entryX, incidentY);
+            let p_internal1_red = { x: dropCenterX + raindropRadius * Math.cos(normalAngle + Math.PI - 2*angle_r), y: dropCenterY + raindropRadius * Math.sin(normalAngle + Math.PI - 2*angle_r) };
+            ctxRainbow.lineTo(p_internal1_red.x, p_internal1_red.y);
+            let exitAngle_primary_red = degToRad(180 - 42); // Relative to initial ray direction
+            let exit_primary_red_normal = Math.atan2(p_internal1_red.y - dropCenterY, p_internal1_red.x - dropCenterX);
+            let exit_primary_red_final_angle = exit_primary_red_normal + Math.asin(n_water_approx * Math.sin(angle_r)); // This is not the 42 deg.
+            
+            // Simplified exit based on known rainbow angles
+            const exitAnglePrimary = degToRad(42); // Angle from anti-solar point
+            const finalDirPrimary = sunAngleRad + Math.PI - exitAnglePrimary; // Angle of exiting ray wrt horizontal
+            
+            ctxRainbow.lineTo(p_internal1_red.x + R_WIDTH*0.3 * Math.cos(finalDirPrimary), p_internal1_red.y + R_WIDTH*0.3 * Math.sin(finalDirPrimary));
+            ctxRainbow.strokeStyle = colors[0]; // Red
+            ctxRainbow.lineWidth = 1.5;
+            ctxRainbow.stroke();
+
+            // --- Secondary Rainbow Path (2 reflections) ---
+            // Conceptual secondary path (e.g., violet)
+            // Exit angle for secondary rainbow is around 130 degrees from forward, so 180-130 = 50 degrees from anti-solar point.
+            ctxRainbow.beginPath();
+            ctxRainbow.moveTo(entryX, incidentY);
+            let p_internal1_violet = { x: dropCenterX + raindropRadius * Math.cos(normalAngle + Math.PI - 2*angle_r*0.95), y: dropCenterY + raindropRadius * Math.sin(normalAngle + Math.PI - 2*angle_r*0.95) }; // Slightly different path
+            ctxRainbow.lineTo(p_internal1_violet.x, p_internal1_violet.y);
+            let p_internal2_violet = { x: dropCenterX + raindropRadius * Math.cos(normalAngle + Math.PI - 4*angle_r*0.95), y: dropCenterY + raindropRadius * Math.sin(normalAngle + Math.PI - 4*angle_r*0.95) };
+            ctxRainbow.lineTo(p_internal2_violet.x, p_internal2_violet.y);
+            
+            const exitAngleSecondary = degToRad(51); // Angle from anti-solar point
+            const finalDirSecondary = sunAngleRad + Math.PI - exitAngleSecondary;
+
+            ctxRainbow.lineTo(p_internal2_violet.x + R_WIDTH*0.3 * Math.cos(finalDirSecondary), p_internal2_violet.y + R_WIDTH*0.3 * Math.sin(finalDirSecondary));
+            ctxRainbow.strokeStyle = colors[6]; // Violet
+            ctxRainbow.lineWidth = 1.5;
+            ctxRainbow.stroke();
+        }
+        
+        // Observer and rainbow arcs (conceptual)
+        const observerX = R_WIDTH * 0.1;
+        const observerY = R_HEIGHT * 0.8;
+        ctxRainbow.fillStyle = 'black';
+        ctxRainbow.fillText("Observator", observerX - 20, observerY + 15);
+        ctxRainbow.beginPath();
+        ctxRainbow.arc(observerX, observerY, 5, 0, 2 * Math.PI);
+        ctxRainbow.fill();
+
+        // Anti-solar point
+        const antiSolarX = observerX + R_WIDTH * Math.cos(sunAngleRad + Math.PI);
+        const antiSolarY = observerY + R_WIDTH * Math.sin(sunAngleRad + Math.PI);
+
+        // Primary Rainbow Arc
+        ctxRainbow.beginPath();
+        ctxRainbow.arc(antiSolarX, antiSolarY, R_HEIGHT * 0.7, degToRad(180 - 42 - 5), degToRad(180 - 42 + 5), true); // Simplified arc
+        ctxRainbow.lineWidth = 10;
+        const primaryGradient = ctxRainbow.createLinearGradient(0, R_HEIGHT*0.1, 0, R_HEIGHT*0.4);
+        primaryGradient.addColorStop(0, colors[0]); // Red outer
+        primaryGradient.addColorStop(1, colors[6]); // Violet inner
+        ctxRainbow.strokeStyle = primaryGradient;
+        // ctxRainbow.stroke(); // This arc drawing is complex relative to observer
+
+        // Text labels
+        ctxRainbow.fillStyle = 'black';
+        ctxRainbow.font = '12px Arial';
+        ctxRainbow.fillText("Raze solare incidente", R_WIDTH * 0.1, R_HEIGHT * 0.1);
+        ctxRainbow.fillText("Picătură de ploaie", dropCenterX - 50, dropCenterY - raindropRadius - 10);
+        ctxRainbow.fillText("Curcubeu Primar (conceptual)", R_WIDTH * 0.6, R_HEIGHT * 0.8);
+        ctxRainbow.fillText("Curcubeu Secundar (conceptual, mai sus, culori inversate)", R_WIDTH * 0.6, R_HEIGHT * 0.9);
+        
+        // The rainbow simulation is highly complex for accurate ray tracing.
+        // This provides a visual representation of the concept.
+    }
+
+    function initDispersionSim() {
+        if (!ctxPrism || !ctxRainbow) return;
+        drawPrismSimulation();
+        drawRainbowSimulation();
+    }
+
+    // --- Simulation: Refracția Luminii ---
+    const refractionCanvas = document.getElementById('refractionCanvas');
+    const ctxRefraction = refractionCanvas.getContext('2d');
+    const refractionAngleSlider = document.getElementById('refractionAngle');
+    const n1RefractionSlider = document.getElementById('n1Refraction');
+    const n2RefractionSlider = document.getElementById('n2Refraction');
+    const materialN1RefractionSelect = document.getElementById('materialN1Refraction');
+    const materialN2RefractionSelect = document.getElementById('materialN2Refraction');
+
+
+    function drawRefractionSimulation() {
+        if (!ctxRefraction) return;
+        const RF_WIDTH = refractionCanvas.width;
+        const RF_HEIGHT = refractionCanvas.height;
+        ctxRefraction.clearRect(0, 0, RF_WIDTH, RF_HEIGHT);
+
+        const angleIncidenceDeg = parseFloat(refractionAngleSlider.value);
+        document.getElementById('refractionAngleValue').textContent = angleIncidenceDeg;
+        const n1 = parseFloat(n1RefractionSlider.value);
+        document.getElementById('n1RefractionValue').textContent = n1.toFixed(2);
+        const n2 = parseFloat(n2RefractionSlider.value);
+        document.getElementById('n2RefractionValue').textContent = n2.toFixed(2);
+
+        const angleIncidenceRad = degToRad(angleIncidenceDeg);
+
+        // Interface line
+        const interfaceY = RF_HEIGHT / 2;
+        ctxRefraction.beginPath();
+        ctxRefraction.moveTo(0, interfaceY);
+        ctxRefraction.lineTo(RF_WIDTH, interfaceY);
+        ctxRefraction.strokeStyle = '#333';
+        ctxRefraction.lineWidth = 2;
+        ctxRefraction.stroke();
+
+        // Labels for media
+        ctxRefraction.fillStyle = '#555';
+        ctxRefraction.font = '14px Arial';
+        ctxRefraction.fillText(`Mediu 1 (n1 = ${n1.toFixed(3)})`, 10, interfaceY - 10);
+        ctxRefraction.fillText(`Mediu 2 (n2 = ${n2.toFixed(3)})`, 10, interfaceY + 20);
+
+        // Point of incidence
+        const incidentPointX = RF_WIDTH / 2;
+        const incidentPointY = interfaceY;
+
+        // Normal line
+        ctxRefraction.beginPath();
+        ctxRefraction.moveTo(incidentPointX, 0);
+        ctxRefraction.lineTo(incidentPointX, RF_HEIGHT);
+        ctxRefraction.setLineDash([5, 5]);
+        ctxRefraction.strokeStyle = 'gray';
+        ctxRefraction.lineWidth = 1;
+        ctxRefraction.stroke();
+        ctxRefraction.setLineDash([]);
+
+        // Incident ray
+        const rayLength = RF_HEIGHT / 2 * 0.8;
+        const startX = incidentPointX - rayLength * Math.sin(angleIncidenceRad);
+        const startY = incidentPointY - rayLength * Math.cos(angleIncidenceRad);
+        ctxRefraction.beginPath();
+        ctxRefraction.moveTo(startX, startY);
+        ctxRefraction.lineTo(incidentPointX, incidentPointY);
+        ctxRefraction.strokeStyle = 'red';
+        ctxRefraction.lineWidth = 3;
+        ctxRefraction.stroke();
+        // Arrowhead for incident ray
+        drawArrowhead(ctxRefraction, incidentPointX, incidentPointY, startX, startY, 10, 'red');
+
+
+        // Reflected ray (always present, angle of reflection = angle of incidence)
+        const reflectedEndX = incidentPointX - rayLength * Math.sin(angleIncidenceRad);
+        const reflectedEndY = incidentPointY + rayLength * Math.cos(angleIncidenceRad);
+        ctxRefraction.beginPath();
+        ctxRefraction.moveTo(incidentPointX, incidentPointY);
+        ctxRefraction.lineTo(reflectedEndX, reflectedEndY);
+        ctxRefraction.strokeStyle = 'rgba(255, 0, 0, 0.3)'; // Dimmer red
+        ctxRefraction.lineWidth = 2;
+        ctxRefraction.stroke();
+        drawArrowhead(ctxRefraction, reflectedEndX, reflectedEndY, incidentPointX, incidentPointY, 8, 'rgba(255,0,0,0.3)');
+
+
+        // Refracted ray (Snell's Law: n1 * sin(theta1) = n2 * sin(theta2))
+        const sinTheta2 = (n1 / n2) * Math.sin(angleIncidenceRad);
+
+        if (Math.abs(sinTheta2) <= 1) { // Refraction occurs
+            const angleRefractionRad = Math.asin(sinTheta2);
+            const endX = incidentPointX + rayLength * Math.sin(angleRefractionRad);
+            const endY = incidentPointY + rayLength * Math.cos(angleRefractionRad);
+
+            ctxRefraction.beginPath();
+            ctxRefraction.moveTo(incidentPointX, incidentPointY);
+            ctxRefraction.lineTo(endX, endY);
+            ctxRefraction.strokeStyle = 'blue';
+            ctxRefraction.lineWidth = 3;
+            ctxRefraction.stroke();
+            drawArrowhead(ctxRefraction, endX, endY, incidentPointX, incidentPointY, 10, 'blue');
+
+            // Angle labels
+            ctxRefraction.fillStyle = 'black';
+            ctxRefraction.font = '12px Arial';
+            // Incident angle arc
+            ctxRefraction.beginPath();
+            ctxRefraction.arc(incidentPointX, incidentPointY, 30, -Math.PI/2 , -Math.PI/2 + angleIncidenceRad, false);
+            ctxRefraction.strokeStyle = 'rgba(0,0,0,0.5)';
+            ctxRefraction.stroke();
+            ctxRefraction.fillText(`θ₁=${angleIncidenceDeg}°`, incidentPointX - 50, interfaceY - 20);
+
+            // Refracted angle arc
+            ctxRefraction.beginPath();
+            ctxRefraction.arc(incidentPointX, incidentPointY, 30, Math.PI/2, Math.PI/2 - angleRefractionRad, true);
+            ctxRefraction.strokeStyle = 'rgba(0,0,0,0.5)';
+            ctxRefraction.stroke();
+            ctxRefraction.fillText(`θ₂=${radToDeg(angleRefractionRad).toFixed(1)}°`, incidentPointX + 35, interfaceY + 30);
+
+        } else { // Total Internal Reflection (should be handled by TIR sim, but good to note)
+            ctxRefraction.fillStyle = 'purple';
+            ctxRefraction.font = 'bold 14px Arial';
+            ctxRefraction.fillText('Reflexie Totală Internă!', incidentPointX + 20, interfaceY + 50);
+        }
+    }
+    
+    function drawArrowhead(ctx, x1, y1, x2, y2, size, color) {
+        const angle = Math.atan2(y1 - y2, x1 - x2);
+        ctx.save();
+        ctx.beginPath();
+        ctx.translate(x1, y1);
+        ctx.rotate(angle);
+        ctx.moveTo(0, 0);
+        ctx.lineTo(size, size / 2);
+        ctx.lineTo(size, -size / 2);
+        ctx.closePath();
+        ctx.fillStyle = color;
+        ctx.fill();
+        ctx.restore();
+    }
+
+
+    function initRefractionSim() {
+        if (!ctxRefraction) return;
+        // Set initial values from material dropdowns
+        materialN1RefractionSelect.value = n1RefractionSlider.value = "1.0003"; // Aer as default
+        materialN2RefractionSelect.value = n2RefractionSlider.value = "1.333"; // Apa as default
+        updateRefractionNFromMaterial();
+        drawRefractionSimulation();
+    }
+    
+    function updateRefractionNFromMaterial() {
+        n1RefractionSlider.value = materialN1RefractionSelect.value;
+        n2RefractionSlider.value = materialN2RefractionSelect.value;
+        drawRefractionSimulation();
+    }
+
+
+    // --- Simulation: Reflexia Totală Internă ---
+    const totalReflectionCanvas = document.getElementById('totalReflectionCanvas');
+    const ctxTIR = totalReflectionCanvas.getContext('2d');
+    const tirAngleSlider = document.getElementById('tirAngle');
+    const n1TIRSlider = document.getElementById('n1TIR');
+    const n2TIRSlider = document.getElementById('n2TIR');
+    const materialN1TIRSelect = document.getElementById('materialN1TIR');
+    const materialN2TIRSelect = document.getElementById('materialN2TIR');
+    const criticalAngleInfo = document.getElementById('criticalAngleInfo');
+
+    function drawTotalReflectionSimulation() {
+        if(!ctxTIR) return;
+        const TIR_WIDTH = totalReflectionCanvas.width;
+        const TIR_HEIGHT = totalReflectionCanvas.height;
+        ctxTIR.clearRect(0, 0, TIR_WIDTH, TIR_HEIGHT);
+
+        const angleIncidenceDeg = parseFloat(tirAngleSlider.value);
+        document.getElementById('tirAngleValue').textContent = angleIncidenceDeg;
+        const n1 = parseFloat(n1TIRSlider.value); // Denser medium (source)
+        document.getElementById('n1TIRValue').textContent = n1.toFixed(2);
+        const n2 = parseFloat(n2TIRSlider.value); // Rarer medium
+        document.getElementById('n2TIRValue').textContent = n2.toFixed(2);
+
+        const angleIncidenceRad = degToRad(angleIncidenceDeg);
+
+        // Interface line
+        const interfaceY = TIR_HEIGHT / 2;
+        ctxTIR.beginPath();
+        ctxTIR.moveTo(0, interfaceY);
+        ctxTIR.lineTo(TIR_WIDTH, interfaceY);
+        ctxTIR.strokeStyle = '#333';
+        ctxTIR.lineWidth = 2;
+        ctxTIR.stroke();
+
+        // Labels for media (light comes from bottom medium - n1)
+        ctxTIR.fillStyle = '#555';
+        ctxTIR.font = '14px Arial';
+        ctxTIR.fillText(`Mediu 2 (rar, n2 = ${n2.toFixed(3)})`, 10, interfaceY - 10);
+        ctxTIR.fillText(`Mediu 1 (dens, n1 = ${n1.toFixed(3)}, Sursa de lumină)`, 10, interfaceY + 20);
+
+        // Point of incidence
+        const incidentPointX = TIR_WIDTH / 2;
+        const incidentPointY = interfaceY;
+
+        // Normal line
+        ctxTIR.beginPath();
+        ctxTIR.moveTo(incidentPointX, 0);
+        ctxTIR.lineTo(incidentPointX, TIR_HEIGHT);
+        ctxTIR.setLineDash([5, 5]);
+        ctxTIR.strokeStyle = 'gray';
+        ctxTIR.lineWidth = 1;
+        ctxTIR.stroke();
+        ctxTIR.setLineDash([]);
+
+        // Incident ray (from bottom medium n1)
+        const rayLength = TIR_HEIGHT / 2 * 0.8;
+        const startX = incidentPointX + rayLength * Math.sin(angleIncidenceRad); // Note: ray comes from bottom
+        const startY = incidentPointY + rayLength * Math.cos(angleIncidenceRad);
+        ctxTIR.beginPath();
+        ctxTIR.moveTo(startX, startY);
+        ctxTIR.lineTo(incidentPointX, incidentPointY);
+        ctxTIR.strokeStyle = 'orange';
+        ctxTIR.lineWidth = 3;
+        ctxTIR.stroke();
+        drawArrowhead(ctxTIR, incidentPointX, incidentPointY, startX, startY, 10, 'orange');
+
+
+        // Critical Angle Calculation
+        let criticalAngleRad = null;
+        let criticalAngleDeg = null;
+        if (n1 > n2) {
+            criticalAngleRad = Math.asin(n2 / n1);
+            criticalAngleDeg = radToDeg(criticalAngleRad);
+            criticalAngleInfo.textContent = `Unghi Critic (θc): ${criticalAngleDeg.toFixed(1)}°`;
+        } else {
+            criticalAngleInfo.textContent = "Reflexia totală internă nu este posibilă (n1 ≤ n2).";
+             // Reflected ray (always present, angle of reflection = angle of incidence)
+            const reflectedEndX = incidentPointX + rayLength * Math.sin(angleIncidenceRad); // Stays in n1
+            const reflectedEndY = incidentPointY - rayLength * Math.cos(angleIncidenceRad); // Goes upwards in n1
+            ctxTIR.beginPath();
+            ctxTIR.moveTo(incidentPointX, incidentPointY);
+            ctxTIR.lineTo(reflectedEndX, reflectedEndY);
+            ctxTIR.strokeStyle = 'rgba(255, 165, 0, 0.3)'; // Dimmer orange
+            ctxTIR.lineWidth = 2;
+            ctxTIR.stroke();
+            drawArrowhead(ctxTIR, reflectedEndX, reflectedEndY, incidentPointX, incidentPointY, 8, 'rgba(255,165,0,0.3)');
+            
+            // Refracted ray if n1 <= n2 (normal refraction)
+            const sinTheta2_normal_case = (n1 / n2) * Math.sin(angleIncidenceRad);
+            if (Math.abs(sinTheta2_normal_case) <= 1) {
+                const angleRefractionRad_normal_case = Math.asin(sinTheta2_normal_case);
+                const endX_normal = incidentPointX - rayLength * Math.sin(angleRefractionRad_normal_case); // Into n2 (top)
+                const endY_normal = incidentPointY - rayLength * Math.cos(angleRefractionRad_normal_case);
+                ctxTIR.beginPath();
+                ctxTIR.moveTo(incidentPointX, incidentPointY);
+                ctxTIR.lineTo(endX_normal, endY_normal);
+                ctxTIR.strokeStyle = 'green';
+                ctxTIR.lineWidth = 3;
+                ctxTIR.stroke();
+                drawArrowhead(ctxTIR, endX_normal, endY_normal, incidentPointX, incidentPointY, 10, 'green');
+            }
+            return; // Stop if TIR not possible
+        }
+
+        // Check for TIR
+        if (angleIncidenceRad >= criticalAngleRad) { // Total Internal Reflection
+            const reflectedEndX = incidentPointX - rayLength * Math.sin(angleIncidenceRad); // Stays in n1 (bottom)
+            const reflectedEndY = incidentPointY + rayLength * Math.cos(angleIncidenceRad);
+            
+            ctxTIR.beginPath();
+            ctxTIR.moveTo(incidentPointX, incidentPointY);
+            ctxTIR.lineTo(reflectedEndX, reflectedEndY);
+            ctxTIR.strokeStyle = 'purple';
+            ctxTIR.lineWidth = 3;
+            ctxTIR.stroke();
+            drawArrowhead(ctxTIR, reflectedEndX, reflectedEndY, incidentPointX, incidentPointY, 10, 'purple');
+
+            ctxTIR.fillStyle = 'purple';
+            ctxTIR.font = 'bold 14px Arial';
+            if (Math.abs(angleIncidenceRad - criticalAngleRad) < degToRad(0.5)) {
+                 ctxTIR.fillText('Unghi Critic Ating! Raza la 90°', incidentPointX - 100, TIR_HEIGHT - 20);
+                 // Draw grazing ray
+                const grazingEndX = incidentPointX - TIR_WIDTH/2; // Along interface to the left
+                const grazingEndY = interfaceY;
+                ctxTIR.beginPath();
+                ctxTIR.moveTo(incidentPointX, incidentPointY);
+                ctxTIR.lineTo(grazingEndX, grazingEndY);
+                ctxTIR.strokeStyle = 'rgba(0, 255, 0, 0.5)'; // Faint green
+                ctxTIR.lineWidth = 2;
+                ctxTIR.stroke();
+
+            } else {
+                ctxTIR.fillText('Reflexie Totală Internă!', incidentPointX - 70, TIR_HEIGHT - 20);
+            }
+
+        } else { // Refraction occurs
+            const sinTheta2 = (n1 / n2) * Math.sin(angleIncidenceRad);
+            const angleRefractionRad = Math.asin(sinTheta2);
+            const endX = incidentPointX - rayLength * Math.sin(angleRefractionRad); // Into n2 (top)
+            const endY = incidentPointY - rayLength * Math.cos(angleRefractionRad);
+
+            ctxTIR.beginPath();
+            ctxTIR.moveTo(incidentPointX, incidentPointY);
+            ctxTIR.lineTo(endX, endY);
+            ctxTIR.strokeStyle = 'green';
+            ctxTIR.lineWidth = 3;
+            ctxTIR.stroke();
+            drawArrowhead(ctxTIR, endX, endY, incidentPointX, incidentPointY, 10, 'green');
+
+            // Also draw the weaker reflected ray
+            const reflectedEndX = incidentPointX - rayLength * Math.sin(angleIncidenceRad); // Stays in n1 (bottom)
+            const reflectedEndY = incidentPointY + rayLength * Math.cos(angleIncidenceRad);
+            ctxTIR.beginPath();
+            ctxTIR.moveTo(incidentPointX, incidentPointY);
+            ctxTIR.lineTo(reflectedEndX, reflectedEndY);
+            ctxTIR.strokeStyle = 'rgba(255, 165, 0, 0.3)'; // Dimmer orange for reflection
+            ctxTIR.lineWidth = 2;
+            ctxTIR.stroke();
+            drawArrowhead(ctxTIR, reflectedEndX, reflectedEndY, incidentPointX, incidentPointY, 8, 'rgba(255,165,0,0.3)');
+        }
+
+        // Angle labels (incident in bottom medium)
+        ctxTIR.fillStyle = 'black';
+        ctxTIR.font = '12px Arial';
+        ctxTIR.beginPath();
+        ctxTIR.arc(incidentPointX, incidentPointY, 30, Math.PI/2, Math.PI/2 - angleIncidenceRad, true);
+        ctxTIR.strokeStyle = 'rgba(0,0,0,0.5)';
+        ctxTIR.stroke();
+        ctxTIR.fillText(`θ₁=${angleIncidenceDeg}°`, incidentPointX + 35, interfaceY + 30);
+    }
+
+    function initTotalReflectionSim() {
+        if (!ctxTIR) return;
+        materialN1TIRSelect.value = n1TIRSlider.value = "1.517"; // Sticla Crown
+        materialN2TIRSelect.value = n2TIRSlider.value = "1.0003"; // Aer
+        updateTIRNFromMaterial();
+        drawTotalReflectionSimulation();
+    }
+    
+    function updateTIRNFromMaterial() {
+        n1TIRSlider.value = materialN1TIRSelect.value;
+        n2TIRSlider.value = materialN2TIRSelect.value;
+
+        // Ensure n1 > n2 for TIR, adjust if necessary or provide feedback
+        if (parseFloat(n1TIRSlider.value) <= parseFloat(n2TIRSlider.value)) {
+            // Try to auto-adjust n2 to be less than n1 if a common pair exists, or alert user
+            // For simplicity, we'll let the simulation show "TIR not possible"
+        }
+        drawTotalReflectionSimulation();
+    }
+
+
+    // Event Listeners for Controls
+    // Dispersion
+    prismAngleSlider.addEventListener('input', drawPrismSimulation);
+    prismIncidentAngleSlider.addEventListener('input', drawPrismSimulation);
+    prismMaterialSelect.addEventListener('change', drawPrismSimulation);
+    sunAngleRainbowSlider.addEventListener('input', drawRainbowSimulation);
+
+    // Refraction
+    refractionAngleSlider.addEventListener('input', drawRefractionSimulation);
+    n1RefractionSlider.addEventListener('input', drawRefractionSimulation);
+    n2RefractionSlider.addEventListener('input', drawRefractionSimulation);
+    materialN1RefractionSelect.addEventListener('change', updateRefractionNFromMaterial);
+    materialN2RefractionSelect.addEventListener('change', updateRefractionNFromMaterial);
+
+
+    // Total Internal Reflection
+    tirAngleSlider.addEventListener('input', drawTotalReflectionSimulation);
+    n1TIRSlider.addEventListener('input', drawTotalReflectionSimulation);
+    n2TIRSlider.addEventListener('input', drawTotalReflectionSimulation);
+    materialN1TIRSelect.addEventListener('change', updateTIRNFromMaterial);
+    materialN2TIRSelect.addEventListener('change', updateTIRNFromMaterial);
+
+
+    // Initial setup
+    window.onload = () => {
+        // Set canvas dimensions based on container (optional, can use fixed)
+        [dispersionCanvasPrism, dispersionCanvasRainbow, refractionCanvas, totalReflectionCanvas].forEach(canvas => {
+            if (canvas) {
+                // canvas.width = canvas.parentElement.clientWidth * 0.95; // Adjust if needed
+            }
+        });
+        openTab('dispersion'); // Open the first tab by default
+    };
+    window.onresize = () => {
+        // Optional: re-initialize or redraw on resize if canvas dimensions are dynamic
+        // For now, fixed canvas sizes are used mostly, responsive via CSS for container
+        const activeTab = document.querySelector('.tab-button.active');
+        if (activeTab) {
+            const tabId = activeTab.getAttribute('onclick').match(/'([^']+)'/)[1];
+            openTab(tabId); // This will re-init the current sim
+        }
+    };
+
+</script>
+
+</body>
+</html>
