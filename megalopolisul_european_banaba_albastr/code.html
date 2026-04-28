@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Blue Banana - EU Explorer</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed-variant": "#5b21b6",
+                        "outline": "#8a8c9a",
+                        "inverse-primary": "#a5b4fc",
+                        "surface-container-highest": "#d6d8de",
+                        "on-surface-variant": "#585a68",
+                        "background": "#e8eaf0",
+                        "secondary-fixed": "#d8dae6",
+                        "surface-bright": "#edeef4",
+                        "on-primary-fixed": "#1e1b4b",
+                        "secondary": "#6c6e7e",
+                        "on-secondary-fixed": "#1a1b26",
+                        "surface-container-high": "#dcdee4",
+                        "secondary-fixed-dim": "#b8baca",
+                        "on-surface": "#2e3040",
+                        "on-primary": "#ffffff",
+                        "surface-tint": "#6366f1",
+                        "primary": "#6366f1",
+                        "error": "#dc2626",
+                        "primary-fixed": "#e0e2ff",
+                        "tertiary-container": "#a78bfa",
+                        "inverse-on-surface": "#e8eaf0",
+                        "primary-fixed-dim": "#a5b4fc",
+                        "on-tertiary-container": "#3b1f63",
+                        "tertiary-fixed": "#ede9fe",
+                        "on-error": "#ffffff",
+                        "on-primary-container": "#e0e2ff",
+                        "on-secondary-container": "#585a68",
+                        "inverse-surface": "#2e3040",
+                        "surface-container-low": "#e5e7ed",
+                        "on-tertiary-fixed": "#2e1065",
+                        "surface-container-lowest": "#f0f2f8",
+                        "on-tertiary": "#ffffff",
+                        "surface": "#e8eaf0",
+                        "primary-container": "#818cf8",
+                        "on-primary-fixed-variant": "#4338ca",
+                        "error-container": "#fee2e2",
+                        "surface-dim": "#d4d6dc",
+                        "tertiary-fixed-dim": "#c4b5fd",
+                        "outline-variant": "#d0d2dc",
+                        "on-background": "#2e3040",
+                        "surface-variant": "#dcdee4",
+                        "on-secondary-fixed-variant": "#404252",
+                        "secondary-container": "#d8dae6",
+                        "tertiary": "#7c3aed",
+                        "surface-container": "#e2e4ea",
+                        "on-error-container": "#991b1b",
+                        "on-secondary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {},
+                    "fontFamily": {
+                        "headline": ["Plus Jakarta Sans"],
+                        "display": ["Plus Jakarta Sans"],
+                        "body": ["Plus Jakarta Sans"],
+                        "label": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {}
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #e8eaf0; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        
+        /* Neomorphic Utilities */
+        .neo-raised { box-shadow: 6px 6px 12px rgba(0,0,0,0.08), -6px -6px 12px rgba(255,255,255,0.6); }
+        .neo-inset { box-shadow: inset 4px 4px 8px rgba(0,0,0,0.06), inset -4px -4px 8px rgba(255,255,255,0.5); }
+        .neo-button-active:active { box-shadow: inset 4px 4px 8px rgba(0,0,0,0.06), inset -4px -4px 8px rgba(255,255,255,0.5); transform: scale(0.98); }
+    </style>
+</head>
+<body class="bg-background text-on-surface antialiased pt-24 pb-12">
+<!-- TopNavBar -->
+<nav class="bg-[#e8eaf0] dark:bg-slate-900 rounded-2xl mt-4 mx-4 shadow-[6px_6px_12px_rgba(0,0,0,0.08),-6px_-6px_12px_rgba(255,255,255,0.6)] dark:shadow-[4px_4px_10px_rgba(0,0,0,0.4),-2px_-2px_6px_rgba(255,255,255,0.05)] fixed top-0 left-0 right-0 flex justify-between items-center px-8 py-3 z-50 max-w-7xl mx-auto font-['Plus_Jakarta_Sans'] text-sm font-medium tracking-tight">
+<div class="text-xl font-semibold text-indigo-600 dark:text-indigo-400 tracking-tighter">EU Explorer</div>
+<div class="hidden md:flex items-center gap-2">
+<a class="shadow-[inset_4px_4px_8px_rgba(0,0,0,0.06),inset_-4px_-4px_8px_rgba(255,255,255,0.5)] text-indigo-700 dark:text-indigo-300 rounded-xl px-4 py-2 hover:shadow-[4px_4px_8px_rgba(0,0,0,0.04),-4px_-4px_8px_rgba(255,255,255,0.4)] transition-all duration-300 active:scale-95" href="#">Blue Banana</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-indigo-500 px-4 py-2 hover:shadow-[4px_4px_8px_rgba(0,0,0,0.04),-4px_-4px_8px_rgba(255,255,255,0.4)] transition-all duration-300 rounded-xl active:scale-95" href="#">Metropolises</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-indigo-500 px-4 py-2 hover:shadow-[4px_4px_8px_rgba(0,0,0,0.04),-4px_-4px_8px_rgba(255,255,255,0.4)] transition-all duration-300 rounded-xl active:scale-95" href="#">Quizzes</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-indigo-500 px-4 py-2 hover:shadow-[4px_4px_8px_rgba(0,0,0,0.04),-4px_-4px_8px_rgba(255,255,255,0.4)] transition-all duration-300 rounded-xl active:scale-95" href="#">Interactive Maps</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="hidden md:block text-slate-600 hover:text-indigo-500 px-4 py-2 neo-raised rounded-xl transition-all duration-300 neo-button-active">Sign In</button>
+<button class="bg-background text-indigo-600 neo-raised rounded-xl px-4 py-2 font-semibold transition-all duration-300 neo-button-active flex items-center gap-2">
+<span>Start Learning</span>
+<span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</nav>
+<main class="max-w-7xl mx-auto px-6 mt-12 space-y-16">
+<!-- Hero Section -->
+<section class="flex flex-col lg:flex-row gap-12 items-center">
+<div class="flex-1 space-y-6">
+<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full neo-inset text-tertiary text-sm font-semibold">
+<span class="material-symbols-outlined text-sm" data-icon="map">map</span>
+                    The European Megalopolis
+                </div>
+<h1 class="text-5xl font-bold text-on-surface tracking-tight leading-tight">
+                    The Blue Banana
+                </h1>
+<p class="text-lg text-on-surface-variant leading-relaxed">
+                    A discontinuous corridor of urbanization spreading over Western and Central Europe, with a population of around 111 million. It stretches from North Wales across Greater London to the Benelux states and along the German Rhineland, Southern Germany, Alsace in France in the west and Switzerland to Northern Italy in the south.
+                </p>
+</div>
+<div class="flex-1 w-full relative">
+<div class="aspect-[4/3] rounded-3xl neo-raised p-2 overflow-hidden bg-background">
+<img alt="Map highlighting the Blue Banana corridor in Europe" class="w-full h-full object-cover rounded-2xl opacity-80 mix-blend-multiply" data-alt="Abstract stylized glowing blue map of Europe highlighting the Blue Banana corridor from London to Milan against a dark soft background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBO_tXZBRg4VJI1l93bRDVJMqIVBE8HRS0yOntAoxeVh0IQLhyGp-Xms-sXmmPKQwWBYCNSve_v6pdB40n28KTxzQ8VO0S1xkfU8x1yFqkJ8Qvqsh8Mc6zveEeXNl24Oy50Tadh4lsejfqm7ewC7vakHEpJk9lF3pHPUuzXla3-ONqACU9_g83UEMPS7QpyELrUmR6qAniV1u2bjZfWunEdW9NyDVI6Kyf73eJxdrJGyVGkpUtFqDvzbdwbbI4Ugc0vZW337nW2Zm3t"/>
+</div>
+</div>
+</section>
+<!-- Bento Grid: Core Concepts -->
+<section>
+<h2 class="text-3xl font-semibold mb-8 text-on-surface">Anatomy of the Corridor</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Core -->
+<div class="neo-raised rounded-3xl p-8 bg-background flex flex-col h-full col-span-1 md:col-span-2">
+<div class="w-12 h-12 rounded-xl neo-inset flex items-center justify-center text-primary mb-6">
+<span class="material-symbols-outlined" data-icon="hub">hub</span>
+</div>
+<h3 class="text-xl font-bold text-on-surface mb-3">The Core Region</h3>
+<p class="text-on-surface-variant mb-6 flex-grow">
+                        The densely populated heart of Europe, characterized by highly developed infrastructure, immense economic output, and significant political influence. It encompasses global cities like London, Frankfurt, and Milan.
+                    </p>
+<div class="grid grid-cols-2 gap-4 mt-auto">
+<div class="neo-inset rounded-xl p-4 text-center">
+<span class="block text-2xl font-bold text-primary mb-1">111M+</span>
+<span class="text-xs text-on-surface-variant uppercase tracking-wider">Population</span>
+</div>
+<div class="neo-inset rounded-xl p-4 text-center">
+<span class="block text-2xl font-bold text-primary mb-1">Top Tier</span>
+<span class="text-xs text-on-surface-variant uppercase tracking-wider">GDP Output</span>
+</div>
+</div>
+</div>
+<!-- Periphery -->
+<div class="neo-raised rounded-3xl p-8 bg-background flex flex-col h-full">
+<div class="w-12 h-12 rounded-xl neo-inset flex items-center justify-center text-tertiary mb-6">
+<span class="material-symbols-outlined" data-icon="share">share</span>
+</div>
+<h3 class="text-xl font-bold text-on-surface mb-3">The Periphery</h3>
+<p class="text-on-surface-variant flex-grow">
+                        Areas surrounding the main corridor that benefit from proximity but may lack the intense concentration of wealth and infrastructure found in the core.
+                    </p>
+</div>
+<!-- Factors -->
+<div class="neo-raised rounded-3xl p-8 bg-background col-span-1 md:col-span-3">
+<h3 class="text-xl font-bold text-on-surface mb-6">Favorable Factors</h3>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+<div class="flex items-start gap-4">
+<div class="w-10 h-10 rounded-lg neo-inset flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined" data-icon="route">route</span>
+</div>
+<div>
+<h4 class="font-semibold text-on-surface">Infrastructure</h4>
+<p class="text-sm text-on-surface-variant mt-1">Historically dense trade routes evolving into modern high-speed rail and highway networks.</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<div class="w-10 h-10 rounded-lg neo-inset flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined" data-icon="cloud">cloud</span>
+</div>
+<div>
+<h4 class="font-semibold text-on-surface">Climate</h4>
+<p class="text-sm text-on-surface-variant mt-1">Temperate climate favorable for agriculture and historically supporting dense populations.</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<div class="w-10 h-10 rounded-lg neo-inset flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined" data-icon="history_edu">history_edu</span>
+</div>
+<div>
+<h4 class="font-semibold text-on-surface">History</h4>
+<p class="text-sm text-on-surface-variant mt-1">Early industrialization in regions like the Ruhr valley established long-lasting economic dominance.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-[#e8eaf0] dark:bg-slate-900 rounded-t-3xl mt-20 shadow-[0_-6px_12px_rgba(0,0,0,0.05),0_-6px_12px_rgba(255,255,255,0.5)] w-full flex flex-col md:flex-row justify-between items-center px-12 py-10 gap-6 font-['Plus_Jakarta_Sans'] text-xs uppercase tracking-widest text-indigo-600 dark:text-indigo-400">
+<div class="hidden text-xl font-semibold text-indigo-600 dark:text-indigo-400 tracking-tighter">EU Explorer</div>
+<div class="text-slate-500 dark:text-slate-400">
+            © 2024 European Union Educational Initiative. Designed for clarity and exploration.
+        </div>
+<div class="flex flex-wrap justify-center gap-6">
+<a class="text-slate-500 dark:text-slate-500 hover:text-indigo-500 hover:underline decoration-indigo-500 decoration-2 underline-offset-4 transition-colors duration-200" href="#">Curriculum</a>
+<a class="text-slate-500 dark:text-slate-500 hover:text-indigo-500 hover:underline decoration-indigo-500 decoration-2 underline-offset-4 transition-colors duration-200" href="#">Data Sources</a>
+<a class="text-slate-500 dark:text-slate-500 hover:text-indigo-500 hover:underline decoration-indigo-500 decoration-2 underline-offset-4 transition-colors duration-200" href="#">Privacy Policy</a>
+<a class="text-slate-500 dark:text-slate-500 hover:text-indigo-500 hover:underline decoration-indigo-500 decoration-2 underline-offset-4 transition-colors duration-200" href="#">Contact Support</a>
+</div>
+</footer>
+</body></html>

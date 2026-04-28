@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>EU Infrastructure &amp; Connectivity</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed-variant": "#5b21b6",
+                        "outline": "#8a8c9a",
+                        "inverse-primary": "#a5b4fc",
+                        "surface-container-highest": "#d6d8de",
+                        "on-surface-variant": "#585a68",
+                        "background": "#e8eaf0",
+                        "secondary-fixed": "#d8dae6",
+                        "surface-bright": "#edeef4",
+                        "on-primary-fixed": "#1e1b4b",
+                        "secondary": "#6c6e7e",
+                        "on-secondary-fixed": "#1a1b26",
+                        "surface-container-high": "#dcdee4",
+                        "secondary-fixed-dim": "#b8baca",
+                        "on-surface": "#2e3040",
+                        "on-primary": "#ffffff",
+                        "surface-tint": "#6366f1",
+                        "primary": "#6366f1",
+                        "error": "#dc2626",
+                        "primary-fixed": "#e0e2ff",
+                        "tertiary-container": "#a78bfa",
+                        "inverse-on-surface": "#e8eaf0",
+                        "primary-fixed-dim": "#a5b4fc",
+                        "on-tertiary-container": "#3b1f63",
+                        "tertiary-fixed": "#ede9fe",
+                        "on-error": "#ffffff",
+                        "on-primary-container": "#e0e2ff",
+                        "on-secondary-container": "#585a68",
+                        "inverse-surface": "#2e3040",
+                        "surface-container-low": "#e5e7ed",
+                        "on-tertiary-fixed": "#2e1065",
+                        "surface-container-lowest": "#f0f2f8",
+                        "on-tertiary": "#ffffff",
+                        "surface": "#e8eaf0",
+                        "primary-container": "#818cf8",
+                        "on-primary-fixed-variant": "#4338ca",
+                        "error-container": "#fee2e2",
+                        "surface-dim": "#d4d6dc",
+                        "tertiary-fixed-dim": "#c4b5fd",
+                        "outline-variant": "#d0d2dc",
+                        "on-background": "#2e3040",
+                        "surface-variant": "#dcdee4",
+                        "on-secondary-fixed-variant": "#404252",
+                        "secondary-container": "#d8dae6",
+                        "tertiary": "#7c3aed",
+                        "surface-container": "#e2e4ea",
+                        "on-error-container": "#991b1b",
+                        "on-secondary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Plus Jakarta Sans"],
+                        "display": ["Plus Jakarta Sans"],
+                        "body": ["Plus Jakarta Sans"],
+                        "label": ["Plus Jakarta Sans"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #e8eaf0; }
+        .neo-raised { box-shadow: 6px 6px 12px rgba(0,0,0,0.08), -6px -6px 12px rgba(255,255,255,0.6); }
+        .neo-inset { box-shadow: inset 4px 4px 8px rgba(0,0,0,0.06), inset -4px -4px 8px rgba(255,255,255,0.5); }
+    </style>
+</head>
+<body class="bg-background text-on-surface antialiased min-h-screen flex flex-col pt-24 pb-12 px-4 sm:px-6 lg:px-8">
+<!-- TopNavBar -->
+<nav class="bg-[#e8eaf0] font-['Plus_Jakarta_Sans'] text-sm font-medium tracking-tight rounded-2xl mt-4 mx-4 shadow-[6px_6px_12px_rgba(0,0,0,0.08),-6px_-6px_12px_rgba(255,255,255,0.6)] fixed top-0 left-0 right-0 flex justify-between items-center px-8 py-3 z-50 max-w-7xl mx-auto">
+<div class="text-xl font-semibold text-indigo-600 tracking-tighter">EU Explorer</div>
+<div class="hidden md:flex gap-2">
+<a class="text-slate-600 hover:text-indigo-500 px-4 py-2 hover:shadow-[4px_4px_8px_rgba(0,0,0,0.04),-4px_-4px_8px_rgba(255,255,255,0.4)] transition-all duration-300" href="#">Blue Banana</a>
+<a class="text-slate-600 hover:text-indigo-500 px-4 py-2 hover:shadow-[4px_4px_8px_rgba(0,0,0,0.04),-4px_-4px_8px_rgba(255,255,255,0.4)] transition-all duration-300" href="#">Metropolises</a>
+<a class="text-slate-600 hover:text-indigo-500 px-4 py-2 hover:shadow-[4px_4px_8px_rgba(0,0,0,0.04),-4px_-4px_8px_rgba(255,255,255,0.4)] transition-all duration-300" href="#">Quizzes</a>
+<a class="shadow-[inset_4px_4px_8px_rgba(0,0,0,0.06),inset_-4px_-4px_8px_rgba(255,255,255,0.5)] text-indigo-700 rounded-xl px-4 py-2" href="#">Interactive Maps</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-slate-600 hover:text-indigo-500 font-medium">Sign In</button>
+<button class="bg-[#e8eaf0] text-indigo-600 px-4 py-2 rounded-xl shadow-[6px_6px_12px_rgba(0,0,0,0.08),-6px_-6px_12px_rgba(255,255,255,0.6)] active:scale-95 transition-transform duration-150">Start Learning</button>
+</div>
+</nav>
+<main class="max-w-7xl mx-auto w-full flex-grow space-y-12">
+<!-- Header Section -->
+<header class="text-center space-y-4 py-12">
+<h1 class="text-4xl md:text-5xl font-bold text-on-surface tracking-tight">European Infrastructure &amp; Connectivity</h1>
+<p class="text-on-surface-variant text-lg max-w-2xl mx-auto">Explore the intricate networks that power the continent. From high-speed rail to next-generation digital fibers.</p>
+</header>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- High-Speed Rail Card -->
+<div class="bg-surface rounded-xl p-6 neo-raised md:col-span-2 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-2xl font-semibold text-primary">High-Speed Rail Network</h2>
+<span aria-hidden="true" class="material-symbols-outlined text-primary text-3xl" data-icon="train">train</span>
+</div>
+<p class="text-on-surface-variant mb-6">Connecting major metropolises across the Union, significantly reducing travel times and carbon emissions compared to short-haul flights.</p>
+</div>
+<div class="w-full h-64 rounded-lg neo-inset overflow-hidden relative">
+<img alt="High speed train moving through a modern station" class="w-full h-full object-cover opacity-80 mix-blend-multiply" data-alt="sleek modern high speed train pulling into a futuristic european train station with blurred motion effect" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJr03UyrAl0tVDZYWNfMSavZbsKVP-Bfgi3yQwDA1bMcl0qM1pSxqz7rXwgM1u3wXe7dxi3nj1YwLMGQ_fc7ZD_31drVIKCz26IXDmbyi_-WgYnx-b2L_ncP6ebCRsFoiDCYyHoQ4DEkFWscdOd8jGCO05uJqEdu6tJO0EuQ4ZSJPGwaeZd78UtwyoaiCyy58_e8MqCpD9g5EfGxLgf_f4am4X_PLHbVO0CG6eGdvuB3o2_IFi8J8qgAeIP4Cn1dcegSDUDUtg7nPO"/>
+</div>
+</div>
+<!-- Digital Connectivity Stats -->
+<div class="bg-surface rounded-xl p-6 neo-raised flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-3 mb-4">
+<span aria-hidden="true" class="material-symbols-outlined text-tertiary text-2xl" data-icon="wifi">wifi</span>
+<h2 class="text-xl font-semibold text-on-surface">5G Coverage</h2>
+</div>
+<p class="text-on-surface-variant text-sm mb-4">Population coverage across member states reaching new milestones.</p>
+</div>
+<div class="space-y-4">
+<div class="space-y-1">
+<div class="flex justify-between text-sm">
+<span class="text-on-surface font-medium">Urban Areas</span>
+<span class="text-primary font-bold">85%</span>
+</div>
+<div class="w-full h-3 rounded-full neo-inset">
+<div class="bg-primary h-full rounded-full w-[85%] neo-raised"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-sm">
+<span class="text-on-surface font-medium">Rural Areas</span>
+<span class="text-tertiary font-bold">42%</span>
+</div>
+<div class="w-full h-3 rounded-full neo-inset">
+<div class="bg-tertiary h-full rounded-full w-[42%] neo-raised"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Major Airports -->
+<div class="bg-surface rounded-xl p-6 neo-raised flex flex-col">
+<div class="flex items-center gap-3 mb-4">
+<span aria-hidden="true" class="material-symbols-outlined text-primary text-2xl" data-icon="flight_takeoff">flight_takeoff</span>
+<h2 class="text-xl font-semibold text-on-surface">Aviation Hubs</h2>
+</div>
+<div class="flex-grow rounded-lg neo-inset p-4 flex items-center justify-center">
+<ul class="w-full space-y-3">
+<li class="flex justify-between items-center p-2 rounded-lg hover:bg-surface-bright transition-colors cursor-pointer">
+<span class="font-medium text-on-surface">Frankfurt (FRA)</span>
+<span class="text-sm text-on-surface-variant">Hub</span>
+</li>
+<li class="flex justify-between items-center p-2 rounded-lg hover:bg-surface-bright transition-colors cursor-pointer">
+<span class="font-medium text-on-surface">Paris (CDG)</span>
+<span class="text-sm text-on-surface-variant">Hub</span>
+</li>
+<li class="flex justify-between items-center p-2 rounded-lg hover:bg-surface-bright transition-colors cursor-pointer">
+<span class="font-medium text-on-surface">Amsterdam (AMS)</span>
+<span class="text-sm text-on-surface-variant">Hub</span>
+</li>
+</ul>
+</div>
+</div>
+<!-- Fiber Optic Map -->
+<div class="bg-surface rounded-xl p-6 neo-raised md:col-span-2">
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-2xl font-semibold text-tertiary">Fiber Optic Backbone</h2>
+<span aria-hidden="true" class="material-symbols-outlined text-tertiary text-3xl" data-icon="cable">cable</span>
+</div>
+<p class="text-on-surface-variant mb-6 text-sm">Visualizing the high-capacity submarine and terrestrial cables ensuring digital sovereignty and high-speed data transfer.</p>
+<div class="w-full h-48 rounded-lg neo-inset overflow-hidden">
+<img alt="Abstract visualization of glowing fiber optic cables" class="w-full h-full object-cover opacity-90 mix-blend-luminosity" data-alt="close up of glowing blue and purple fiber optic cables transmitting light in dark environment abstract digital connectivity" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0aczAYfWp6SGEmA_Ay1vW6cD3xW7cbTpOe3EuzoqZAmTzzXDuf49wQaWnDvLaFzWgoUld6FNFOfRExek8_Fg9OX9bsSszo3PpL_uBTuBwpff_r3BrnZeiUlUYOaJjnybHPGKaWDaPiuM6ncLs1Jgaw2J8DlTOHb9Qzt3QqYoLkoivji5FJMgZUaoS5PCiD8_6MIloJUhV9mijeHC4ljz9TYkovrde-7kJv8-TEEtUNhECQTHESl-1O6FzTy0tmthDllz59JRu_L_n"/>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-[#e8eaf0] font-['Plus_Jakarta_Sans'] text-xs uppercase tracking-widest rounded-t-3xl mt-20 shadow-[0_-6px_12px_rgba(0,0,0,0.05),0_-6px_12px_rgba(255,255,255,0.5)] w-full flex flex-col md:flex-row justify-between items-center px-12 py-10 gap-6">
+<div class="text-slate-500">© 2024 European Union Educational Initiative. Designed for clarity and exploration.</div>
+<div class="flex gap-6">
+<a class="text-slate-500 hover:text-indigo-500 hover:underline decoration-indigo-500 decoration-2 underline-offset-4 transition-colors duration-200" href="#">Curriculum</a>
+<a class="text-slate-500 hover:text-indigo-500 hover:underline decoration-indigo-500 decoration-2 underline-offset-4 transition-colors duration-200" href="#">Data Sources</a>
+<a class="text-slate-500 hover:text-indigo-500 hover:underline decoration-indigo-500 decoration-2 underline-offset-4 transition-colors duration-200" href="#">Privacy Policy</a>
+<a class="text-slate-500 hover:text-indigo-500 hover:underline decoration-indigo-500 decoration-2 underline-offset-4 transition-colors duration-200" href="#">Contact Support</a>
+</div>
+</footer>
+</body></html>

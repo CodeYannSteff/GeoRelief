@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uniunea Europeană - Călătorie Spațială</title>
+    
+    <!-- Three.js and Post-Processing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Inter:wght@300;500;700&display=swap');
+        
+        body, html { margin: 0; padding: 0; overflow: hidden; background-color: #000; }
+        #webgl-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1; pointer-events: none; }
+        
+        /* Magic height for super smooth and long scrolling */
+        .scroll-space { display: none; }
+        
+        /* UI Elements */
+        .overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 10;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .scroll-prompt {
+            position: absolute;
+            bottom: 40px;
+            color: rgba(255,255,255,0.7);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: opacity 0.8s ease;
+        }
+        .scroll-prompt.hidden { opacity: 0; }
+        .mouse-icon {
+            width: 24px; height: 36px;
+            border: 2px solid rgba(255,255,255,0.7);
+            border-radius: 12px;
+            position: relative;
+            margin-bottom: 10px;
+        }
+        .mouse-wheel {
+            width: 4px; height: 8px;
+            background: white;
+            border-radius: 2px;
+            position: absolute;
+            top: 6px; left: 50%;
+            transform: translateX(-50%);
+            animation: scrollWheel 1.5s infinite;
+        }
+        @keyframes scrollWheel {
+            0% { top: 6px; opacity: 1; }
+            100% { top: 20px; opacity: 0; }
+        }
+
+        .final-ui {
+            text-align: center;
+            opacity: 0;
+            transform: translateY(60px) scale(0.9);
+            transition: all 2s cubic-bezier(0.19, 1, 0.22, 1);
+            pointer-events: none;
+            background: radial-gradient(circle, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 60%);
+            padding: 60px;
+        }
+        .final-ui.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 6vw;
+            color: #ffffff;
+            margin: 0 0 10px 0;
+            text-shadow: 0 0 30px rgba(100, 150, 255, 0.9), 0 0 60px rgba(100, 150, 255, 0.5);
+            letter-spacing: 6px;
+        }
+        h2 {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.2vw;
+            color: #c7d2fe;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-bottom: 50px;
+            text-shadow: 0 2px 10px rgba(0,0,0,1);
+            line-height: 1.8;
+        }
+
+        .explore-btn {
+            display: inline-block;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: white;
+            text-decoration: none;
+            padding: 20px 50px;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #3730a3, #db2777);
+            box-shadow: 0 15px 40px -10px rgba(219, 39, 119, 0.9);
+            border: 1px solid rgba(255,255,255,0.3);
+            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .explore-btn::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.7s;
+        }
+        .explore-btn:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px -10px rgba(219, 39, 119, 1);
+            border-color: rgba(255,255,255,0.8);
+        }
+        .explore-btn:hover::before { left: 100%; }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 3.5rem; }
+            h2 { font-size: 1rem; }
+            .explore-btn { padding: 15px 35px; font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+    <div id="webgl-container"></div>
+    <div class="scroll-space"></div>
+
+    <div class="overlay">
+        <div class="scroll-prompt" id="scroll-prompt">
+            <div class="mouse-icon"><div class="mouse-wheel"></div></div>
+            Scroll sau Click pentru a Începe
+        </div>
+
+        <div class="final-ui" id="final-ui">
+            <h1>Uniunea Europeană</h1>
+            <h2>Udrea Yannis Andrei, Trandafir Maria, Șerban David<br>Colegiul Național "Ion C. Brătianu"</h2>
+            <a href="presentation.html" class="explore-btn">Descoperă Proiectul</a>
+        </div>
+    </div>
+
+    <!-- HIGH QUALITY SHADERS -->
+    <script id="noise-glsl" type="x-shader/x-common">
+        // Advanced Simplex 3D Noise with Domain Warping
+        vec4 permute(vec4 x){return mod(((x*34.0)+1.0)*x, 289.0);}
+        vec4 taylorInvSqrt(vec4 r){return 1.79284291400159 - 0.85373472095314 * r;}
+        float snoise(vec3 v){ 
+            const vec2  C = vec2(1.0/6.0, 1.0/3.0) ;
+            const vec4  D = vec4(0.0, 0.5, 1.0, 2.0);
+            vec3 i  = floor(v + dot(v, C.yyy) );
+            vec3 x0 = v - i + dot(i, C.xxx) ;
+            vec3 g = step(x0.yzx, x0.xyz);
+            vec3 l = 1.0 - g;
+            vec3 i1 = min( g.xyz, l.zxy );
+            vec3 i2 = max( g.xyz, l.zxy );
+            vec3 x1 = x0 - i1 + C.xxx;
+            vec3 x2 = x0 - i2 + C.yyy;
+            vec3 x3 = x0 - D.yyy;
+            i = mod(i, 289.0 ); 
+            vec4 p = permute( permute( permute( 
+                        i.z + vec4(0.0, i1.z, i2.z, 1.0 ))
+                      + i.y + vec4(0.0, i1.y, i2.y, 1.0 )) 
+                      + i.x + vec4(0.0, i1.x, i2.x, 1.0 ));
+            float n_ = 0.142857142857;
+            vec3  ns = n_ * D.wyz - D.xzx;
+            vec4 j = p - 49.0 * floor(p * ns.z * ns.z);
+            vec4 x_ = floor(j * ns.z);
+            vec4 y_ = floor(j - 7.0 * x_ );
+            vec4 x = x_ *ns.x + ns.yyyy;
+            vec4 y = y_ *ns.x + ns.yyyy;
+            vec4 h = 1.0 - abs(x) - abs(y);
+            vec4 b0 = vec4( x.xy, y.xy );
+            vec4 b1 = vec4( x.zw, y.zw );
+            vec4 s0 = floor(b0)*2.0 + 1.0;
+            vec4 s1 = floor(b1)*2.0 + 1.0;
+            vec4 sh = -step(h, vec4(0.0));
+            vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy ;
+            vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww ;
+            vec3 p0 = vec3(a0.xy,h.x);
+            vec3 p1 = vec3(a0.zw,h.y);
+            vec3 p2 = vec3(a1.xy,h.z);
+            vec3 p3 = vec3(a1.zw,h.w);
+            vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2, p2), dot(p3,p3)));
+            p0 *= norm.x; p1 *= norm.y; p2 *= norm.z; p3 *= norm.w;
+            vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);
+            m = m * m;
+            return 42.0 * dot( m*m, vec4( dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3) ) );
+        }
+        
+        // 8 Octave FBM for extremely high detail
+        float fbm(vec3 x) {
+            float v = 0.0;
+            float a = 0.5;
+            vec3 shift = vec3(100.0);
+            for (int i = 0; i < 8; ++i) {
+                v += a * snoise(x);
+                x = x * 2.0 + shift;
+                a *= 0.5;
+            }
+            return v;
+        }
+
+        // Domain warping for more organic fluid patterns
+        float warp(vec3 p) {
+            vec3 q = vec3(fbm(p), fbm(p + vec3(5.2,1.3,2.8)), fbm(p + vec3(2.1,8.9,4.2)));
+            return fbm(p + 4.0 * q);
+        }
+    </script>
+
+    <script id="earth-vs" type="x-shader/x-vertex">
+        varying vec2 vUv;
+        varying vec3 vNormal;
+        varying vec3 vPosition;
+        varying vec3 vViewPosition;
+        
+        void main() {
+            vUv = uv;
+            vNormal = normalize(normalMatrix * normal);
+            vPosition = position;
+            vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+            vViewPosition = -mvPosition.xyz;
+            gl_Position = projectionMatrix * mvPosition;
+        }
+    </script>
+
+    <script id="earth-fs" type="x-shader/x-fragment">
+        varying vec2 vUv;
+        varying vec3 vNormal;
+        varying vec3 vPosition;
+        varying vec3 vViewPosition;
+        uniform vec3 lightDir;
+        uniform float time;
+
+        ${NOISE_GLSL}
+
+        // Compute procedural normals for bump mapping
+        vec3 computeBumpNormal(vec3 pos, vec3 normal, float h) {
+            float eps = 0.01; // Sample distance
+            float hX = warp(normalize(pos + vec3(eps, 0, 0)) * 5.0);
+            float hY = warp(normalize(pos + vec3(0, eps, 0)) * 5.0);
+            float hZ = warp(normalize(pos + vec3(0, 0, eps)) * 5.0);
+            
+            vec3 grad = vec3(hX - h, hY - h, hZ - h) / eps;
+            return normalize(normal - grad * 1.5); // Bump strength
+        }
+
+        void main() {
+            // High detail terrain map
+            vec3 normPos = normalize(vPosition);
+            float h = warp(normPos * 5.0);
+            h = (h + 1.0) * 0.5; // map to 0-1
+            
+            // Ultra HQ Colors
+            vec3 deepWater = vec3(0.005, 0.04, 0.15);
+            vec3 shallowWater = vec3(0.02, 0.2, 0.35);
+            vec3 shore = vec3(0.8, 0.7, 0.5);
+            vec3 landDark = vec3(0.02, 0.15, 0.02);
+            vec3 landLight = vec3(0.15, 0.35, 0.05);
+            vec3 mountains = vec3(0.6, 0.55, 0.5);
+            vec3 snow = vec3(0.9, 0.9, 0.95);
+
+            vec3 color;
+            float isWater = step(h, 0.5);
+            
+            if (h < 0.45) {
+                color = mix(deepWater, shallowWater, h / 0.45);
+            } else if (h < 0.5) {
+                color = mix(shallowWater, shore, (h - 0.45) / 0.05);
+            } else if (h < 0.65) {
+                color = mix(landDark, landLight, (h - 0.5) / 0.15);
+            } else if (h < 0.8) {
+                color = mix(landLight, mountains, (h - 0.65) / 0.15);
+            } else {
+                color = mix(mountains, snow, (h - 0.8) / 0.2);
+            }
+
+            // Normal perturbation (Bump Mapping)
+            vec3 nNormal = vNormal;
+            if (isWater < 0.5) {
+                nNormal = computeBumpNormal(vPosition, vNormal, h);
+            }
+
+            // Lighting
+            vec3 lDir = normalize(lightDir);
+            vec3 vDir = normalize(vViewPosition);
+            float diff = max(dot(nNormal, lDir), 0.0);
+            
+            // Specular Reflection (Only on water)
+            vec3 reflectDir = reflect(-lDir, nNormal);
+            float spec = pow(max(dot(vDir, reflectDir), 0.0), 30.0);
+            float specStrength = isWater * 0.8;
+            vec3 specular = vec3(1.0) * spec * specStrength;
+
+            // Highly detailed City Lights using pure noise (visible only on land, on dark side)
+            float cityNoise = fbm(normPos * 50.0);
+            float cityClusters = smoothstep(0.4, 0.8, cityNoise);
+            float popMask = cityClusters * (1.0 - isWater);
+            vec3 cityColor = vec3(1.0, 0.8, 0.4) * popMask;
+            
+            float nightMask = smoothstep(0.1, -0.2, dot(vNormal, lDir)); // using smooth unperturbed normal for night mask
+            
+            // Final composite
+            color = (color * diff) + specular + (cityColor * nightMask * 4.0);
+
+            gl_FragColor = vec4(color, 1.0);
+        }
+    </script>
+
+    <script id="clouds-fs" type="x-shader/x-fragment">
+        varying vec2 vUv;
+        varying vec3 vNormal;
+        varying vec3 vPosition;
+        uniform vec3 lightDir;
+        uniform float time;
+
+        ${NOISE_GLSL}
+
+        void main() {
+            vec3 p = normalize(vPosition) * 4.0 + vec3(time * 0.03, time * 0.01, 0.0);
+            float n = warp(p);
+            n = smoothstep(0.2, 0.9, n);
+            
+            vec3 lDir = normalize(lightDir);
+            float diff = max(dot(vNormal, lDir), 0.1);
+            
+            vec3 cloudColor = vec3(1.0, 0.95, 0.9);
+            float alpha = n * 0.8;
+            
+            // Reddish sunset clouds at terminator line
+            float terminator = smoothstep(-0.2, 0.2, dot(vNormal, lDir)) - smoothstep(0.2, 0.5, dot(vNormal, lDir));
+            cloudColor = mix(cloudColor, vec3(1.0, 0.4, 0.1), terminator * 0.8);
+            
+            cloudColor *= diff;
+
+            gl_FragColor = vec4(cloudColor, alpha);
+        }
+    </script>
+
+    <script id="atmo-fs" type="x-shader/x-fragment">
+        varying vec3 vNormal;
+        varying vec3 vViewPosition;
+        uniform vec3 lightDir;
+        
+        void main() {
+            vec3 lDir = normalize(lightDir);
+            vec3 vDir = normalize(vViewPosition);
+            
+            float intensity = pow(0.65 - dot(vNormal, vDir), 4.0);
+            float dayLight = smoothstep(-0.3, 0.3, dot(vNormal, lDir));
+            
+            vec3 color = vec3(0.2, 0.5, 1.0) * intensity * (0.2 + 0.8 * dayLight);
+            
+            gl_FragColor = vec4(color, intensity * dayLight * 1.5);
+        }
+    </script>
+
+    <script id="sun-fs" type="x-shader/x-fragment">
+        varying vec3 vPosition;
+        varying vec3 vNormal;
+        varying vec3 vViewPosition;
+        uniform float time;
+        ${NOISE_GLSL}
+        void main() {
+            vec3 p = normalize(vPosition) * 8.0 - vec3(time * 0.2, time*0.5, 0.0);
+            float n = warp(p);
+            
+            vec3 core = vec3(1.0, 0.9, 0.8);
+            vec3 edge = vec3(1.0, 0.3, 0.0);
+            vec3 color = mix(edge, core, n);
+            
+            float intensity = pow(0.8 - dot(vNormal, normalize(vViewPosition)), 2.0);
+            color += vec3(1.0, 0.5, 0.0) * intensity;
+            
+            gl_FragColor = vec4(color, 1.0);
+        }
+    </script>
+
+    <script>
+        // Inject Noise Function
+        const noiseGLSL = document.getElementById('noise-glsl').textContent;
+        const prepareShader = (id) => document.getElementById(id).textContent.replace('${NOISE_GLSL}', noiseGLSL);
+
+        // --- Core Setup ---
+        const scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2(0x020005, 0.0004);
+
+        const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 8000);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); 
+        document.getElementById('webgl-container').appendChild(renderer.domElement);
+
+        // --- Post-Processing (High Quality Bloom) ---
+        const renderScene = new THREE.RenderPass(scene, camera);
+        const bloomPass = new THREE.UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.8, 0.5, 0.85);
+        bloomPass.threshold = 0.15;
+        bloomPass.strength = 1.4;
+        bloomPass.radius = 0.8;
+
+        const composer = new THREE.EffectComposer(renderer);
+        composer.addPass(renderScene);
+        composer.addPass(bloomPass);
+
+        // Global Uniforms
+        const uniforms = {
+            time: { value: 0 },
+            lightDir: { value: new THREE.Vector3() }
+        };
+
+        // --- 1. Curved Camera Spline (Non-Linear Path) ---
+        const points = [
+            new THREE.Vector3(0, 0, 500),         // Nebula Start
+            new THREE.Vector3(400, 200, -200),    // Deep Space curve
+            new THREE.Vector3(50, -100, -800),    // Passing near the Sun
+            new THREE.Vector3(-300, 150, -1500),  // Curving around
+            new THREE.Vector3(-50, 0, -2100),     // Arriving at Earth
+            new THREE.Vector3(0, 0, -2180)        // Final rest stop
+        ];
+        const cameraPath = new THREE.CatmullRomCurve3(points);
+        cameraPath.tension = 0.5;
+
+        // --- 2. Advanced Nebula / Starfield ---
+        const starsGeo = new THREE.BufferGeometry();
+        const starsCount = 20000;
+        const posArray = new Float32Array(starsCount * 3);
+        const colorsArray = new Float32Array(starsCount * 3);
+        const sizeArray = new Float32Array(starsCount);
+        
+        for(let i = 0; i < starsCount; i++) {
+            const i3 = i * 3;
+            // Spread stars widely across the spline
+            const t = Math.random();
+            const pt = cameraPath.getPointAt(t);
+            
+            // Random offset from the path
+            const radius = 50 + Math.random() * 1500;
+            const theta = Math.random() * Math.PI * 2;
+            const phi = Math.random() * Math.PI;
+            
+            posArray[i3] = pt.x + radius * Math.sin(phi) * Math.cos(theta);
+            posArray[i3+1] = pt.y + radius * Math.sin(phi) * Math.sin(theta);
+            posArray[i3+2] = pt.z + radius * Math.cos(phi) - 200; // offset slightly
+            
+            // Color variations (Blue, Purple, Pink, Orange)
+            const c = new THREE.Color();
+            const rand = Math.random();
+            if(rand > 0.8) c.setHSL(0.8, 1.0, 0.7); // Pink
+            else if(rand > 0.6) c.setHSL(0.6, 1.0, 0.8); // Blue
+            else if(rand > 0.4) c.setHSL(0.1, 1.0, 0.7); // Orange
+            else c.setHSL(0.0, 0.0, 1.0); // White
+            
+            colorsArray[i3] = c.r; colorsArray[i3+1] = c.g; colorsArray[i3+2] = c.b;
+            sizeArray[i] = Math.random() * 2.5 + 0.5;
+        }
+        starsGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        starsGeo.setAttribute('color', new THREE.BufferAttribute(colorsArray, 3));
+        starsGeo.setAttribute('size', new THREE.BufferAttribute(sizeArray, 1));
+        
+        const starsMat = new THREE.PointsMaterial({
+            vertexColors: true,
+            transparent: true,
+            opacity: 0.9,
+            sizeAttenuation: true,
+            blending: THREE.AdditiveBlending
+        });
+        
+        // Circular soft texture
+        const canvas = document.createElement('canvas');
+        canvas.width = 32; canvas.height = 32;
+        const ctx = canvas.getContext('2d');
+        const gradient = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
+        gradient.addColorStop(0, 'rgba(255,255,255,1)');
+        gradient.addColorStop(0.3, 'rgba(255,255,255,0.8)');
+        gradient.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, 32, 32);
+        starsMat.map = new THREE.CanvasTexture(canvas);
+
+        const starSystem = new THREE.Points(starsGeo, starsMat);
+        scene.add(starSystem);
+
+        // --- 3. HQ Procedural Sun ---
+        const sunGroup = new THREE.Group();
+        sunGroup.position.set(-200, -100, -900); // Placed along the curve
+        
+        const sunGeo = new THREE.SphereGeometry(120, 128, 128);
+        const sunMat = new THREE.ShaderMaterial({
+            vertexShader: document.getElementById('earth-vs').textContent,
+            fragmentShader: prepareShader('sun-fs'),
+            uniforms: uniforms
+        });
+        const sun = new THREE.Mesh(sunGeo, sunMat);
+        sunGroup.add(sun);
+        
+        const sunLight = new THREE.PointLight(0xffccaa, 4, 4000);
+        sunGroup.add(sunLight);
+        scene.add(sunGroup);
+
+        // --- 4. The Earth (Extreme Quality) ---
+        const earthGroup = new THREE.Group();
+        earthGroup.position.set(0, 0, -2250);
+        
+        // Light direction from Sun to Earth
+        uniforms.lightDir.value.subVectors(sunGroup.position, earthGroup.position).normalize();
+
+        const earthGeo = new THREE.SphereGeometry(45, 256, 256); // High poly for bump mapping
+        const earthShaderMat = new THREE.ShaderMaterial({
+            vertexShader: document.getElementById('earth-vs').textContent,
+            fragmentShader: prepareShader('earth-fs'),
+            uniforms: uniforms
+        });
+        const earth = new THREE.Mesh(earthGeo, earthShaderMat);
+        
+        const cloudGeo = new THREE.SphereGeometry(45.5, 128, 128);
+        const cloudMat = new THREE.ShaderMaterial({
+            vertexShader: document.getElementById('earth-vs').textContent,
+            fragmentShader: prepareShader('clouds-fs'),
+            uniforms: uniforms,
+            transparent: true,
+            blending: THREE.NormalBlending,
+            depthWrite: false
+        });
+        const clouds = new THREE.Mesh(cloudGeo, cloudMat);
+        
+        const atmoGeo = new THREE.SphereGeometry(46.5, 128, 128);
+        const atmoMat = new THREE.ShaderMaterial({
+            vertexShader: document.getElementById('earth-vs').textContent,
+            fragmentShader: document.getElementById('atmo-fs').textContent,
+            uniforms: uniforms,
+            transparent: true,
+            blending: THREE.AdditiveBlending,
+            side: THREE.BackSide,
+            depthWrite: false
+        });
+        const atmosphere = new THREE.Mesh(atmoGeo, atmoMat);
+
+        earthGroup.add(earth);
+        earthGroup.add(clouds);
+        earthGroup.add(atmosphere);
+        
+        earthGroup.rotation.z = 23.5 * Math.PI / 180; // Proper axial tilt
+        scene.add(earthGroup);
+        scene.add(new THREE.AmbientLight(0x0a0a1a));
+
+        // --- Interaction & Automatic Animation Logic ---
+        let targetScroll = 0;
+        let currentScroll = 0;
+        let scrollVelocity = 0;
+        let isAnimatingCamera = false;
+        
+        let mouseX = 0;
+        let mouseY = 0;
+        let targetCameraX = 0;
+        let targetCameraY = 0;
+
+        function startJourney() {
+            if (isAnimatingCamera) return;
+            isAnimatingCamera = true;
+            document.getElementById('scroll-prompt').classList.add('hidden');
+        }
+
+        window.addEventListener('wheel', startJourney);
+        window.addEventListener('click', startJourney);
+        window.addEventListener('touchstart', startJourney);
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+        });
+
+        // --- Animation Loop ---
+        const clock = new THREE.Clock();
+
+        function animate() {
+            requestAnimationFrame(animate);
+            const delta = clock.getDelta();
+            const time = clock.getElapsedTime();
+            uniforms.time.value = time;
+
+            if (isAnimatingCamera) {
+                targetScroll += delta * 0.06; // Adjust speed (e.g. 0.06 = ~16 seconds to finish)
+                if (targetScroll > 1) targetScroll = 1;
+            }
+
+            // Smooth Scroll LERP (Fixed for responsiveness)
+            const diff = targetScroll - currentScroll;
+            currentScroll += diff * 0.05; // 0.05 is the smoothing factor
+            
+            // Calculate a pseudo-velocity for the warp effect
+            scrollVelocity = diff * 0.05;
+            
+            // Clamp currentScroll
+            if(currentScroll < 0) currentScroll = 0;
+            if(currentScroll > 1) currentScroll = 1;
+            
+            // Position Camera along Spline
+            const camPos = cameraPath.getPointAt(currentScroll);
+            
+            // Mouse Parallax Damping
+            targetCameraX += (mouseX * 15 - targetCameraX) * 0.05;
+            targetCameraY += (mouseY * 15 - targetCameraY) * 0.05;
+            
+            camera.position.set(camPos.x + targetCameraX, camPos.y + targetCameraY, camPos.z);
+            
+            // Smooth LookAhead
+            const lookAheadT = Math.min(1.0, currentScroll + 0.03); // Look slightly ahead on the curve
+            const baseLookTarget = cameraPath.getPointAt(lookAheadT);
+            
+            // Add mouse offset to look target for deep parallax
+            baseLookTarget.x += mouseX * 30;
+            baseLookTarget.y += mouseY * 30;
+            
+            camera.lookAt(baseLookTarget);
+
+            // Rotations
+            sun.rotation.y = time * 0.02;
+            earth.rotation.y = time * 0.04;
+            clouds.rotation.y = time * 0.05;
+            
+            // Dynamic Star size pulsing
+            const sizes = starSystem.geometry.attributes.size.array;
+            for(let i=0; i<sizes.length; i++) {
+                sizes[i] = sizeArray[i] * (1.0 + Math.sin(time * 2.0 + i) * 0.3);
+            }
+            starSystem.geometry.attributes.size.needsUpdate = true;
+            
+            // Star stretching/warp effect based on velocity
+            const speed = Math.abs(scrollVelocity) * 5000;
+            if (speed > 1) {
+                // stretch logic omitted to keep geometry clean, using FOV instead for warp speed feel
+                camera.fov = 55 + speed * 10;
+                camera.updateProjectionMatrix();
+            } else {
+                camera.fov += (55 - camera.fov) * 0.1;
+                camera.updateProjectionMatrix();
+            }
+
+            // UI trigger
+            const ui = document.getElementById('final-ui');
+            if (currentScroll > 0.98) {
+                ui.classList.add('visible');
+            } else {
+                ui.classList.remove('visible');
+            }
+
+            composer.render();
+        }
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            composer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        animate();
+    </script>
+</body>
+</html>

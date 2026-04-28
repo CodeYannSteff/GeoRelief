@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>EU Explorer - Quizzes &amp; Mini-Games</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed-variant": "#5b21b6",
+                        "outline": "#8a8c9a",
+                        "inverse-primary": "#a5b4fc",
+                        "surface-container-highest": "#d6d8de",
+                        "on-surface-variant": "#585a68",
+                        "background": "#e8eaf0",
+                        "secondary-fixed": "#d8dae6",
+                        "surface-bright": "#edeef4",
+                        "on-primary-fixed": "#1e1b4b",
+                        "secondary": "#6c6e7e",
+                        "on-secondary-fixed": "#1a1b26",
+                        "surface-container-high": "#dcdee4",
+                        "secondary-fixed-dim": "#b8baca",
+                        "on-surface": "#2e3040",
+                        "on-primary": "#ffffff",
+                        "surface-tint": "#6366f1",
+                        "primary": "#6366f1",
+                        "error": "#dc2626",
+                        "primary-fixed": "#e0e2ff",
+                        "tertiary-container": "#a78bfa",
+                        "inverse-on-surface": "#e8eaf0",
+                        "primary-fixed-dim": "#a5b4fc",
+                        "on-tertiary-container": "#3b1f63",
+                        "tertiary-fixed": "#ede9fe",
+                        "on-error": "#ffffff",
+                        "on-primary-container": "#e0e2ff",
+                        "on-secondary-container": "#585a68",
+                        "inverse-surface": "#2e3040",
+                        "surface-container-low": "#e5e7ed",
+                        "on-tertiary-fixed": "#2e1065",
+                        "surface-container-lowest": "#f0f2f8",
+                        "on-tertiary": "#ffffff",
+                        "surface": "#e8eaf0",
+                        "primary-container": "#818cf8",
+                        "on-primary-fixed-variant": "#4338ca",
+                        "error-container": "#fee2e2",
+                        "surface-dim": "#d4d6dc",
+                        "tertiary-fixed-dim": "#c4b5fd",
+                        "outline-variant": "#d0d2dc",
+                        "on-background": "#2e3040",
+                        "surface-variant": "#dcdee4",
+                        "on-secondary-fixed-variant": "#404252",
+                        "secondary-container": "#d8dae6",
+                        "tertiary": "#7c3aed",
+                        "surface-container": "#e2e4ea",
+                        "on-error-container": "#991b1b",
+                        "on-secondary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Plus Jakarta Sans"],
+                        "display": ["Plus Jakarta Sans"],
+                        "body": ["Plus Jakarta Sans"],
+                        "label": ["Plus Jakarta Sans"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-surface');
+            font-family: theme('fontFamily.body');
+        }
+        .neo-raised {
+            box-shadow: 6px 6px 12px rgba(0,0,0,0.08), -6px -6px 12px rgba(255,255,255,0.6);
+        }
+        .neo-pressed {
+            box-shadow: inset 4px 4px 8px rgba(0,0,0,0.06), inset -4px -4px 8px rgba(255,255,255,0.5);
+        }
+    </style>
+</head>
+<body class="min-h-screen pt-24 pb-12 flex flex-col items-center">
+<!-- TopNavBar -->
+<nav class="fixed top-0 left-0 right-0 flex justify-between items-center px-8 py-3 z-50 max-w-7xl mx-auto rounded-2xl mt-4 mx-4 bg-[#e8eaf0] dark:bg-slate-900 shadow-[6px_6px_12px_rgba(0,0,0,0.08),-6px_-6px_12px_rgba(255,255,255,0.6)] dark:shadow-[4px_4px_10px_rgba(0,0,0,0.4),-2px_-2px_6px_rgba(255,255,255,0.05)]">
+<div class="flex items-center gap-6">
+<span class="text-xl font-semibold text-indigo-600 dark:text-indigo-400 tracking-tighter">EU Explorer</span>
+<div class="hidden md:flex gap-2">
+<a class="font-['Plus_Jakarta_Sans'] text-sm font-medium tracking-tight text-slate-600 dark:text-slate-400 hover:text-indigo-500 px-4 py-2 hover:shadow-[4px_4px_8px_rgba(0,0,0,0.04),-4px_-4px_8px_rgba(255,255,255,0.4)] transition-all duration-300 active:scale-95 transition-transform duration-150" href="#">Blue Banana</a>
+<a class="font-['Plus_Jakarta_Sans'] text-sm font-medium tracking-tight text-slate-600 dark:text-slate-400 hover:text-indigo-500 px-4 py-2 hover:shadow-[4px_4px_8px_rgba(0,0,0,0.04),-4px_-4px_8px_rgba(255,255,255,0.4)] transition-all duration-300 active:scale-95 transition-transform duration-150" href="#">Metropolises</a>
+<a class="font-['Plus_Jakarta_Sans'] text-sm font-medium tracking-tight shadow-[inset_4px_4px_8px_rgba(0,0,0,0.06),inset_-4px_-4px_8px_rgba(255,255,255,0.5)] text-indigo-700 dark:text-indigo-300 rounded-xl px-4 py-2" href="#">Quizzes</a>
+<a class="font-['Plus_Jakarta_Sans'] text-sm font-medium tracking-tight text-slate-600 dark:text-slate-400 hover:text-indigo-500 px-4 py-2 hover:shadow-[4px_4px_8px_rgba(0,0,0,0.04),-4px_-4px_8px_rgba(255,255,255,0.4)] transition-all duration-300 active:scale-95 transition-transform duration-150" href="#">Interactive Maps</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="font-['Plus_Jakarta_Sans'] text-sm font-medium tracking-tight text-slate-600 dark:text-slate-400 hover:text-indigo-500 px-4 py-2 hover:shadow-[4px_4px_8px_rgba(0,0,0,0.04),-4px_-4px_8px_rgba(255,255,255,0.4)] transition-all duration-300 active:scale-95 transition-transform duration-150">Sign In</button>
+<button class="font-['Plus_Jakarta_Sans'] text-sm font-medium tracking-tight text-indigo-600 dark:text-indigo-400 hover:shadow-[4px_4px_8px_rgba(0,0,0,0.04),-4px_-4px_8px_rgba(255,255,255,0.4)] transition-all duration-300 active:scale-95 transition-transform duration-150 bg-[#e8eaf0] rounded-xl px-4 py-2 neo-raised">Start Learning</button>
+</div>
+</nav>
+<main class="w-full max-w-7xl px-4 md:px-8 flex-grow flex flex-col gap-12">
+<!-- Header Section -->
+<header class="text-center py-8">
+<h1 class="text-4xl md:text-5xl font-semibold text-on-surface mb-4">Test Your Knowledge</h1>
+<p class="text-on-surface-variant text-lg max-w-2xl mx-auto">Explore the diverse cultures, geography, and history of the European Union through our interactive challenges.</p>
+</header>
+<!-- Stats Overview Bento -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-background rounded-2xl p-6 neo-raised flex flex-col items-center justify-center">
+<span class="material-symbols-outlined text-4xl text-primary mb-2" data-icon="emoji_events">emoji_events</span>
+<h3 class="text-2xl font-bold text-on-surface">1,240</h3>
+<p class="text-sm text-on-surface-variant uppercase tracking-wider">Total Score</p>
+</div>
+<div class="bg-background rounded-2xl p-6 neo-raised flex flex-col items-center justify-center">
+<span class="material-symbols-outlined text-4xl text-tertiary mb-2" data-icon="local_fire_department">local_fire_department</span>
+<h3 class="text-2xl font-bold text-on-surface">5 Days</h3>
+<p class="text-sm text-on-surface-variant uppercase tracking-wider">Current Streak</p>
+</div>
+<div class="bg-background rounded-2xl p-6 neo-raised flex flex-col items-center justify-center">
+<div class="w-full bg-surface-container-high rounded-full h-4 mb-2 neo-pressed overflow-hidden">
+<div class="bg-primary h-full rounded-full w-3/4"></div>
+</div>
+<h3 class="text-xl font-semibold text-on-surface">Level 7 Explorer</h3>
+<p class="text-sm text-on-surface-variant">75% to Level 8</p>
+</div>
+</section>
+<!-- Quiz Categories -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Category 1 -->
+<div class="bg-background rounded-3xl p-8 neo-raised flex flex-col gap-6">
+<div class="flex items-center justify-between">
+<h2 class="text-2xl font-semibold text-on-surface">Flag Frenzy</h2>
+<span class="material-symbols-outlined text-3xl text-primary" data-icon="flag">flag</span>
+</div>
+<p class="text-on-surface-variant">Can you identify the flags of all 27 member states? Race against the clock.</p>
+<div class="mt-auto flex justify-between items-center">
+<span class="text-sm font-medium text-secondary">15 Questions • Medium</span>
+<button class="bg-background text-primary font-semibold py-3 px-6 rounded-xl neo-raised active:neo-pressed transition-all duration-200">Play Now</button>
+</div>
+</div>
+<!-- Category 2 -->
+<div class="bg-background rounded-3xl p-8 neo-raised flex flex-col gap-6">
+<div class="flex items-center justify-between">
+<h2 class="text-2xl font-semibold text-on-surface">Capital Match</h2>
+<span class="material-symbols-outlined text-3xl text-tertiary" data-icon="map">map</span>
+</div>
+<p class="text-on-surface-variant">Drag and drop cities onto the correct country on the interactive map.</p>
+<div class="mt-auto flex justify-between items-center">
+<span class="text-sm font-medium text-secondary">20 Locations • Hard</span>
+<button class="bg-background text-tertiary font-semibold py-3 px-6 rounded-xl neo-raised active:neo-pressed transition-all duration-200">Play Now</button>
+</div>
+</div>
+</section>
+<!-- Active Mini-Game Preview (Interactive State Example) -->
+<section class="bg-background rounded-3xl p-8 md:p-12 neo-raised">
+<div class="flex flex-col md:flex-row gap-8 items-center">
+<div class="w-full md:w-1/2 flex justify-center">
+<!-- Placeholder for Map/Flag Image -->
+<div class="w-64 h-64 bg-surface-container-high rounded-full neo-pressed flex items-center justify-center overflow-hidden">
+<img alt="Paris skyline" class="w-full h-full object-cover opacity-80 mix-blend-multiply" data-alt="Iconic view of the Eiffel Tower in Paris on a sunny day with blue sky" src="https://lh3.googleusercontent.com/aida-public/AB6AXuApBckuUCHTonltZMxhfa1GFBLSNd_OdZo8tAZYCI3EZdM3eHDil-cCUt0Xr5CcRSw5WEE5XPn0Wr-OrKuc-wdRf66UDcD-30gLtLTo6CYPKwmj4S5zc6h5ZkDQT9tNCEaYBB0mFSEjJIxf5umo-NuoiGrlD-uPbhHrrBu-6Uf6iF8w6VOy0y7xB67sWYwIYBXxkmV3KpNATy4RZgsJA89sIoJB5NGiqO1STi-3XYFtMhi6vqcZfNb_Vk5WMAcxuHlPl9Ktk7LP4g4m"/>
+</div>
+</div>
+<div class="w-full md:w-1/2 flex flex-col gap-6 text-center md:text-left">
+<div class="inline-block bg-background px-4 py-1 rounded-full neo-pressed text-sm font-medium text-primary w-max mx-auto md:mx-0">
+                        Daily Trivia
+                    </div>
+<h3 class="text-3xl font-semibold text-on-surface">Which city is known as the "Capital of Europe"?</h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+<button class="bg-background text-on-surface font-medium py-4 px-6 rounded-xl neo-raised active:neo-pressed transition-all duration-200 text-left hover:text-primary">A) Brussels</button>
+<button class="bg-background text-on-surface font-medium py-4 px-6 rounded-xl neo-raised active:neo-pressed transition-all duration-200 text-left hover:text-primary">B) Strasbourg</button>
+<button class="bg-background text-on-surface font-medium py-4 px-6 rounded-xl neo-raised active:neo-pressed transition-all duration-200 text-left hover:text-primary">C) Luxembourg City</button>
+<button class="bg-background text-on-surface font-medium py-4 px-6 rounded-xl neo-raised active:neo-pressed transition-all duration-200 text-left hover:text-primary">D) Frankfurt</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full flex flex-col md:flex-row justify-between items-center px-12 py-10 gap-6 bg-[#e8eaf0] dark:bg-slate-900 rounded-t-3xl mt-20 shadow-[0_-6px_12px_rgba(0,0,0,0.05),0_-6px_12px_rgba(255,255,255,0.5)] max-w-7xl mx-auto">
+<p class="font-['Plus_Jakarta_Sans'] text-xs uppercase tracking-widest text-slate-500 dark:text-slate-500">© 2024 European Union Educational Initiative. Designed for clarity and exploration.</p>
+<div class="flex gap-6">
+<a class="font-['Plus_Jakarta_Sans'] text-xs uppercase tracking-widest text-slate-500 dark:text-slate-500 hover:text-indigo-500 hover:underline decoration-indigo-500 decoration-2 underline-offset-4 transition-colors duration-200" href="#">Curriculum</a>
+<a class="font-['Plus_Jakarta_Sans'] text-xs uppercase tracking-widest text-slate-500 dark:text-slate-500 hover:text-indigo-500 hover:underline decoration-indigo-500 decoration-2 underline-offset-4 transition-colors duration-200" href="#">Data Sources</a>
+<a class="font-['Plus_Jakarta_Sans'] text-xs uppercase tracking-widest text-slate-500 dark:text-slate-500 hover:text-indigo-500 hover:underline decoration-indigo-500 decoration-2 underline-offset-4 transition-colors duration-200" href="#">Privacy Policy</a>
+<a class="font-['Plus_Jakarta_Sans'] text-xs uppercase tracking-widest text-slate-500 dark:text-slate-500 hover:text-indigo-500 hover:underline decoration-indigo-500 decoration-2 underline-offset-4 transition-colors duration-200" href="#">Contact Support</a>
+</div>
+</footer>
+</body></html>

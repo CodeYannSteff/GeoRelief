@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html class="light" lang="ro">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Banana Albastră - EU Explorer</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+        <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        background: "#2e3440",
+                        surface: "#3b4252",
+                        "surface-raised": "#434c5e",
+                        primary: "#88c0d0",
+                        secondary: "#81a1c1",
+                        tertiary: "#5e81ac",
+                        success: "#a3be8c",
+                        error: "#bf616a",
+                        warning: "#ebcb8b",
+                        "on-background": "#eceff4",
+                        "on-surface": "#e5e9f0",
+                        "on-surface-variant": "#d8dee9",
+                    },
+                    fontFamily: {
+                        sans: ["Plus Jakarta Sans", "sans-serif"],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #2e3440; color: #eceff4; font-family: 'Plus Jakarta Sans', sans-serif; }
+        .neo-raised { background-color: #3b4252; box-shadow: 5px 5px 10px #272c36, -5px -5px 10px #4f586e; }
+        .neo-pressed { background-color: #3b4252; box-shadow: inset 5px 5px 10px #272c36, inset -5px -5px 10px #4f586e; }
+        .neo-interactive:hover { transform: translateY(-2px); box-shadow: 7px 7px 14px #272c36, -7px -7px 14px #4f586e; }
+        .neo-interactive:active { transform: translateY(0); box-shadow: inset 4px 4px 8px #272c36, inset -4px -4px 8px #4f586e; }
+        
+        /* Typography overrides for Nord */
+        h1, h2, h3, h4, h5, h6 { color: #eceff4 !important; }
+        p, span, div { color: #d8dee9; }
+        a { color: #88c0d0; transition: color 0.2s; }
+        a:hover { color: #81a1c1; }
+        
+        /* Overrides for specific text utilities from before */
+        .text-slate-800, .text-slate-700, .text-on-surface, .text-primary, .text-indigo-700 { color: #eceff4 !important; }
+        .text-slate-600, .text-slate-500, .text-on-surface-variant { color: #d8dee9 !important; }
+        .text-primary { color: #88c0d0 !important; }
+        .bg-surface, .bg-slate-900 { background-color: #3b4252 !important; }
+        .bg-white { background-color: #3b4252 !important; }
+    </style>
+</head>
+<body class="bg-background text-on-surface antialiased pt-24 pb-12">
+    <!-- TopNavBar -->
+    <nav class="fixed top-0 left-0 right-0 flex justify-between items-center px-8 py-3 z-50 max-w-7xl mx-auto rounded-2xl mt-4 mx-4 bg-surface dark:bg-slate-900 neo-raised dark:shadow-[4px_4px_10px_rgba(0,0,0,0.4),-2px_-2px_6px_rgba(255,255,255,0.05)]">
+        <a href="presentation.html" class="text-xl font-semibold text-primary dark:text-indigo-400 tracking-tighter">EU Explorer</a>
+        <div class="hidden md:flex items-center gap-2 font-['Plus_Jakarta_Sans'] text-sm font-medium tracking-tight">
+            <a class="text-indigo-700 dark:text-indigo-300 neo-pressed rounded-xl px-4 py-2" href="banana-albastra.html">Banana Albastră</a>
+            <a class="text-slate-600 dark:text-slate-400 hover:text-secondary px-4 py-2 hover:shadow-[4px_4px_8px_rgba(0,0,0,0.04),-4px_-4px_8px_rgba(255,255,255,0.4)] transition-all duration-300 active:scale-95 transition-transform duration-150" href="metropole.html">Metropole</a>
+            <a class="text-slate-600 dark:text-slate-400 hover:text-secondary px-4 py-2 hover:shadow-[4px_4px_8px_rgba(0,0,0,0.04),-4px_-4px_8px_rgba(255,255,255,0.4)] transition-all duration-300 active:scale-95 transition-transform duration-150" href="chestionare.html">Chestionare</a>
+            <a class="text-slate-600 dark:text-slate-400 hover:text-secondary px-4 py-2 hover:shadow-[4px_4px_8px_rgba(0,0,0,0.04),-4px_-4px_8px_rgba(255,255,255,0.4)] transition-all duration-300 active:scale-95 transition-transform duration-150" href="presentation.html">Hărți Interactive</a>
+        </div>
+        <div class="flex items-center gap-4">
+            
+            <button class="bg-background text-primary neo-raised rounded-xl px-4 py-2 font-semibold transition-all duration-300 flex items-center gap-2">
+                <span>Începe Să Înveți</span>
+                <span class="material-symbols-outlined">arrow_forward</span>
+            </button>
+        </div>
+    </nav>
+    <main class="max-w-7xl mx-auto px-6 mt-12 space-y-16">
+        <!-- Hero Section -->
+        <section class="flex flex-col lg:flex-row gap-12 items-center">
+            <div class="flex-1 space-y-6">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full neo-inset text-tertiary text-sm font-semibold">
+                    <span class="material-symbols-outlined text-sm">map</span>
+                    Megalopolisul European
+                </div>
+                <h1 class="text-5xl font-bold text-on-surface tracking-tight leading-tight">
+                    Banana Albastră
+                </h1>
+                <p class="text-lg text-on-surface-variant leading-relaxed">
+                    Un coridor discontinuu de urbanizare care se întinde peste Europa de Vest și Centrală, cu o populație de aproximativ 111 milioane de locuitori. Se întinde din Nordul Țării Galilor, prin Londra Mare, până în statele Benelux și de-a lungul Renaniei germane, Sudului Germaniei, Alsaciei în Franța la vest și Elveției până în Nordul Italiei la sud.
+                </p>
+            </div>
+            <div class="flex-1 w-full relative">
+                <div class="aspect-[4/3] rounded-3xl neo-raised p-2 overflow-hidden bg-background">
+                    <img alt="Harta care evidențiază coridorul Bananei Albastre în Europa" class="w-full h-full object-cover rounded-2xl opacity-80 mix-blend-multiply" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBO_tXZBRg4VJI1l93bRDVJMqIVBE8HRS0yOntAoxeVh0IQLhyGp-Xms-sXmmPKQwWBYCNSve_v6pdB40n28KTxzQ8VO0S1xkfU8x1yFqkJ8Qvqsh8Mc6zveEeXNl24Oy50Tadh4lsejfqm7ewC7vakHEpJk9lF3pHPUuzXla3-ONqACU9_g83UEMPS7QpyELrUmR6qAniV1u2bjZfWunEdW9NyDVI6Kyf73eJxdrJGyVGkpUtFqDvzbdwbbI4Ugc0vZW337nW2Zm3t"/>
+                </div>
+            </div>
+        </section>
+        <!-- Bento Grid: Core Concepts -->
+        <section>
+            <h2 class="text-3xl font-semibold mb-8 text-on-surface">Anatomia Coridorului</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Core -->
+                <div class="neo-raised rounded-3xl p-8 bg-background flex flex-col h-full col-span-1 md:col-span-2">
+                    <div class="w-12 h-12 rounded-xl neo-inset flex items-center justify-center text-primary mb-6">
+                        <span class="material-symbols-outlined">hub</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-on-surface mb-3">Regiunea Centrală</h3>
+                    <p class="text-on-surface-variant mb-6 flex-grow">
+                        Inima dens populată a Europei, caracterizată prin infrastructură extrem de dezvoltată, producție economică imensă și influență politică semnificativă. Cuprinde orașe globale precum Londra, Frankfurt și Milano.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 mt-auto">
+                        <div class="neo-inset rounded-xl p-4 text-center">
+                            <span class="block text-2xl font-bold text-primary mb-1">111M+</span>
+                            <span class="text-xs text-on-surface-variant uppercase tracking-wider">Populație</span>
+                        </div>
+                        <div class="neo-inset rounded-xl p-4 text-center">
+                            <span class="block text-2xl font-bold text-primary mb-1">Top Tier</span>
+                            <span class="text-xs text-on-surface-variant uppercase tracking-wider">Producție PIB</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Periphery -->
+                <div class="neo-raised rounded-3xl p-8 bg-background flex flex-col h-full">
+                    <div class="w-12 h-12 rounded-xl neo-inset flex items-center justify-center text-tertiary mb-6">
+                        <span class="material-symbols-outlined">share</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-on-surface mb-3">Periferia</h3>
+                    <p class="text-on-surface-variant flex-grow">
+                        Zonele care înconjoară coridorul principal și care beneficiază de proximitate, dar care pot lipsi de concentrarea intensă de bogăție și infrastructură găsită în centru.
+                    </p>
+                </div>
+                <!-- Factors -->
+                <div class="neo-raised rounded-3xl p-8 bg-background col-span-1 md:col-span-3">
+                    <h3 class="text-xl font-bold text-on-surface mb-6">Factori Favorabili</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-lg neo-inset flex items-center justify-center text-primary shrink-0">
+                                <span class="material-symbols-outlined">route</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-on-surface">Infrastructură</h4>
+                                <p class="text-sm text-on-surface-variant mt-1">Rute comerciale istoric dense care au evoluat în rețele moderne de cale ferată de mare viteză și autostrăzi.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-lg neo-inset flex items-center justify-center text-primary shrink-0">
+                                <span class="material-symbols-outlined">cloud</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-on-surface">Climă</h4>
+                                <p class="text-sm text-on-surface-variant mt-1">Climă temperată favorabilă agriculturii și care a susținut istoric populații dense.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-lg neo-inset flex items-center justify-center text-primary shrink-0">
+                                <span class="material-symbols-outlined">history_edu</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-on-surface">Istorie</h4>
+                                <p class="text-sm text-on-surface-variant mt-1">Industrializarea timpurie în regiuni precum valea Ruhr a stabilit o dominație economică de lungă durată.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- Footer -->
+    <footer class="w-full flex flex-col md:flex-row justify-between items-center px-12 py-10 gap-6 rounded-t-3xl mt-20 bg-surface dark:bg-slate-900 shadow-[0_-6px_12px_rgba(0,0,0,0.05),0_-6px_12px_rgba(255,255,255,0.5)] font-['Plus_Jakarta_Sans'] text-xs uppercase tracking-widest text-primary dark:text-indigo-400">
+        <div class="text-slate-500 dark:text-slate-500">© 2024 Inițiativa Educațională a Uniunii Europene. Proiectat pentru claritate și explorare.</div>
+        <div class="flex gap-6">
+            <a class="text-slate-500 dark:text-slate-500 hover:text-secondary hover:underline decoration-indigo-500 decoration-2 underline-offset-4 transition-colors duration-200" href="#">Curriculum</a>
+            <a class="text-slate-500 dark:text-slate-500 hover:text-secondary hover:underline decoration-indigo-500 decoration-2 underline-offset-4 transition-colors duration-200" href="#">Surse de Date</a>
+            <a class="text-slate-500 dark:text-slate-500 hover:text-secondary hover:underline decoration-indigo-500 decoration-2 underline-offset-4 transition-colors duration-200" href="#">Politica de Confidențialitate</a>
+            <a class="text-slate-500 dark:text-slate-500 hover:text-secondary hover:underline decoration-indigo-500 decoration-2 underline-offset-4 transition-colors duration-200" href="#">Suport Contact</a>
+        </div>
+    </footer>
+</body>
+</html>

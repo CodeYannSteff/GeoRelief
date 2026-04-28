@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>EU Explorer - Home</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed-variant": "#5b21b6",
+                    "outline": "#8a8c9a",
+                    "inverse-primary": "#a5b4fc",
+                    "surface-container-highest": "#d6d8de",
+                    "on-surface-variant": "#585a68",
+                    "background": "#e8eaf0",
+                    "secondary-fixed": "#d8dae6",
+                    "surface-bright": "#edeef4",
+                    "on-primary-fixed": "#1e1b4b",
+                    "secondary": "#6c6e7e",
+                    "on-secondary-fixed": "#1a1b26",
+                    "surface-container-high": "#dcdee4",
+                    "secondary-fixed-dim": "#b8baca",
+                    "on-surface": "#2e3040",
+                    "on-primary": "#ffffff",
+                    "surface-tint": "#6366f1",
+                    "primary": "#6366f1",
+                    "error": "#dc2626",
+                    "primary-fixed": "#e0e2ff",
+                    "tertiary-container": "#a78bfa",
+                    "inverse-on-surface": "#e8eaf0",
+                    "primary-fixed-dim": "#a5b4fc",
+                    "on-tertiary-container": "#3b1f63",
+                    "tertiary-fixed": "#ede9fe",
+                    "on-error": "#ffffff",
+                    "on-primary-container": "#e0e2ff",
+                    "on-secondary-container": "#585a68",
+                    "inverse-surface": "#2e3040",
+                    "surface-container-low": "#e5e7ed",
+                    "on-tertiary-fixed": "#2e1065",
+                    "surface-container-lowest": "#f0f2f8",
+                    "on-tertiary": "#ffffff",
+                    "surface": "#e8eaf0",
+                    "primary-container": "#818cf8",
+                    "on-primary-fixed-variant": "#4338ca",
+                    "error-container": "#fee2e2",
+                    "surface-dim": "#d4d6dc",
+                    "tertiary-fixed-dim": "#c4b5fd",
+                    "outline-variant": "#d0d2dc",
+                    "on-background": "#2e3040",
+                    "surface-variant": "#dcdee4",
+                    "on-secondary-fixed-variant": "#404252",
+                    "secondary-container": "#d8dae6",
+                    "tertiary": "#7c3aed",
+                    "surface-container": "#e2e4ea",
+                    "on-error-container": "#991b1b",
+                    "on-secondary": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.5rem",
+                    "lg": "1rem",
+                    "xl": "1.5rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Plus Jakarta Sans"],
+                    "display": ["Plus Jakarta Sans"],
+                    "body": ["Plus Jakarta Sans"],
+                    "label": ["Plus Jakarta Sans"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #e8eaf0; }
+        .neomorphic-raised {
+            box-shadow: 6px 6px 12px rgba(0,0,0,0.08), -6px -6px 12px rgba(255,255,255,0.6);
+            border-radius: 1.5rem;
+            background-color: #e8eaf0;
+        }
+        .neomorphic-inset {
+            box-shadow: inset 4px 4px 8px rgba(0,0,0,0.06), inset -4px -4px 8px rgba(255,255,255,0.5);
+            border-radius: 1.5rem;
+            background-color: #e8eaf0;
+        }
+        .neomorphic-text {
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1), -2px -2px 4px rgba(255,255,255,0.8);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen flex flex-col pt-24">
+<!-- TopNavBar -->
+<nav class="fixed top-0 left-0 right-0 flex justify-between items-center px-8 py-3 z-50 max-w-7xl mx-auto rounded-2xl mt-4 mx-4 bg-[#e8eaf0] dark:bg-slate-900 shadow-[6px_6px_12px_rgba(0,0,0,0.08),-6px_-6px_12px_rgba(255,255,255,0.6)] dark:shadow-[4px_4px_10px_rgba(0,0,0,0.4),-2px_-2px_6px_rgba(255,255,255,0.05)]">
+<div class="text-xl font-semibold text-indigo-600 dark:text-indigo-400 tracking-tighter">EU Explorer</div>
+<div class="hidden md:flex items-center gap-2 font-['Plus_Jakarta_Sans'] text-sm font-medium tracking-tight">
+<a class="text-indigo-700 dark:text-indigo-300 rounded-xl px-4 py-2 shadow-[inset_4px_4px_8px_rgba(0,0,0,0.06),inset_-4px_-4px_8px_rgba(255,255,255,0.5)] active:scale-95 transition-transform duration-150 hover:shadow-[4px_4px_8px_rgba(0,0,0,0.04),-4px_-4px_8px_rgba(255,255,255,0.4)] transition-all duration-300" href="#">Blue Banana</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-indigo-500 px-4 py-2 hover:shadow-[4px_4px_8px_rgba(0,0,0,0.04),-4px_-4px_8px_rgba(255,255,255,0.4)] transition-all duration-300 active:scale-95 transition-transform duration-150" href="#">Metropolises</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-indigo-500 px-4 py-2 hover:shadow-[4px_4px_8px_rgba(0,0,0,0.04),-4px_-4px_8px_rgba(255,255,255,0.4)] transition-all duration-300 active:scale-95 transition-transform duration-150" href="#">Quizzes</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-indigo-500 px-4 py-2 hover:shadow-[4px_4px_8px_rgba(0,0,0,0.04),-4px_-4px_8px_rgba(255,255,255,0.4)] transition-all duration-300 active:scale-95 transition-transform duration-150" href="#">Interactive Maps</a>
+</div>
+<div class="flex items-center gap-4">
+<div class="neomorphic-inset px-4 py-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-sm">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-24 md:w-40 text-on-surface placeholder:text-on-surface-variant" placeholder="Search..." type="text"/>
+</div>
+<button class="neomorphic-raised px-4 py-2 text-primary font-medium text-sm hover:text-indigo-500 transition-colors">Sign In</button>
+<button class="neomorphic-raised px-4 py-2 text-primary font-semibold text-sm flex items-center gap-2">
+                Start Learning
+                <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</nav>
+<main class="flex-grow w-full max-w-7xl mx-auto px-4 md:px-8 py-8 flex flex-col gap-12">
+<!-- Hero Section -->
+<section class="neomorphic-raised p-8 md:p-16 flex flex-col md:flex-row items-center gap-12 text-center md:text-left">
+<div class="flex-1 space-y-6">
+<h1 class="text-4xl md:text-6xl font-bold text-on-surface tracking-tight neomorphic-text">
+                    Unity in <span class="text-primary">Diversity</span>.
+                </h1>
+<p class="text-lg text-on-surface-variant max-w-2xl font-medium leading-relaxed">
+                    Explore the rich tapestry of the European Union. Discover vibrant cultures, intertwined histories, and the strength of a united continent through interactive experiences.
+                </p>
+<div class="pt-4 flex gap-4 justify-center md:justify-start">
+<button class="neomorphic-raised px-8 py-4 text-primary font-semibold text-lg flex items-center gap-2 active:shadow-[inset_4px_4px_8px_rgba(0,0,0,0.06),inset_-4px_-4px_8px_rgba(255,255,255,0.5)] transition-shadow">
+                        Explore Map
+                        <span class="material-symbols-outlined">map</span>
+</button>
+</div>
+</div>
+<div class="flex-1 w-full max-w-md neomorphic-inset p-4 aspect-square flex items-center justify-center">
+<!-- Placeholder for interactive SVG Map -->
+<div class="w-full h-full rounded-xl bg-surface-container-high flex items-center justify-center relative overflow-hidden" data-alt="Abstract soft geometric representation of Europe map in light clay neomorphic style" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDbESt1sv5oZf2T6evBu8AKkMhP75xdZ9GZ-YisIeTG-xp8H7Komu5Qp4b4rRhgfrP3UxlfG2qrqom4WnGH9I_oAQhwLwjID23hcqkS9tMwFPCktOtJAdCBTMsqm2yqWKhdwIoXn-ZTp0b_-MGOKF6MPAP2f3qaNDsI1e2B-lOToph541fznGhJxRmM1EFWPaZkOwkvFQ0n6vdVL39At2twOytikH06-sGjmFU5M-qQXRL5M1PHLGro7qs8xrPMyuJRKCHHVbKMzvib'); background-size: cover; background-position: center; opacity: 0.6;">
+<div class="absolute inset-0 bg-background/40 backdrop-blur-[2px]"></div>
+<span class="material-symbols-outlined text-6xl text-primary drop-shadow-md z-10">public</span>
+</div>
+</div>
+</section>
+<!-- Bento Grid Navigation -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Card 1 -->
+<div class="neomorphic-raised p-8 flex flex-col items-center text-center gap-4 hover:scale-[1.02] transition-transform cursor-pointer">
+<div class="w-16 h-16 neomorphic-inset rounded-full flex items-center justify-center mb-2">
+<span class="material-symbols-outlined text-3xl text-tertiary">moving</span>
+</div>
+<h3 class="text-xl font-bold text-on-surface">The Blue Banana</h3>
+<p class="text-on-surface-variant text-sm">Trace Europe's core economic corridor from Manchester to Milan.</p>
+</div>
+<!-- Card 2 -->
+<div class="neomorphic-raised p-8 flex flex-col items-center text-center gap-4 hover:scale-[1.02] transition-transform cursor-pointer md:col-span-2">
+<div class="w-16 h-16 neomorphic-inset rounded-full flex items-center justify-center mb-2">
+<span class="material-symbols-outlined text-3xl text-primary">location_city</span>
+</div>
+<h3 class="text-xl font-bold text-on-surface">Metropolises</h3>
+<p class="text-on-surface-variant text-sm max-w-md">Dive deep into the cultural, historical, and economic hubs that drive the European Union forward.</p>
+</div>
+<!-- Card 3 -->
+<div class="neomorphic-raised p-8 flex flex-col items-center text-center gap-4 hover:scale-[1.02] transition-transform cursor-pointer md:col-span-2">
+<div class="w-16 h-16 neomorphic-inset rounded-full flex items-center justify-center mb-2">
+<span class="material-symbols-outlined text-3xl text-primary">quiz</span>
+</div>
+<h3 class="text-xl font-bold text-on-surface">Test Your Knowledge</h3>
+<p class="text-on-surface-variant text-sm max-w-md">Engaging quizzes on European geography, history, and institutions. See how well you know the EU.</p>
+</div>
+<!-- Card 4 -->
+<div class="neomorphic-raised p-8 flex flex-col items-center text-center gap-4 hover:scale-[1.02] transition-transform cursor-pointer">
+<div class="w-16 h-16 neomorphic-inset rounded-full flex items-center justify-center mb-2">
+<span class="material-symbols-outlined text-3xl text-tertiary">travel_explore</span>
+</div>
+<h3 class="text-xl font-bold text-on-surface">Interactive Maps</h3>
+<p class="text-on-surface-variant text-sm">Visualize demographic, economic, and geographic data.</p>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full flex flex-col md:flex-row justify-between items-center px-12 py-10 gap-6 rounded-t-3xl mt-20 bg-[#e8eaf0] dark:bg-slate-900 shadow-[0_-6px_12px_rgba(0,0,0,0.05),0_-6px_12px_rgba(255,255,255,0.5)] font-['Plus_Jakarta_Sans'] text-xs uppercase tracking-widest text-indigo-600 dark:text-indigo-400">
+<div class="text-slate-500 dark:text-slate-500">© 2024 European Union Educational Initiative. Designed for clarity and exploration.</div>
+<div class="flex gap-6">
+<a class="text-slate-500 dark:text-slate-500 hover:text-indigo-500 hover:underline decoration-indigo-500 decoration-2 underline-offset-4 transition-colors duration-200" href="#">Curriculum</a>
+<a class="text-slate-500 dark:text-slate-500 hover:text-indigo-500 hover:underline decoration-indigo-500 decoration-2 underline-offset-4 transition-colors duration-200" href="#">Data Sources</a>
+<a class="text-slate-500 dark:text-slate-500 hover:text-indigo-500 hover:underline decoration-indigo-500 decoration-2 underline-offset-4 transition-colors duration-200" href="#">Privacy Policy</a>
+<a class="text-slate-500 dark:text-slate-500 hover:text-indigo-500 hover:underline decoration-indigo-500 decoration-2 underline-offset-4 transition-colors duration-200" href="#">Contact Support</a>
+</div>
+</footer>
+</body></html>

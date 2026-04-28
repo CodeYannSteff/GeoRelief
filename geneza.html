@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html class="light" lang="ro">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Factorii Dezvoltării Europene - EU Explorer</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+        <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        background: "#2e3440",
+                        surface: "#3b4252",
+                        "surface-raised": "#434c5e",
+                        primary: "#88c0d0",
+                        secondary: "#81a1c1",
+                        tertiary: "#5e81ac",
+                        success: "#a3be8c",
+                        error: "#bf616a",
+                        warning: "#ebcb8b",
+                        "on-background": "#eceff4",
+                        "on-surface": "#e5e9f0",
+                        "on-surface-variant": "#d8dee9",
+                    },
+                    fontFamily: {
+                        sans: ["Plus Jakarta Sans", "sans-serif"],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #2e3440; color: #eceff4; font-family: 'Plus Jakarta Sans', sans-serif; }
+        .neo-raised { background-color: #3b4252; box-shadow: 5px 5px 10px #272c36, -5px -5px 10px #4f586e; }
+        .neo-pressed { background-color: #3b4252; box-shadow: inset 5px 5px 10px #272c36, inset -5px -5px 10px #4f586e; }
+        .neo-interactive:hover { transform: translateY(-2px); box-shadow: 7px 7px 14px #272c36, -7px -7px 14px #4f586e; }
+        .neo-interactive:active { transform: translateY(0); box-shadow: inset 4px 4px 8px #272c36, inset -4px -4px 8px #4f586e; }
+        
+        /* Typography overrides for Nord */
+        h1, h2, h3, h4, h5, h6 { color: #eceff4 !important; }
+        p, span, div { color: #d8dee9; }
+        a { color: #88c0d0; transition: color 0.2s; }
+        a:hover { color: #81a1c1; }
+        
+        /* Overrides for specific text utilities from before */
+        .text-slate-800, .text-slate-700, .text-on-surface, .text-primary, .text-indigo-700 { color: #eceff4 !important; }
+        .text-slate-600, .text-slate-500, .text-on-surface-variant { color: #d8dee9 !important; }
+        .text-primary { color: #88c0d0 !important; }
+        .bg-surface, .bg-slate-900 { background-color: #3b4252 !important; }
+        .bg-white { background-color: #3b4252 !important; }
+    </style>
+</head>
+<body class="font-body bg-background text-on-surface antialiased min-h-screen flex flex-col">
+    <!-- TopNavBar -->
+    <nav class="fixed top-0 left-0 right-0 flex justify-between items-center px-8 py-3 z-50 max-w-7xl mx-auto rounded-2xl mt-4 mx-4 bg-surface dark:bg-slate-900 neo-raised dark:shadow-[4px_4px_10px_rgba(0,0,0,0.4),-2px_-2px_6px_rgba(255,255,255,0.05)]">
+        <a href="presentation.html" class="text-xl font-semibold text-primary dark:text-indigo-400 tracking-tighter">EU Explorer</a>
+        <div class="hidden md:flex items-center gap-2 font-['Plus_Jakarta_Sans'] text-sm font-medium tracking-tight">
+            <a class="text-slate-600 dark:text-slate-400 hover:text-secondary px-4 py-2 hover:shadow-[4px_4px_8px_rgba(0,0,0,0.04),-4px_-4px_8px_rgba(255,255,255,0.4)] transition-all duration-300 active:scale-95 transition-transform duration-150" href="banana-albastra.html">Banana Albastră</a>
+            <a class="text-slate-600 dark:text-slate-400 hover:text-secondary px-4 py-2 hover:shadow-[4px_4px_8px_rgba(0,0,0,0.04),-4px_-4px_8px_rgba(255,255,255,0.4)] transition-all duration-300 active:scale-95 transition-transform duration-150" href="metropole.html">Metropole</a>
+            <a class="text-slate-600 dark:text-slate-400 hover:text-secondary px-4 py-2 hover:shadow-[4px_4px_8px_rgba(0,0,0,0.04),-4px_-4px_8px_rgba(255,255,255,0.4)] transition-all duration-300 active:scale-95 transition-transform duration-150" href="chestionare.html">Chestionare</a>
+            <a class="text-slate-600 dark:text-slate-400 hover:text-secondary px-4 py-2 hover:shadow-[4px_4px_8px_rgba(0,0,0,0.04),-4px_-4px_8px_rgba(255,255,255,0.4)] transition-all duration-300 active:scale-95 transition-transform duration-150" href="presentation.html">Hărți Interactive</a>
+        </div>
+        <div class="flex items-center gap-4">
+            
+            <button class="bg-background text-primary neo-raise rounded-xl px-4 py-2 font-semibold transition-all duration-300 flex items-center gap-2">
+                <span>Începe Să Înveți</span>
+                <span class="material-symbols-outlined">arrow_forward</span>
+            </button>
+        </div>
+    </nav>
+    <main class="flex-grow pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full space-y-24">
+        <!-- Hero Section -->
+        <section class="flex flex-col items-center text-center space-y-6">
+            <h1 class="font-headline text-5xl md:text-6xl font-semibold text-on-surface tracking-tight max-w-4xl">
+                Arhitectura Dezvoltării <span class="text-primary">Europene</span>
+            </h1>
+            <p class="font-body text-lg text-on-surface-variant max-w-2xl">
+                Descoperirea forțelor geografice, istorice și economice care au modelat peisajul urban european modern.
+            </p>
+        </section>
+        <!-- Bento Grid: The Core Factors -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Geography -->
+            <div class="neo-raised rounded-xl p-8 bg-surface flex flex-col items-start gap-4">
+                <div class="neo-inset p-4 rounded-full text-primary">
+                    <span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">landscape</span>
+                </div>
+                <h3 class="font-headline text-xl font-semibold text-on-surface">Fundamente Geografice</h3>
+                <p class="text-sm text-on-surface-variant">Râurile, câmpiile și resursele naturale au dictat așezările timpurii și rutele comerciale.</p>
+            </div>
+            <!-- History -->
+            <div class="neo-raised rounded-xl p-8 bg-surface flex flex-col items-start gap-4">
+                <div class="neo-inset p-4 rounded-full text-tertiary">
+                    <span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">history_edu</span>
+                </div>
+                <h3 class="font-headline text-xl font-semibold text-on-surface">Continuități Istorice</h3>
+                <p class="text-sm text-on-surface-variant">Drumurile romane și ligile comerciale medievale au pus bazele infrastructurii pentru conectivitatea modernă.</p>
+            </div>
+            <!-- Economy -->
+            <div class="neo-raised rounded-xl p-8 bg-surface flex flex-col items-start gap-4">
+                <div class="neo-inset p-4 rounded-full text-primary">
+                    <span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">euro</span>
+                </div>
+                <h3 class="font-headline text-xl font-semibold text-on-surface">Integrare Economică</h3>
+                <p class="text-sm text-on-surface-variant">Eliminarea treptată a frontierelor a accelerat aglomerarea industrială și post-industrială.</p>
+            </div>
+        </section>
+        <!-- Timeline Section -->
+        <section class="space-y-12">
+            <h2 class="font-headline text-3xl font-semibold text-center text-on-surface">Evoluția Integrării</h2>
+            <div class="relative max-w-3xl mx-auto">
+                <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-2 neo-inset rounded-full"></div>
+                <div class="space-y-16">
+                    <div class="relative flex items-center justify-between w-full">
+                        <div class="w-5/12 text-right pr-8">
+                            <h4 class="font-headline text-xl font-semibold text-primary">1951</h4>
+                            <p class="text-sm text-on-surface-variant">Comunitatea Europeană a Cărbunelui și Oțelului</p>
+                        </div>
+                        <div class="w-8 h-8 absolute left-1/2 transform -translate-x-1/2 neo-raised bg-surface rounded-full border-4 border-primary z-10"></div>
+                        <div class="w-5/12 pl-8">
+                            <div class="neo-raised p-6 rounded-xl bg-surface">
+                                <p class="text-sm text-on-surface">Gruparea resurselor pentru reconstrucție și prevenirea viitoarelor conflicte, creând primele instituții supranaționale.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative flex items-center justify-between w-full flex-row-reverse">
+                        <div class="w-5/12 text-left pl-8">
+                            <h4 class="font-headline text-xl font-semibold text-tertiary">1957</h4>
+                            <p class="text-sm text-on-surface-variant">Tratatele de la Roma</p>
+                        </div>
+                        <div class="w-8 h-8 absolute left-1/2 transform -translate-x-1/2 neo-raised bg-surface rounded-full border-4 border-tertiary z-10"></div>
+                        <div class="w-5/12 pr-8 text-right">
+                            <div class="neo-raised p-6 rounded-xl bg-surface">
+                                <p class="text-sm text-on-surface">Înființarea Comunității Economice Europene (CEE) și bazele unei piețe comune.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative flex items-center justify-between w-full">
+                        <div class="w-5/12 text-right pr-8">
+                            <h4 class="font-headline text-xl font-semibold text-primary">1992</h4>
+                            <p class="text-sm text-on-surface-variant">Tratatul de la Maastricht</p>
+                        </div>
+                        <div class="w-8 h-8 absolute left-1/2 transform -translate-x-1/2 neo-raised bg-surface rounded-full border-4 border-primary z-10"></div>
+                        <div class="w-5/12 pl-8">
+                            <div class="neo-raised p-6 rounded-xl bg-surface">
+                                <p class="text-sm text-on-surface">Crearea formală a Uniunii Europene, deschizând calea pentru moneda unică (Euro).</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- Footer -->
+    <footer class="w-full flex flex-col md:flex-row justify-between items-center px-12 py-10 gap-6 rounded-t-3xl mt-20 bg-surface dark:bg-slate-900 shadow-[0_-6px_12px_rgba(0,0,0,0.05),0_-6px_12px_rgba(255,255,255,0.5)] font-['Plus_Jakarta_Sans'] text-xs uppercase tracking-widest text-primary dark:text-indigo-400">
+        <div class="text-slate-500 dark:text-slate-500">© 2024 Inițiativa Educațională a Uniunii Europene. Proiectat pentru claritate și explorare.</div>
+        <div class="flex gap-6">
+            <a class="text-slate-500 dark:text-slate-500 hover:text-secondary hover:underline decoration-indigo-500 decoration-2 underline-offset-4 transition-colors duration-200" href="#">Curriculum</a>
+            <a class="text-slate-500 dark:text-slate-500 hover:text-secondary hover:underline decoration-indigo-500 decoration-2 underline-offset-4 transition-colors duration-200" href="#">Surse de Date</a>
+            <a class="text-slate-500 dark:text-slate-500 hover:text-secondary hover:underline decoration-indigo-500 decoration-2 underline-offset-4 transition-colors duration-200" href="#">Politica de Confidențialitate</a>
+            <a class="text-slate-500 dark:text-slate-500 hover:text-secondary hover:underline decoration-indigo-500 decoration-2 underline-offset-4 transition-colors duration-200" href="#">Suport Contact</a>
+        </div>
+    </footer>
+</body>
+</html>

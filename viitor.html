@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html class="light" lang="ro">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Viitorul Urbanismului | EU Explorer</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+        <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        background: "#2e3440",
+                        surface: "#3b4252",
+                        "surface-raised": "#434c5e",
+                        primary: "#88c0d0",
+                        secondary: "#81a1c1",
+                        tertiary: "#5e81ac",
+                        success: "#a3be8c",
+                        error: "#bf616a",
+                        warning: "#ebcb8b",
+                        "on-background": "#eceff4",
+                        "on-surface": "#e5e9f0",
+                        "on-surface-variant": "#d8dee9",
+                    },
+                    fontFamily: {
+                        sans: ["Plus Jakarta Sans", "sans-serif"],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #2e3440; color: #eceff4; font-family: 'Plus Jakarta Sans', sans-serif; }
+        .neo-raised { background-color: #3b4252; box-shadow: 5px 5px 10px #272c36, -5px -5px 10px #4f586e; }
+        .neo-pressed { background-color: #3b4252; box-shadow: inset 5px 5px 10px #272c36, inset -5px -5px 10px #4f586e; }
+        .neo-interactive:hover { transform: translateY(-2px); box-shadow: 7px 7px 14px #272c36, -7px -7px 14px #4f586e; }
+        .neo-interactive:active { transform: translateY(0); box-shadow: inset 4px 4px 8px #272c36, inset -4px -4px 8px #4f586e; }
+        
+        /* Typography overrides for Nord */
+        h1, h2, h3, h4, h5, h6 { color: #eceff4 !important; }
+        p, span, div { color: #d8dee9; }
+        a { color: #88c0d0; transition: color 0.2s; }
+        a:hover { color: #81a1c1; }
+        
+        /* Overrides for specific text utilities from before */
+        .text-slate-800, .text-slate-700, .text-on-surface, .text-primary, .text-indigo-700 { color: #eceff4 !important; }
+        .text-slate-600, .text-slate-500, .text-on-surface-variant { color: #d8dee9 !important; }
+        .text-primary { color: #88c0d0 !important; }
+        .bg-surface, .bg-slate-900 { background-color: #3b4252 !important; }
+        .bg-white { background-color: #3b4252 !important; }
+    </style>
+</head>
+<body class="bg-background text-on-surface antialiased pt-28">
+    <!-- TopNavBar -->
+    <nav class="fixed top-0 left-0 right-0 flex justify-between items-center px-8 py-3 z-50 max-w-7xl mx-auto rounded-2xl mt-4 mx-4 bg-surface neo-raised">
+        <a href="presentation.html" class="text-xl font-semibold text-primary dark:text-indigo-400 tracking-tighter">EU Explorer</a>
+        <div class="hidden md:flex items-center gap-2 font-['Plus_Jakarta_Sans'] text-sm font-medium tracking-tight">
+            <a class="text-slate-600 dark:text-slate-400 hover:text-secondary px-4 py-2 hover:shadow-[4px_4px_8px_rgba(0,0,0,0.04),-4px_-4px_8px_rgba(255,255,255,0.4)] transition-all duration-300 active:scale-95 transition-transform duration-150" href="banana-albastra.html">Banana Albastră</a>
+            <a class="text-slate-600 dark:text-slate-400 hover:text-secondary px-4 py-2 hover:shadow-[4px_4px_8px_rgba(0,0,0,0.04),-4px_-4px_8px_rgba(255,255,255,0.4)] transition-all duration-300 active:scale-95 transition-transform duration-150" href="metropole.html">Metropole</a>
+            <a class="text-slate-600 dark:text-slate-400 hover:text-secondary px-4 py-2 hover:shadow-[4px_4px_8px_rgba(0,0,0,0.04),-4px_-4px_8px_rgba(255,255,255,0.4)] transition-all duration-300 active:scale-95 transition-transform duration-150" href="chestionare.html">Chestionare</a>
+            <a class="text-slate-600 dark:text-slate-400 hover:text-secondary px-4 py-2 hover:shadow-[4px_4px_8px_rgba(0,0,0,0.04),-4px_-4px_8px_rgba(255,255,255,0.4)] transition-all duration-300 active:scale-95 transition-transform duration-150" href="presentation.html">Hărți Interactive</a>
+        </div>
+        <div class="flex items-center gap-4">
+            <button class="w-10 h-10 rounded-full flex items-center justify-center neo-raised neo-interactive text-primary">
+                <span class="material-symbols-outlined">search</span>
+            </button>
+            
+            <button class="px-6 py-2 rounded-xl text-primary neo-pressed font-bold">Începe Să Înveți</button>
+        </div>
+    </nav>
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+        <!-- Hero Section -->
+        <section class="mb-24 mt-12 flex flex-col lg:flex-row gap-12 items-center">
+            <div class="lg:w-1/2 space-y-8">
+                <div class="inline-block px-4 py-2 rounded-full neo-pressed text-tertiary font-semibold text-sm">
+                    Viziune 2050
+                </div>
+                <h1 class="text-5xl lg:text-6xl font-bold tracking-tight text-on-surface leading-tight">
+                    Planul pentru <br/> <span class="text-primary">Orașele de Mâine</span>
+                </h1>
+                <p class="text-lg text-on-surface-variant font-medium leading-relaxed max-w-xl">
+                    Descoperă cum rețelele inteligente, infrastructura verde omniprezentă și obiectivele de dezvoltare durabilă remodelează activ țesutul urban al Uniunii Europene.
+                </p>
+                <div class="flex gap-4 pt-4">
+                    <button class="px-8 py-3 rounded-xl neo-raised neo-interactive text-primary font-semibold flex items-center gap-2">
+                        Explorează Concepte <span class="material-symbols-outlined">arrow_forward</span>
+                    </button>
+                </div>
+            </div>
+            <div class="lg:w-1/2 w-full h-[500px] rounded-3xl neo-raised p-4">
+                <div class="w-full h-full rounded-2xl overflow-hidden neo-pressed relative">
+                    <img alt="Concept de oraș verde futurist" class="w-full h-full object-cover opacity-90 mix-blend-multiply" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPkQqletjWck9BXEpKb-NZfznuwibBSGwOJzY96KAP6IEd5tm0vEoqdwSdJSAVI4kZsd0i3F-916ZPck-LwM-NLvCn-NWiLITg4thdMW5weBia3EA3udh3e1lj93iv2pZccEtyCi6KT4Cw4HwrQXAaSsJqhGCi2PKwBsdQkM7iBrRNSigeTV_BAMp0YhUIOg65Zk8N2UfGpHIjI4zGZId86yTMpZK7xDrkzDWLMysksv8yVYo1btKqPOwq2FbWNSbLjl6c1MUvRDs8"/>
+                </div>
+            </div>
+        </section>
+        <!-- Bento Grid Concepts -->
+        <section class="mb-24">
+            <h2 class="text-3xl font-bold text-on-surface mb-12 pl-4 border-l-4 border-primary">Ecosisteme Urbane Inteligente</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="md:col-span-2 neo-raised rounded-3xl p-8 flex flex-col justify-between h-[400px] relative overflow-hidden group">
+                    <div class="absolute inset-0 z-0 neo-pressed m-4 rounded-2xl overflow-hidden opacity-50 transition-opacity duration-500 group-hover:opacity-70">
+                        <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBaPlbITTnF2SS0pH3qHL_tFskygVGFKhIQqGGe1zyGwDpjVW_eY_is1GN0aEYgKGf81byDjUTlIrErrdue0dgnRnWXqGnMmdbZh1KlTTnpNwIZcu04TtZ77CSHm5LHbyjS4YsT_3n7iOLcQ1BJ_rAHkXOvNZ4ZxmJNlkoEcIg-rtxBwEU2Qnbhgb2gPiHcmrPbwM7gaa2wzI_2XY78tWWaQgqTcec9vTRX2Ce7iUVQruN52XpZHpjaILu0-9zpebGgl92I5MEysB4H"/>
+                    </div>
+                    <div class="relative z-10 flex flex-col h-full justify-between pointer-events-none">
+                        <div class="w-12 h-12 rounded-full neo-raised flex items-center justify-center text-tertiary bg-background pointer-events-auto">
+                            <span class="material-symbols-outlined">energy_savings_leaf</span>
+                        </div>
+                        <div class="bg-background/80 backdrop-blur-sm p-6 rounded-2xl neo-raised pointer-events-auto">
+                            <h3 class="text-xl font-bold mb-2">Districte cu Emisii Zero</h3>
+                            <p class="text-on-surface-variant text-sm">Cartiere întregi alimentate de micro-rețele localizate, integrând sticlă solară, pavaje kinetice și captarea energiei ambientale pentru a obține o amprentă de carbon net-negativă.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="neo-raised rounded-3xl p-6 flex flex-col gap-6">
+                    <div class="h-40 rounded-2xl neo-pressed overflow-hidden">
+                        <img class="w-full h-full object-cover opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBog8zWUni8M8_Qwyg-wShkr-81pYAFDRx0hn4vSgllyFL8e3GSXUCou9hd91z5uB3vvxtrMyMDQZJ-A1a88bSb4Ye_Rt_043SDLCGTwXIOiRVx7u307Oifg6ZZfO7UjST2kziDkAvj6gAcs-4YWIrSysOsgNY_-lS6OPkL7f2R5hz2fPCUEDkjg3KEcfYGHC7u4ggTNpNkugucJq5KCs_2SEhll4-8Gs9fgkMurbP6WKCLSAbOsVpxfiYXU-7VemxFvnf33dT8FsfH"/>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="material-symbols-outlined text-primary">solar_power</span>
+                            <h3 class="font-bold text-lg">Integrare Solară</h3>
+                        </div>
+                        <p class="text-sm text-on-surface-variant">Materiale fotovoltaice țesute perfect în fațadele clădirilor, transformând fiecare structură într-o centrală electrică silențioasă fără a compromite estetica arhitecturală.</p>
+                    </div>
+                </div>
+                <div class="neo-raised rounded-3xl p-6 flex flex-col justify-between">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-full neo-pressed flex items-center justify-center text-secondary">
+                            <span class="material-symbols-outlined">commute</span>
+                        </div>
+                        <h3 class="font-bold">Tranzit Autonom</h3>
+                    </div>
+                    <p class="text-sm text-on-surface-variant mb-6">Pod-uri cu levitație magnetică, conduse de AI, înlocuiesc aglomerația tradițională, oferind rețele de transport public silențioase, fără frecare și cu emisii zero.</p>
+                    <button class="w-full py-2 rounded-xl neo-pressed text-primary text-sm font-semibold hover:text-tertiary transition-colors">Citește Detalii</button>
+                </div>
+                <div class="md:col-span-2 neo-raised rounded-3xl p-6 flex flex-col sm:flex-row items-center gap-8">
+                    <div class="sm:w-1/3 w-full aspect-square rounded-2xl neo-pressed overflow-hidden relative">
+                        <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUX3gaE4aDc1Shlfsl4Pf5OIfzzdjn_O-s2SIn6nZmGowQ59flaSqQYWzQ7iQYWzQ7iQYHxz-eK3w2uOKzyLZxOskFiV3AzKDD3-wItgFiFyC8MFH3BwnbjNchF7yQQ4iN_DFAn6o1NM9v3bNcVx6c182hh_QMbJsXlngEnIlw3ON7Vc_Z7HxrqHS9oziLNXjPK44UijggPvK_XUSxwYqu_P0Q_hFQXodtmX-y3tD6YLqpYvWOxq72eNbBFWx_BYrJciCPJtSuuaxJvf0zj4K"/>
+                    </div>
+                    <div class="sm:w-2/3 space-y-4">
+                        <h3 class="text-2xl font-bold">Renaturare Urbană</h3>
+                        <p class="text-on-surface-variant text-sm leading-relaxed">
+                            Readucerea naturii în jungla de beton. Proiectăm o creștere de 40% a acoperirii cu coronament urban până în 2040, utilizând păduri verticale, acoperișuri verzi extinse și coridoare de bio-filtrare pentru a îmbunătăți calitatea aerului și bunăstarea cetățenilor.
+                        </p>
+                        <div class="flex gap-4 pt-2">
+                            <div class="neo-pressed px-4 py-2 rounded-lg text-xs font-semibold text-primary">Calitate Aer +60%</div>
+                            <div class="neo-pressed px-4 py-2 rounded-lg text-xs font-semibold text-tertiary">Insulă de Căldură -4°C</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="mb-24 py-12 px-8 neo-raised rounded-[3rem]">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">Etapele ODD 2030</h2>
+                <p class="text-on-surface-variant max-w-2xl mx-auto">Urmărirea progresului nostru către Obiectivele de Dezvoltare Durabilă ale ONU prin metrici urbane tangibile.</p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="neo-pressed rounded-2xl p-6 text-center flex flex-col items-center justify-center">
+                    <span class="material-symbols-outlined text-3xl text-primary mb-2">wind_power</span>
+                    <span class="text-4xl font-extrabold text-on-surface mb-1">85%</span>
+                    <span class="text-xs font-medium text-on-surface-variant uppercase tracking-wider">Rețea Regenerabilă</span>
+                </div>
+                <div class="neo-pressed rounded-2xl p-6 text-center flex flex-col items-center justify-center">
+                    <span class="material-symbols-outlined text-3xl text-tertiary mb-2">recycling</span>
+                    <span class="text-4xl font-extrabold text-on-surface mb-1">92%</span>
+                    <span class="text-xs font-medium text-on-surface-variant uppercase tracking-wider">Economie Circulară</span>
+                </div>
+                <div class="neo-pressed rounded-2xl p-6 text-center flex flex-col items-center justify-center">
+                    <span class="material-symbols-outlined text-3xl text-primary mb-2">water_drop</span>
+                    <span class="text-4xl font-extrabold text-on-surface mb-1">100%</span>
+                    <span class="text-xs font-medium text-on-surface-variant uppercase tracking-wider">Reciclare Apă</span>
+                </div>
+                <div class="neo-pressed rounded-2xl p-6 text-center flex flex-col items-center justify-center">
+                    <span class="material-symbols-outlined text-3xl text-tertiary mb-2">forest</span>
+                    <span class="text-4xl font-extrabold text-on-surface mb-1">45%</span>
+                    <span class="text-xs font-medium text-on-surface-variant uppercase tracking-wider">Acoperire Verde</span>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- Footer -->
+    <footer class="w-full flex flex-col md:flex-row justify-between items-center px-12 py-10 gap-6 rounded-t-3xl mt-20 bg-surface shadow-[0_-6px_12px_rgba(0,0,0,0.05),0_-6px_12px_rgba(255,255,255,0.5)] font-['Plus_Jakarta_Sans'] text-xs uppercase tracking-widest text-primary">
+        <div class="text-slate-500">© 2024 Inițiativa Educațională a Uniunii Europene. Proiectat pentru claritate și explorare.</div>
+        <div class="flex gap-6">
+            <a class="text-slate-500 hover:text-secondary hover:underline decoration-indigo-500 decoration-2 underline-offset-4 transition-colors duration-200" href="#">Curriculum</a>
+            <a class="text-slate-500 hover:text-secondary hover:underline decoration-indigo-500 decoration-2 underline-offset-4 transition-colors duration-200" href="#">Surse de Date</a>
+            <a class="text-slate-500 hover:text-secondary hover:underline decoration-indigo-500 decoration-2 underline-offset-4 transition-colors duration-200" href="#">Politica de Confidențialitate</a>
+            <a class="text-slate-500 hover:text-secondary hover:underline decoration-indigo-500 decoration-2 underline-offset-4 transition-colors duration-200" href="#">Suport Contact</a>
+        </div>
+    </footer>
+</body>
+</html>

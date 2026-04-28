@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html class="light" lang="ro">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Metropole Europene - EU Explorer</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+        <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        background: "#2e3440",
+                        surface: "#3b4252",
+                        "surface-raised": "#434c5e",
+                        primary: "#88c0d0",
+                        secondary: "#81a1c1",
+                        tertiary: "#5e81ac",
+                        success: "#a3be8c",
+                        error: "#bf616a",
+                        warning: "#ebcb8b",
+                        "on-background": "#eceff4",
+                        "on-surface": "#e5e9f0",
+                        "on-surface-variant": "#d8dee9",
+                    },
+                    fontFamily: {
+                        sans: ["Plus Jakarta Sans", "sans-serif"],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #2e3440; color: #eceff4; font-family: 'Plus Jakarta Sans', sans-serif; }
+        .neo-raised { background-color: #3b4252; box-shadow: 5px 5px 10px #272c36, -5px -5px 10px #4f586e; }
+        .neo-pressed { background-color: #3b4252; box-shadow: inset 5px 5px 10px #272c36, inset -5px -5px 10px #4f586e; }
+        .neo-interactive:hover { transform: translateY(-2px); box-shadow: 7px 7px 14px #272c36, -7px -7px 14px #4f586e; }
+        .neo-interactive:active { transform: translateY(0); box-shadow: inset 4px 4px 8px #272c36, inset -4px -4px 8px #4f586e; }
+        
+        /* Typography overrides for Nord */
+        h1, h2, h3, h4, h5, h6 { color: #eceff4 !important; }
+        p, span, div { color: #d8dee9; }
+        a { color: #88c0d0; transition: color 0.2s; }
+        a:hover { color: #81a1c1; }
+        
+        /* Overrides for specific text utilities from before */
+        .text-slate-800, .text-slate-700, .text-on-surface, .text-primary, .text-indigo-700 { color: #eceff4 !important; }
+        .text-slate-600, .text-slate-500, .text-on-surface-variant { color: #d8dee9 !important; }
+        .text-primary { color: #88c0d0 !important; }
+        .bg-surface, .bg-slate-900 { background-color: #3b4252 !important; }
+        .bg-white { background-color: #3b4252 !important; }
+    </style>
+</head>
+<body class="font-body text-on-surface antialiased pt-24 min-h-screen flex flex-col">
+    <!-- TopNavBar -->
+    <nav class="fixed top-0 left-0 right-0 flex justify-between items-center px-8 py-3 z-50 max-w-7xl mx-auto rounded-2xl mt-4 mx-4 bg-surface dark:bg-slate-900 neo-raised dark:shadow-[4px_4px_10px_rgba(0,0,0,0.4),-2px_-2px_6px_rgba(255,255,255,0.05)]">
+        <a href="presentation.html" class="text-xl font-semibold text-primary dark:text-indigo-400 tracking-tighter">EU Explorer</a>
+        <div class="hidden md:flex items-center gap-2 font-['Plus_Jakarta_Sans'] text-sm font-medium tracking-tight">
+            <a class="text-slate-600 dark:text-slate-400 hover:text-secondary px-4 py-2 hover:shadow-[4px_4px_8px_rgba(0,0,0,0.04),-4px_-4px_8px_rgba(255,255,255,0.4)] transition-all duration-300 active:scale-95 transition-transform duration-150" href="banana-albastra.html">Banana Albastră</a>
+            <a class="text-indigo-700 dark:text-indigo-300 neo-pressed rounded-xl px-4 py-2" href="metropole.html">Metropole</a>
+            <a class="text-slate-600 dark:text-slate-400 hover:text-secondary px-4 py-2 hover:shadow-[4px_4px_8px_rgba(0,0,0,0.04),-4px_-4px_8px_rgba(255,255,255,0.4)] transition-all duration-300 active:scale-95 transition-transform duration-150" href="chestionare.html">Chestionare</a>
+            <a class="text-slate-600 dark:text-slate-400 hover:text-secondary px-4 py-2 hover:shadow-[4px_4px_8px_rgba(0,0,0,0.04),-4px_-4px_8px_rgba(255,255,255,0.4)] transition-all duration-300 active:scale-95 transition-transform duration-150" href="presentation.html">Hărți Interactive</a>
+        </div>
+        <div class="flex items-center gap-4">
+            
+            <button class="bg-background text-primary neo-raise rounded-xl px-4 py-2 font-semibold transition-all duration-300 flex items-center gap-2">
+                <span>Începe Să Înveți</span>
+                <span class="material-symbols-outlined">arrow_forward</span>
+            </button>
+        </div>
+    </nav>
+    <main class="flex-grow max-w-7xl mx-auto px-6 py-12 w-full">
+        <header class="mb-16 text-center">
+            <h1 class="font-headline text-4xl md:text-5xl font-semibold text-on-surface mb-4">Metropole Europene</h1>
+            <p class="font-body text-on-surface-variant max-w-2xl mx-auto text-lg">Explorează centrele economice, nodurile culturale și capitalele istorice care modelează viitorul continentului.</p>
+        </header>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- City Card: Paris -->
+            <article class="bg-background rounded-xl p-6 neo-raise flex flex-col gap-6">
+                <div class="h-48 rounded-lg overflow-hidden neo-inset p-2">
+                    <img alt="Panorama Parisului cu Turnul Eiffel" class="w-full h-full object-cover rounded-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfcD8KsG7kUjwKlUI3hVXLtesTYlT-FxWSZiD_VI5lIWnmsyjiwt-pHxKM1wJJw1BfbWPHALCa-sRlkEpOeduVBTE05USCixnhf_4IHH1bNZBtzTnGjx44mi-GdtZWP2G_9vOWUm-Mvu4Ur77BgcX_ga2qj4UMyOltZcB-NthWloVQTubkyKH9yaj78XxzTf4qxh2PTHmU_O-HVGQoPwBXmnprNAaqTvewhwbYQjLL-Dwep6lMJccd1d7ELl3mlo62AGdHEB3CYzop"/>
+                </div>
+                <div>
+                    <h2 class="font-headline text-2xl font-semibold text-primary mb-2 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">location_city</span>
+                        Paris
+                    </h2>
+                    <p class="font-body text-sm text-on-surface-variant mb-4">Centrul global pentru artă, modă, gastronomie și cultură. Un motor economic major al Europei.</p>
+                    <div class="grid grid-cols-2 gap-4 neo-inset p-4 rounded-lg">
+                        <div>
+                            <div class="text-xs text-on-surface-variant uppercase tracking-wider mb-1">Populație</div>
+                            <div class="font-medium text-on-surface">2.16M</div>
+                        </div>
+                        <div>
+                            <div class="text-xs text-on-surface-variant uppercase tracking-wider mb-1">PIB (PPC)</div>
+                            <div class="font-medium text-on-surface">€738B</div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            <!-- City Card: Berlin -->
+            <article class="bg-background rounded-xl p-6 neo-raise flex flex-col gap-6">
+                <div class="h-48 rounded-lg overflow-hidden neo-inset p-2">
+                    <img alt="Poarta Brandenburg din Berlin" class="w-full h-full object-cover rounded-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBsFY_UCADXfvcJKePdjfPzSr1jW9b8rAx6ZHu3HYiEMBTxfqZyuH8plHo85RrwLyJbF9Nygsmz0sIPBN6_WivOFydTh45Lq7g4x9S4kRVCTFPZ9tjvbSWHCoJIp20WnV5MNvDX0EgfK6t8FxjPRrDk9UEZtE8b8mRhAAeiJRKjqFHXsDS-vGnIFRy3V7IlQ-dxFZLVXktJLMXJLosjdyKkHeWnd2lupHzp56H8Eg_hZvzOirrshQ5gQki1UrPbXoV5NQegpwNufCv"/>
+                </div>
+                <div>
+                    <h2 class="font-headline text-2xl font-semibold text-primary mb-2 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">location_city</span>
+                        Berlin
+                    </h2>
+                    <p class="font-body text-sm text-on-surface-variant mb-4">Capitala Germaniei, cunoscută pentru gama sa excepțională de repere, scena culturală vibrantă și stilul de viață.</p>
+                    <div class="grid grid-cols-2 gap-4 neo-inset p-4 rounded-lg">
+                        <div>
+                            <div class="text-xs text-on-surface-variant uppercase tracking-wider mb-1">Populație</div>
+                            <div class="font-medium text-on-surface">3.77M</div>
+                        </div>
+                        <div>
+                            <div class="text-xs text-on-surface-variant uppercase tracking-wider mb-1">PIB (PPC)</div>
+                            <div class="font-medium text-on-surface">€153B</div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            <!-- City Card: Bruxelles -->
+            <article class="bg-background rounded-xl p-6 neo-raise flex flex-col gap-6">
+                <div class="h-48 rounded-lg overflow-hidden neo-inset p-2">
+                    <img alt="Grand Place din Bruxelles" class="w-full h-full object-cover rounded-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGDC4pRTvtehpJ9eIBk7qOSkzL5wXEM0b7l6vZhh2N3l24B9agSHyIqRdMfVMrYy7dBmIvv2CP5RcOgwYuIpnX1uv81wKBWmc5ATMw1NCfohaO3uiaxbLrIuiHcXftI1KNip674Hc5LAoe0BQft50wm-tbPl8pF_eSXXXvdh5B_FXoVPBWEK-ubP7BjxDO9606N68Pe-BSt8IiR56GZ7lpOovExGIW1H96_ky4yhqch0M3llju3pGPuDkD6cpMLuOrna6wrENqQNnb"/>
+                </div>
+                <div>
+                    <h2 class="font-headline text-2xl font-semibold text-primary mb-2 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">location_city</span>
+                        Bruxelles
+                    </h2>
+                    <p class="font-body text-sm text-on-surface-variant mb-4">Capitala de facto a Uniunii Europene, găzduind instituții politice majore și organizații internaționale.</p>
+                    <div class="grid grid-cols-2 gap-4 neo-inset p-4 rounded-lg">
+                        <div>
+                            <div class="text-xs text-on-surface-variant uppercase tracking-wider mb-1">Populație</div>
+                            <div class="font-medium text-on-surface">1.21M</div>
+                        </div>
+                        <div>
+                            <div class="text-xs text-on-surface-variant uppercase tracking-wider mb-1">PIB (PPC)</div>
+                            <div class="font-medium text-on-surface">€83B</div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer class="w-full flex flex-col md:flex-row justify-between items-center px-12 py-10 gap-6 rounded-t-3xl mt-20 bg-surface dark:bg-slate-900 shadow-[0_-6px_12px_rgba(0,0,0,0.05),0_-6px_12px_rgba(255,255,255,0.5)] font-['Plus_Jakarta_Sans'] text-xs uppercase tracking-widest text-primary dark:text-indigo-400">
+        <div class="text-slate-500 dark:text-slate-500">© 2024 Inițiativa Educațională a Uniunii Europene. Proiectat pentru claritate și explorare.</div>
+        <div class="flex gap-6">
+            <a class="text-slate-500 dark:text-slate-500 hover:text-secondary hover:underline decoration-indigo-500 decoration-2 underline-offset-4 transition-colors duration-200" href="#">Curriculum</a>
+            <a class="text-slate-500 dark:text-slate-500 hover:text-secondary hover:underline decoration-indigo-500 decoration-2 underline-offset-4 transition-colors duration-200" href="#">Surse de Date</a>
+            <a class="text-slate-500 dark:text-slate-500 hover:text-secondary hover:underline decoration-indigo-500 decoration-2 underline-offset-4 transition-colors duration-200" href="#">Politica de Confidențialitate</a>
+            <a class="text-slate-500 dark:text-slate-500 hover:text-secondary hover:underline decoration-indigo-500 decoration-2 underline-offset-4 transition-colors duration-200" href="#">Suport Contact</a>
+        </div>
+    </footer>
+</body>
+</html>

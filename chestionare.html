@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html class="dark" lang="ro">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Jocuri și Educație - EU Explorer</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    
+    <!-- JSVectorMap for Real Europe Map -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap/dist/css/jsvectormap.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/jsvectormap"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsvectormap/dist/maps/europe.js"></script>
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        background: "#2e3440",
+                        surface: "#3b4252",
+                        "surface-raised": "#434c5e",
+                        primary: "#88c0d0",
+                        secondary: "#81a1c1",
+                        tertiary: "#5e81ac",
+                        success: "#a3be8c",
+                        error: "#bf616a",
+                        warning: "#ebcb8b",
+                        "on-background": "#eceff4",
+                        "on-surface": "#e5e9f0",
+                        "on-surface-variant": "#d8dee9",
+                    },
+                    fontFamily: {
+                        sans: ["Plus Jakarta Sans", "sans-serif"],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #2e3440; color: #eceff4; font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
+        .neo-raised { background-color: #3b4252; box-shadow: 5px 5px 10px #272c36, -5px -5px 10px #4f586e; }
+        .neo-pressed { background-color: #3b4252; box-shadow: inset 5px 5px 10px #272c36, inset -5px -5px 10px #4f586e; }
+        .neo-interactive:hover { transform: translateY(-2px); box-shadow: 7px 7px 14px #272c36, -7px -7px 14px #4f586e; }
+        .neo-interactive:active { transform: translateY(0); box-shadow: inset 4px 4px 8px #272c36, inset -4px -4px 8px #4f586e; }
+        
+        .game-card { transition: all 0.3s ease; }
+        .game-card:hover { transform: scale(1.02); }
+
+        .hidden-game { display: none; opacity: 0; transition: opacity 0.5s; }
+        .active-game { display: block; opacity: 1; animation: fadeIn 0.5s; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Map Overrides for Nord Theme */
+        .jvm-container { background-color: transparent !important; }
+        .jvm-region { fill: #434c5e !important; stroke: #2e3440 !important; stroke-width: 1px !important; transition: fill 0.2s; }
+        .jvm-region:hover { fill: #81a1c1 !important; cursor: pointer; }
+        .jvm-region.correct { fill: #a3be8c !important; }
+        .jvm-region.wrong { fill: #bf616a !important; }
+        .jvm-tooltip { background-color: #2e3440 !important; color: #eceff4 !important; font-family: 'Plus Jakarta Sans', sans-serif !important; border: 1px solid #4c566a !important; border-radius: 8px !important; padding: 8px 12px !important; }
+    </style>
+</head>
+<body class="min-h-screen pt-24 pb-12 flex flex-col items-center">
+    <!-- Navigare -->
+    <nav class="fixed top-0 left-0 right-0 flex justify-between items-center px-8 py-3 z-50 max-w-7xl mx-auto rounded-2xl mt-4 mx-4 neo-raised">
+        <a href="presentation.html" class="text-xl font-semibold text-primary tracking-tighter">EU Explorer</a>
+        <div class="hidden md:flex items-center gap-2 text-sm font-medium">
+            <a class="text-on-surface-variant hover:text-primary px-4 py-2 transition-all rounded-xl hover:neo-raised" href="banana-albastra.html">Banana Albastră</a>
+            <a class="text-on-surface-variant hover:text-primary px-4 py-2 transition-all rounded-xl hover:neo-raised" href="metropole.html">Metropole</a>
+            <a class="text-primary neo-pressed rounded-xl px-4 py-2" href="chestionare.html">Laborator Interactiv</a>
+        </div>
+        <div class="flex items-center gap-4">
+            <a href="presentation.html" class="text-primary neo-raised rounded-xl px-4 py-2 font-semibold transition-all neo-interactive">
+                Prezentare
+            </a>
+        </div>
+    </nav>
+
+    <main class="w-full max-w-7xl px-4 md:px-8 flex-grow flex flex-col gap-12">
+        <header class="text-center py-8">
+            <h1 class="text-5xl font-extrabold text-on-surface mb-4 tracking-tight">Laboratorul de Geografie Politică</h1>
+            <p class="text-on-surface-variant text-lg max-w-2xl mx-auto font-medium">Testează-ți cunoștințele cartografice, istorice și culturale într-un mediu academic interactiv. Explorează granițele și istoria Europei Centrale și de Vest.</p>
+        </header>
+
+        <!-- Selecție Jocuri -->
+        <section id="game-selector" class="grid grid-cols-1 md:grid-cols-3 gap-8 active-game">
+            <div onclick="startGame('map-game')" class="game-card neo-raised rounded-3xl p-8 cursor-pointer flex flex-col items-center text-center gap-4 border border-transparent hover:border-primary">
+                <div class="w-20 h-20 neo-pressed rounded-full flex items-center justify-center text-primary">
+                    <span class="material-symbols-outlined text-4xl">travel_explore</span>
+                </div>
+                <h3 class="text-2xl font-bold text-on-surface">Cartografie Europeană</h3>
+                <p class="text-on-surface-variant text-sm">Navighează harta vectorială și localizează cu precizie statele membre ale Uniunii Europene.</p>
+            </div>
+            
+            <div onclick="startGame('trivia-game')" class="game-card neo-raised rounded-3xl p-8 cursor-pointer flex flex-col items-center text-center gap-4 border border-transparent hover:border-secondary">
+                <div class="w-20 h-20 neo-pressed rounded-full flex items-center justify-center text-secondary">
+                    <span class="material-symbols-outlined text-4xl">account_balance</span>
+                </div>
+                <h3 class="text-2xl font-bold text-on-surface">Istorie & Instituții</h3>
+                <p class="text-on-surface-variant text-sm">O examinare serioasă a tratatelor fondatoare și a structurilor administrative ale UE.</p>
+            </div>
+
+            <div onclick="startGame('flag-game')" class="game-card neo-raised rounded-3xl p-8 cursor-pointer flex flex-col items-center text-center gap-4 border border-transparent hover:border-success">
+                <div class="w-20 h-20 neo-pressed rounded-full flex items-center justify-center text-success">
+                    <span class="material-symbols-outlined text-4xl">flag</span>
+                </div>
+                <h3 class="text-2xl font-bold text-on-surface">Vexilologie</h3>
+                <p class="text-on-surface-variant text-sm">Studiul drapelelor naționale europene pe baza heraldicii și designului modern.</p>
+            </div>
+        </section>
+
+        <!-- Game 1: Harta Interactivă Reală -->
+        <section id="map-game" class="hidden-game neo-raised rounded-3xl p-8 relative">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-3xl font-bold text-on-surface flex items-center gap-3">
+                    <span class="material-symbols-outlined text-primary text-4xl">travel_explore</span>
+                    Simulare Cartografică
+                </h2>
+                <button onclick="showMenu()" class="neo-interactive neo-raised px-6 py-3 rounded-xl text-on-surface font-semibold text-sm">Întoarcere la index</button>
+            </div>
+            
+            <div class="flex flex-col md:flex-row gap-8">
+                <div class="w-full md:w-1/3 flex flex-col gap-6">
+                    <div class="neo-pressed rounded-2xl p-6 text-center">
+                        <p class="text-on-surface-variant mb-2 font-medium uppercase tracking-wider text-sm">Obiectiv curent de localizat:</p>
+                        <h3 id="target-country" class="text-4xl font-extrabold text-primary" style="min-height: 48px;">Pregătire...</h3>
+                    </div>
+                    <div class="flex justify-between gap-4">
+                        <div class="neo-pressed rounded-xl p-6 text-center w-1/2">
+                            <span class="block text-on-surface-variant text-xs uppercase font-bold tracking-wider mb-2">Punctaj</span>
+                            <span id="map-score" class="text-3xl font-bold text-success">0</span>
+                        </div>
+                        <div class="neo-pressed rounded-xl p-6 text-center w-1/2">
+                            <span class="block text-on-surface-variant text-xs uppercase font-bold tracking-wider mb-2">Erori</span>
+                            <span id="map-attempts" class="text-3xl font-bold text-error">0</span>
+                        </div>
+                    </div>
+                    <div class="neo-pressed rounded-2xl p-6">
+                        <p id="map-feedback" class="text-center font-semibold text-lg text-on-surface-variant">Click pe hartă pentru a începe.</p>
+                    </div>
+                </div>
+                
+                <div class="w-full md:w-2/3 neo-pressed rounded-3xl p-2 flex items-center justify-center overflow-hidden bg-[#2e3440] shadow-inner relative" style="height: 500px;">
+                    <!-- JSVectorMap Container -->
+                    <div id="europe-map" style="width: 100%; height: 100%;"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Game 2: Trivia -->
+        <section id="trivia-game" class="hidden-game neo-raised rounded-3xl p-8">
+            <div class="flex justify-between items-center mb-12">
+                <h2 class="text-3xl font-bold text-on-surface flex items-center gap-3">
+                    <span class="material-symbols-outlined text-secondary text-4xl">account_balance</span>
+                    Istorie & Instituții
+                </h2>
+                <button onclick="showMenu()" class="neo-interactive neo-raised px-6 py-3 rounded-xl text-on-surface font-semibold text-sm">Întoarcere</button>
+            </div>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="neo-pressed rounded-3xl p-10 mb-8">
+                    <span id="trivia-progress" class="text-secondary text-sm font-bold uppercase tracking-widest mb-4 block">Întrebarea 1 din 5</span>
+                    <h3 id="question-text" class="text-3xl font-bold text-on-surface leading-snug">Se încarcă baza de date...</h3>
+                    <p id="question-context" class="mt-4 text-on-surface-variant text-lg border-l-4 border-secondary pl-4 hidden">Explicație adițională...</p>
+                </div>
+                <div id="answers-container" class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <!-- Dynamic Answers -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Game 3: Steaguri Oficiale -->
+        <section id="flag-game" class="hidden-game neo-raised rounded-3xl p-8 text-center">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-3xl font-bold text-on-surface flex items-center gap-3">
+                    <span class="material-symbols-outlined text-success text-4xl">flag</span>
+                    Studiu Vexilologic
+                </h2>
+                <button onclick="showMenu()" class="neo-interactive neo-raised px-6 py-3 rounded-xl text-on-surface font-semibold text-sm">Întoarcere</button>
+            </div>
+            
+            <div class="flex flex-col items-center gap-8 my-12">
+                <div class="neo-pressed p-4 rounded-2xl w-64 h-40 flex items-center justify-center">
+                    <img id="flag-img" src="" alt="Steag Național" class="w-full h-full object-cover rounded shadow-lg opacity-0 transition-opacity duration-300" />
+                </div>
+                
+                <h3 class="text-2xl text-on-surface font-semibold">Identificați statul suveran corespunzător drapelului de mai sus:</h3>
+                
+                <div id="flag-options" class="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-4xl">
+                    <!-- Buttons will be generated by JS -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // Game State Management
+        function hideAll() {
+            document.getElementById('game-selector').classList.remove('active-game');
+            document.getElementById('game-selector').classList.add('hidden-game');
+            document.getElementById('map-game').classList.remove('active-game');
+            document.getElementById('map-game').classList.add('hidden-game');
+            document.getElementById('trivia-game').classList.remove('active-game');
+            document.getElementById('trivia-game').classList.add('hidden-game');
+            document.getElementById('flag-game').classList.remove('active-game');
+            document.getElementById('flag-game').classList.add('hidden-game');
+        }
+
+        function showMenu() {
+            hideAll();
+            document.getElementById('game-selector').classList.remove('hidden-game');
+            document.getElementById('game-selector').classList.add('active-game');
+        }
+
+        function startGame(gameId) {
+            hideAll();
+            document.getElementById(gameId).classList.remove('hidden-game');
+            document.getElementById(gameId).classList.add('active-game');
+            
+            if(gameId === 'map-game') initMapGame();
+            if(gameId === 'trivia-game') initTriviaGame();
+            if(gameId === 'flag-game') initFlagGame();
+        }
+
+        // --- Map Game Logic (JSVectorMap) ---
+        let mapInstance = null;
+        let euCountriesCode = ['FR', 'DE', 'IT', 'ES', 'RO', 'PL', 'NL', 'BE', 'SE', 'AT', 'BG', 'DK', 'FI', 'IE', 'HR', 'LT', 'LV', 'EE', 'CY', 'LU', 'MT', 'SI', 'SK', 'CZ', 'HU', 'PT', 'EL'];
+        let euCountriesNames = {
+            'FR': 'Franța', 'DE': 'Germania', 'IT': 'Italia', 'ES': 'Spania', 'RO': 'România', 
+            'PL': 'Polonia', 'NL': 'Olanda', 'BE': 'Belgia', 'SE': 'Suedia', 'AT': 'Austria', 
+            'BG': 'Bulgaria', 'DK': 'Danemarca', 'FI': 'Finlanda', 'IE': 'Irlanda', 'HR': 'Croația', 
+            'LT': 'Lituania', 'LV': 'Letonia', 'EE': 'Estonia', 'CY': 'Cipru', 'LU': 'Luxemburg', 
+            'MT': 'Malta', 'SI': 'Slovenia', 'SK': 'Slovacia', 'CZ': 'Cehia', 'HU': 'Ungaria', 
+            'PT': 'Portugalia', 'GR': 'Grecia'
+        };
+        // Note jsvectormap uses standard ISO codes (Greece is GR not EL in most maps)
+        
+        let currentTargetCode = '';
+        let mapScore = 0;
+        let mapAttempts = 0;
+
+        function initMapGame() {
+            if(!mapInstance) {
+                mapInstance = new jsVectorMap({
+                    selector: '#europe-map',
+                    map: 'europe',
+                    zoomOnScroll: true,
+                    zoomButtons: true,
+                    backgroundColor: 'transparent',
+                    regionStyle: {
+                        initial: { fill: '#434c5e', stroke: '#2e3440', strokeWidth: 1.5, fillOpacity: 1 },
+                        hover: { fill: '#81a1c1', fillOpacity: 1 }
+                    },
+                    onRegionClick: function(event, code) {
+                        // Check if it's the target
+                        if(code === currentTargetCode) {
+                            mapScore += 100;
+                            document.getElementById('map-feedback').innerHTML = `<span class="text-success font-bold text-xl">Confirmare Pozitivă: ${euCountriesNames[code]} localizat!</span>`;
+                            
+                            // Highlight green temporarily via DOM (since API color setting is complex dynamically)
+                            const path = document.querySelector(`[data-code="${code}"]`);
+                            if(path) { path.style.fill = '#a3be8c'; }
+                            
+                            setTimeout(() => {
+                                if(path) path.style.fill = ''; // reset
+                                pickNewCountry();
+                            }, 1500);
+                        } else {
+                            mapAttempts++;
+                            document.getElementById('map-feedback').innerHTML = `<span class="text-error font-bold text-xl">Eroare: Ați selectat statul incorect.</span>`;
+                            
+                            const path = document.querySelector(`[data-code="${code}"]`);
+                            if(path) { path.style.fill = '#bf616a'; }
+                            setTimeout(() => { if(path) path.style.fill = ''; }, 1000);
+                        }
+                        updateMapStats();
+                    }
+                });
+            }
+            mapScore = 0;
+            mapAttempts = 0;
+            updateMapStats();
+            pickNewCountry();
+        }
+
+        function pickNewCountry() {
+            const codes = Object.keys(euCountriesNames);
+            currentTargetCode = codes[Math.floor(Math.random() * codes.length)];
+            document.getElementById('target-country').innerText = euCountriesNames[currentTargetCode];
+            document.getElementById('map-feedback').innerHTML = "Așteptare coordonate...";
+        }
+
+        function updateMapStats() {
+            document.getElementById('map-score').innerText = mapScore;
+            document.getElementById('map-attempts').innerText = mapAttempts;
+        }
+
+        // --- Trivia Game Logic (Serious & Educational) ---
+        const triviaQuestions = [
+            { 
+                q: "Care tratat fundamental a pus bazele formale ale Uniunii Europene în 1992, stabilind conceptul de cetățenie europeană?", 
+                context: "Acest tratat a marcat trecerea de la o comunitate exclusiv economică (CEE) la o uniune politică.",
+                options: ["Tratatul de la Roma", "Tratatul de la Lisabona", "Tratatul de la Maastricht", "Acordul Schengen"], 
+                answer: "Tratatul de la Maastricht" 
+            },
+            { 
+                q: "Care instituție europeană deține puterea legislativă și este aleasă direct prin votul cetățenilor?", 
+                context: "Alegerile se desfășoară o dată la 5 ani, fiind printre cele mai mari exerciții democratice din lume.",
+                options: ["Comisia Europeană", "Parlamentul European", "Consiliul European", "Curtea de Justiție a UE"], 
+                answer: "Parlamentul European" 
+            },
+            { 
+                q: "Cunoscut sub denumirea de 'Inima Europei', acest oraș găzduiește sediul central al Comisiei Europene.", 
+                context: "Acest oraș face parte din nucleul inițial al celor 6 state fondatoare.",
+                options: ["Strasbourg", "Bruxelles", "Frankfurt", "Luxemburg"], 
+                answer: "Bruxelles" 
+            },
+            { 
+                q: "Care dintre următoarele formațiuni urbane masive reprezintă coloana vertebrală economică a Europei (cunoscută geografic sub numele de Banana Albastră)?", 
+                context: "Se întinde de la nord-vestul Angliei, trece prin Benelux și vestul Germaniei, până la nordul Italiei.",
+                options: ["Axa Paris-Berlin", "Megalopolisul Rin-Ruhr", "Poligonul Nordic", "Arhipelagul Mediteranean"], 
+                answer: "Megalopolisul Rin-Ruhr" 
+            },
+            {
+                q: "Ce stat membru al Uniunii Europene deține președinția rotativă a Consiliului UE pentru prima jumătate a anului 2024?",
+                context: "Sistemul rotativ asigură egalitatea statelor membre în conducerea agendei legislative.",
+                options: ["Spania", "Belgia", "Ungaria", "Franța"],
+                answer: "Belgia"
+            }
+        ];
+        let currentQIndex = 0;
+
+        function initTriviaGame() {
+            currentQIndex = 0;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            let container = document.getElementById('answers-container');
+            let ctxElem = document.getElementById('question-context');
+            
+            if(currentQIndex >= triviaQuestions.length) {
+                document.getElementById('trivia-progress').innerText = "Evaluare Completă";
+                document.getElementById('question-text').innerText = "Ați parcurs întregul set de date istorice.";
+                ctxElem.classList.add('hidden');
+                container.innerHTML = '';
+                return;
+            }
+            
+            document.getElementById('trivia-progress').innerText = `Examinare ${currentQIndex + 1} din ${triviaQuestions.length}`;
+            let q = triviaQuestions[currentQIndex];
+            
+            document.getElementById('question-text').innerText = q.q;
+            ctxElem.innerText = q.context;
+            ctxElem.classList.remove('hidden');
+            
+            container.innerHTML = '';
+            
+            q.options.forEach(opt => {
+                let btn = document.createElement('button');
+                btn.className = "neo-raised neo-interactive p-6 rounded-2xl text-xl font-semibold text-on-surface hover:text-secondary transition-all text-left w-full border border-transparent";
+                btn.innerText = opt;
+                btn.onclick = () => {
+                    // Disable clicks
+                    Array.from(container.children).forEach(b => b.onclick = null);
+                    
+                    if(opt === q.answer) {
+                        btn.classList.add('bg-success', 'text-white', 'border-success');
+                        setTimeout(() => { currentQIndex++; loadQuestion(); }, 1500);
+                    } else {
+                        btn.classList.add('bg-error', 'text-white', 'border-error');
+                        // Highlight correct answer
+                        Array.from(container.children).forEach(b => {
+                            if(b.innerText === q.answer) b.classList.add('border-2', 'border-success', 'text-success');
+                        });
+                        setTimeout(() => { currentQIndex++; loadQuestion(); }, 2500);
+                    }
+                };
+                container.appendChild(btn);
+            });
+        }
+
+        // --- Flag Game Logic (Real Images from CDN) ---
+        // ISO 3166-1 alpha-2 codes for flags
+        const flagData = [
+            { code: 'ro', name: 'România' },
+            { code: 'fr', name: 'Franța' },
+            { code: 'de', name: 'Germania' },
+            { code: 'it', name: 'Italia' },
+            { code: 'es', name: 'Spania' },
+            { code: 'gr', name: 'Grecia' },
+            { code: 'se', name: 'Suedia' },
+            { code: 'pl', name: 'Polonia' },
+            { code: 'nl', name: 'Olanda' },
+            { code: 'be', name: 'Belgia' },
+            { code: 'at', name: 'Austria' },
+            { code: 'fi', name: 'Finlanda' }
+        ];
+        
+        function initFlagGame() {
+            pickFlag();
+        }
+
+        function pickFlag() {
+            let correctFlag = flagData[Math.floor(Math.random() * flagData.length)];
+            const imgElem = document.getElementById('flag-img');
+            imgElem.style.opacity = 0; // fade out
+            
+            setTimeout(() => {
+                imgElem.src = `https://flagcdn.com/w320/${correctFlag.code}.png`;
+                imgElem.onload = () => { imgElem.style.opacity = 1; };
+            }, 300);
+            
+            // Randomize options
+            let options = [correctFlag.name];
+            while(options.length < 4) {
+                let randomName = flagData[Math.floor(Math.random() * flagData.length)].name;
+                if(!options.includes(randomName)) options.push(randomName);
+            }
+            options.sort(() => Math.random() - 0.5);
+            
+            let container = document.getElementById('flag-options');
+            container.innerHTML = '';
+            options.forEach(opt => {
+                let btn = document.createElement('button');
+                btn.className = "neo-raised neo-interactive px-6 py-4 rounded-xl font-bold text-on-surface text-lg border border-transparent transition-all";
+                btn.innerText = opt;
+                btn.onclick = () => {
+                    if(opt === correctFlag.name) {
+                        btn.style.backgroundColor = "#a3be8c";
+                        btn.style.borderColor = "#a3be8c";
+                        btn.style.color = "#2e3440";
+                        setTimeout(pickFlag, 1200);
+                    } else {
+                        btn.style.backgroundColor = "#bf616a";
+                        btn.style.color = "#eceff4";
+                        setTimeout(() => {
+                            btn.style.backgroundColor = "";
+                            btn.style.color = "";
+                        }, 1000);
+                    }
+                }
+                container.appendChild(btn);
+            });
+        }
+    </script>
+</body>
+</html>
