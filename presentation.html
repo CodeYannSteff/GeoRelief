@@ -1,547 +1,1842 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ro">
-<head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>EU Explorer - Prezentare</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-<script>tailwind.config={theme:{extend:{colors:{bg:"#2e3440",sf:"#3b4252",sr:"#434c5e",pr:"#88c0d0",sc:"#81a1c1",tr:"#5e81ac",ok:"#a3be8c",er:"#bf616a",ob:"#eceff4",os:"#e5e9f0",ov:"#d8dee9"},fontFamily:{sans:["Plus Jakarta Sans","sans-serif"]}}}}</script>
-<style>
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#2e3440;color:#eceff4;font-family:'Plus Jakarta Sans',sans-serif;overflow-x:hidden}
-.P{height:100vh;overflow-y:scroll;scroll-snap-type:y mandatory;scroll-behavior:smooth}
-.S{min-height:100vh;scroll-snap-align:start;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:60px 20px}
-#pb{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,#88c0d0,#5e81ac);z-index:100;transition:width .3s;box-shadow:0 0 8px rgba(136,192,208,.5)}
-.D{position:fixed;right:18px;top:50%;transform:translateY(-50%);z-index:90;display:flex;flex-direction:column;gap:11px}
-.D a{width:10px;height:10px;border-radius:50%;background:rgba(136,192,208,.2);border:2px solid rgba(136,192,208,.35);transition:all .4s cubic-bezier(.19,1,.22,1)}
-.D a.on{background:#88c0d0;border-color:#88c0d0;box-shadow:0 0 8px rgba(136,192,208,.6);transform:scale(1.5)}
-.D a:hover{background:rgba(136,192,208,.5);transform:scale(1.2)}
-#sn{position:fixed;bottom:22px;left:22px;z-index:90;font-size:.7rem;font-weight:600;color:rgba(136,192,208,.45);letter-spacing:2px}
-.R{opacity:0;transform:translateY(45px);transition:all .85s cubic-bezier(.19,1,.22,1)}.R.V{opacity:1;transform:translateY(0)}
-.Rl{opacity:0;transform:translateX(-50px);transition:all .85s cubic-bezier(.19,1,.22,1)}.Rl.V{opacity:1;transform:translateX(0)}
-.Rr{opacity:0;transform:translateX(50px);transition:all .85s cubic-bezier(.19,1,.22,1)}.Rr.V{opacity:1;transform:translateX(0)}
-.Rs{opacity:0;transform:scale(.85);transition:all .85s cubic-bezier(.19,1,.22,1)}.Rs.V{opacity:1;transform:scale(1)}
-.T>*:nth-child(1){transition-delay:0s}.T>*:nth-child(2){transition-delay:.1s}.T>*:nth-child(3){transition-delay:.2s}.T>*:nth-child(4){transition-delay:.3s}.T>*:nth-child(5){transition-delay:.4s}.T>*:nth-child(6){transition-delay:.5s}
-.Ln{width:50px;height:3px;background:linear-gradient(90deg,#88c0d0,#5e81ac);border-radius:2px}
-.HL{transition:transform .4s cubic-bezier(.19,1,.22,1),box-shadow .4s}.HL:hover{transform:translateY(-5px);box-shadow:0 14px 28px rgba(0,0,0,.3)}
-.IO{position:relative;overflow:hidden;border-radius:1rem}.IO::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(46,52,64,.3),transparent);pointer-events:none}
-.IO img{width:100%;height:100%;object-fit:cover;transition:transform .5s cubic-bezier(.19,1,.22,1)}.IO:hover img{transform:scale(1.04)}
-.TD{width:14px;height:14px;border-radius:50%;border:3px solid #88c0d0;background:#2e3440;position:absolute;left:50%;transform:translateX(-50%);z-index:2;animation:PL 2s infinite}
-@keyframes PL{0%{box-shadow:0 0 0 0 rgba(136,192,208,.4)}70%{box-shadow:0 0 0 10px rgba(136,192,208,0)}100%{box-shadow:0 0 0 0 rgba(136,192,208,0)}}
-@keyframes BN{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-7px)}}
-@media(max-width:768px){.D{right:8px;gap:8px}.D a{width:7px;height:7px}#sn{bottom:8px;left:8px}.S{padding:36px 12px}}
-</style>
-</head>
-<body>
-<div id="pb" style="width:0%"></div>
-<nav class="D" id="dots"></nav>
-<div id="sn">01 / 12</div>
-<div class="P" id="P">
-
-<!-- S0: HERO -->
-<section class="S" id="s0">
-<div class="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-12 lg:gap-20 relative z-10">
-<div class="flex-1 text-center lg:text-left T">
-<div class="R inline-flex items-center gap-2 px-4 py-2 rounded-full bg-sf/60 border border-pr/20 text-pr text-sm font-semibold mb-6"><span class="material-symbols-outlined text-sm">public</span> Megalopolisul European</div>
-<h1 class="R text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.1] mb-6">Unitate în<br><span class="text-pr">Diversitate</span></h1>
-<p class="R text-lg md:text-xl text-ov max-w-xl leading-relaxed mb-8">Explorează bogatul mozaic al Uniunii Europene — culturi vibrante, istorii împletite și forța unui continent unit.</p>
-<div class="R flex flex-wrap gap-4 justify-center lg:justify-start">
-<a onclick="document.getElementById('s8').scrollIntoView({behavior:'smooth'})" class="cursor-pointer px-8 py-4 rounded-2xl bg-pr/10 border border-pr/30 text-pr font-bold text-lg hover:bg-pr/20 transition-all flex items-center gap-2">Testează-ți Cunoștințele <span class="material-symbols-outlined">quiz</span></a>
-</div>
-</div>
-<div class="flex-1 w-full max-w-lg Rs">
-<div class="aspect-square rounded-3xl overflow-hidden IO border border-sr/50"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbESt1sv5oZf2T6evBu8AKkMhP75xdZ9GZ-YisIeTG-xp8H7Komu5Qp4b4rRhgfrP3UxlfG2qrqom4WnGH9I_oAQhwLwjID23hcqkS9tMwFPCktOtJAdCBTMsqm2yqWKhdwIoXn-ZTp0b_-MGOKF6MPAP2f3qaNDsI1e2B-lOToph541fznGhJxRmM1EFWPaZkOwkvFQ0n6vdVL39At2twOytikH06-sGjmFU5M-qQXRL5M1PHLGro7qs8xrPMyuJRKCHHVbKMzvib" alt="Harta Europei"/></div>
-</div>
-</div>
-<div style="position:absolute;bottom:28px;left:50%;transform:translateX(-50%);animation:BN 2s ease-in-out infinite" class="text-ov/40 flex flex-col items-center gap-1"><span class="text-xs uppercase tracking-[4px]">Scroll</span><span class="material-symbols-outlined text-xl">keyboard_arrow_down</span></div>
-</section>
-
-<!-- S1: BANANA ALBASTRĂ -->
-<section class="S" id="s1">
-<div class="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
-<div class="flex-1 T">
-<div class="R Ln mb-4"></div>
-<div class="R inline-flex items-center gap-2 px-3 py-1 rounded-full bg-tr/10 border border-tr/30 text-tr text-xs font-semibold mb-4 uppercase tracking-wider"><span class="material-symbols-outlined text-sm">moving</span> Coridorul Economic</div>
-<h2 class="R text-4xl md:text-6xl font-extrabold tracking-tight mb-6">Banana <span class="text-pr">Albastră</span></h2>
-<p class="R text-ov text-lg leading-relaxed mb-8 max-w-lg">Un coridor discontinuu de urbanizare cu <strong class="text-ob">111 milioane</strong> de locuitori — din Nordul Țării Galile, prin Londra, Benelux, Renania, până în Nordul Italiei.</p>
-<div class="R flex gap-6">
-<div class="px-6 py-4 rounded-2xl bg-sf/60 border border-pr/20 text-center"><span class="block text-3xl font-extrabold text-pr">111M+</span><span class="text-xs text-ov uppercase tracking-wider">Populație</span></div>
-<div class="px-6 py-4 rounded-2xl bg-sf/60 border border-tr/20 text-center"><span class="block text-3xl font-extrabold text-tr">Top Tier</span><span class="text-xs text-ov uppercase tracking-wider">PIB UE</span></div>
-</div>
-</div>
-<div class="flex-1 w-full max-w-lg Rr">
-<div class="aspect-[4/3] rounded-3xl overflow-hidden IO border border-sr/50"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBO_tXZBRg4VJI1l93bRDVJMqIVBE8HRS0yOntAoxeVh0IQLhyGp-Xms-sXmmPKQwWBYCNSve_v6pdB40n28KTxzQ8VO0S1xkfU8x1yFqkJ8Qvqsh8Mc6zveEeXNl24Oy50Tadh4lsejfqm7ewC7vakHEpJk9lF3pHPUuzXla3-ONqACU9_g83UEMPS7QpyELrUmR6qAniV1u2bjZfWunEdW9NyDVI6Kyf73eJxdrJGyVGkpUtFqDvzbdwbbI4Ugc0vZW337nW2Zm3t" alt="Banana Albastră"/></div>
-</div>
-</div>
-</section>
-
-<!-- S2: ANATOMIA CORIDORULUI -->
-<section class="S" id="s2">
-<div class="max-w-6xl mx-auto w-full">
-<div class="text-center mb-12 T"><div class="R Ln mx-auto mb-4"></div><h2 class="R text-4xl md:text-5xl font-extrabold tracking-tight mb-4">Anatomia Coridorului</h2><p class="R text-ov text-lg max-w-2xl mx-auto">Factorii care au transformat Banana Albastră în coloana vertebrală a Europei.</p></div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6 T">
-<div class="R HL p-8 rounded-3xl bg-sf/50 border border-sr/40 flex flex-col items-center text-center gap-4"><div class="w-14 h-14 rounded-2xl bg-pr/10 border border-pr/30 flex items-center justify-center text-pr"><span class="material-symbols-outlined text-2xl">route</span></div><h3 class="text-xl font-bold">Infrastructură</h3><p class="text-ov text-sm">Rute comerciale istoric dense, acum rețele de cale ferată de mare viteză și autostrăzi.</p></div>
-<div class="R HL p-8 rounded-3xl bg-sf/50 border border-sr/40 flex flex-col items-center text-center gap-4"><div class="w-14 h-14 rounded-2xl bg-sc/10 border border-sc/30 flex items-center justify-center text-sc"><span class="material-symbols-outlined text-2xl">cloud</span></div><h3 class="text-xl font-bold">Climă</h3><p class="text-ov text-sm">Climă temperată favorabilă agriculturii, susținând istoric populații dense.</p></div>
-<div class="R HL p-8 rounded-3xl bg-sf/50 border border-sr/40 flex flex-col items-center text-center gap-4"><div class="w-14 h-14 rounded-2xl bg-tr/10 border border-tr/30 flex items-center justify-center text-tr"><span class="material-symbols-outlined text-2xl">history_edu</span></div><h3 class="text-xl font-bold">Istorie</h3><p class="text-ov text-sm">Industrializarea timpurie în valea Ruhr a stabilit dominația economică.</p></div>
-</div>
-</div>
-</section>
-
-<!-- S3: METROPOLE -->
-<section class="S" id="s3">
-<div class="max-w-6xl mx-auto w-full">
-<div class="text-center mb-12 T"><div class="R Ln mx-auto mb-4"></div><h2 class="R text-4xl md:text-5xl font-extrabold tracking-tight mb-4">Metropole <span class="text-pr">Europene</span></h2><p class="R text-ov text-lg max-w-2xl mx-auto">Centrele care propulsează Uniunea Europeană înainte.</p></div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6 T">
-<div class="R HL rounded-3xl overflow-hidden bg-sf/50 border border-sr/40">
-<div class="h-44 IO"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfcD8KsG7kUjwKlUI3hVXLtesTYlT-FxWSZiD_VI5lIWnmsyjiwt-pHxKM1wJJw1BfbWPHALCa-sRlkEpOeduVBTE05USCixnhf_4IHH1bNZBtzTnGjx44mi-GdtZWP2G_9vOWUm-Mvu4Ur77BgcX_ga2qj4UMyOltZcB-NthWloVQTubkyKH9yaj78XxzTf4qxh2PTHmU_O-HVGQoPwBXmnprNAaqTvewhwbYQjLL-Dwep6lMJccd1d7ELl3mlo62AGdHEB3CYzop" alt="Paris"/></div>
-<div class="p-5"><h3 class="text-xl font-bold text-pr mb-1">Paris</h3><p class="text-ov text-sm mb-3">Centru global pentru artă, modă și cultură.</p><div class="grid grid-cols-2 gap-2"><div class="px-2 py-1 rounded-lg bg-bg/50 text-center text-xs"><span class="text-ov">Pop.</span><br><strong>2.16M</strong></div><div class="px-2 py-1 rounded-lg bg-bg/50 text-center text-xs"><span class="text-ov">PIB</span><br><strong>€738B</strong></div></div></div>
-</div>
-<div class="R HL rounded-3xl overflow-hidden bg-sf/50 border border-sr/40">
-<div class="h-44 IO"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBsFY_UCADXfvcJKePdjfPzSr1jW9b8rAx6ZHu3HYiEMBTxfqZyuH8plHo85RrwLyJbF9Nygsmz0sIPBN6_WivOFydTh45Lq7g4x9S4kRVCTFPZ9tjvbSWHCoJIp20WnV5MNvDX0EgfK6t8FxjPRrDk9UEZtE8b8mRhAAeiJRKjqFHXsDS-vGnIFRy3V7IlQ-dxFZLVXktJLMXJLosjdyKkHeWnd2lupHzp56H8Eg_hZvzOirrshQ5gQki1UrPbXoV5NQegpwNufCv" alt="Berlin"/></div>
-<div class="p-5"><h3 class="text-xl font-bold text-pr mb-1">Berlin</h3><p class="text-ov text-sm mb-3">Scenă culturală vibrantă, centru al inovației.</p><div class="grid grid-cols-2 gap-2"><div class="px-2 py-1 rounded-lg bg-bg/50 text-center text-xs"><span class="text-ov">Pop.</span><br><strong>3.77M</strong></div><div class="px-2 py-1 rounded-lg bg-bg/50 text-center text-xs"><span class="text-ov">PIB</span><br><strong>€153B</strong></div></div></div>
-</div>
-<div class="R HL rounded-3xl overflow-hidden bg-sf/50 border border-sr/40">
-<div class="h-44 IO"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGDC4pRTvtehpJ9eIBk7qOSkzL5wXEM0b7l6vZhh2N3l24B9agSHyIqRdMfVMrYy7dBmIvv2CP5RcOgwYuIpnX1uv81wKBWmc5ATMw1NCfohaO3uiaxbLrIuiHcXftI1KNip674Hc5LAoe0BQft50wm-tbPl8pF_eSXXXvdh5B_FXoVPBWEK-ubP7BjxDO9606N68Pe-BSt8IiR56GZ7lpOovExGIW1H96_ky4yhqch0M3llju3pGPuDkD6cpMLuOrna6wrENqQNnb" alt="Bruxelles"/></div>
-<div class="p-5"><h3 class="text-xl font-bold text-pr mb-1">Bruxelles</h3><p class="text-ov text-sm mb-3">Capitala de facto a UE, instituții majore.</p><div class="grid grid-cols-2 gap-2"><div class="px-2 py-1 rounded-lg bg-bg/50 text-center text-xs"><span class="text-ov">Pop.</span><br><strong>1.21M</strong></div><div class="px-2 py-1 rounded-lg bg-bg/50 text-center text-xs"><span class="text-ov">PIB</span><br><strong>€83B</strong></div></div></div>
-</div>
-</div>
-</div>
-</section>
-
-<!-- S4: GENEZA + TIMELINE -->
-<section class="S" id="s4">
-<div class="max-w-6xl mx-auto w-full">
-<div class="text-center mb-10 T"><div class="R Ln mx-auto mb-4"></div><h2 class="R text-4xl md:text-5xl font-extrabold tracking-tight mb-4">Arhitectura Dezvoltării <span class="text-pr">Europene</span></h2><p class="R text-ov text-lg max-w-2xl mx-auto">Forțele care au modelat peisajul urban modern.</p></div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10 T">
-<div class="R HL p-6 rounded-3xl bg-sf/50 border border-sr/40 flex flex-col items-start gap-3"><div class="w-10 h-10 rounded-xl bg-pr/10 border border-pr/30 flex items-center justify-center text-pr"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">landscape</span></div><h3 class="font-bold">Fundamente Geografice</h3><p class="text-ov text-sm">Râurile și resursele naturale au dictat așezările și rutele comerciale.</p></div>
-<div class="R HL p-6 rounded-3xl bg-sf/50 border border-sr/40 flex flex-col items-start gap-3"><div class="w-10 h-10 rounded-xl bg-tr/10 border border-tr/30 flex items-center justify-center text-tr"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">history_edu</span></div><h3 class="font-bold">Continuități Istorice</h3><p class="text-ov text-sm">Drumurile romane și ligile medievale au pus bazele conectivității moderne.</p></div>
-<div class="R HL p-6 rounded-3xl bg-sf/50 border border-sr/40 flex flex-col items-start gap-3"><div class="w-10 h-10 rounded-xl bg-pr/10 border border-pr/30 flex items-center justify-center text-pr"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">euro</span></div><h3 class="font-bold">Integrare Economică</h3><p class="text-ov text-sm">Eliminarea frontierelor a accelerat aglomerarea industrială.</p></div>
-</div>
-<div class="R relative max-w-3xl mx-auto py-6">
-<div class="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-transparent via-pr to-transparent -translate-x-1/2"></div>
-<div class="space-y-14">
-<div class="relative flex items-center justify-between"><div class="w-5/12 text-right pr-5 Rl"><span class="text-2xl font-extrabold text-pr">1951</span><p class="text-xs text-ov mt-1">CECO</p></div><div class="TD"></div><div class="w-5/12 pl-5 Rr"><div class="p-4 rounded-xl bg-sf/50 border border-sr/40"><p class="text-sm text-os">Gruparea resurselor pentru reconstrucție, creând primele instituții supranaționale.</p></div></div></div>
-<div class="relative flex items-center justify-between flex-row-reverse"><div class="w-5/12 text-left pl-5 Rr"><span class="text-2xl font-extrabold text-tr">1957</span><p class="text-xs text-ov mt-1">Tratatele de la Roma</p></div><div class="TD"></div><div class="w-5/12 pr-5 text-right Rl"><div class="p-4 rounded-xl bg-sf/50 border border-sr/40"><p class="text-sm text-os">Înființarea CEE și bazele pieței comune.</p></div></div></div>
-<div class="relative flex items-center justify-between"><div class="w-5/12 text-right pr-5 Rl"><span class="text-2xl font-extrabold text-pr">1992</span><p class="text-xs text-ov mt-1">Tratatul de la Maastricht</p></div><div class="TD"></div><div class="w-5/12 pl-5 Rr"><div class="p-4 rounded-xl bg-sf/50 border border-sr/40"><p class="text-sm text-os">Crearea formală a UE, deschizând calea pentru Euro.</p></div></div></div>
-</div>
-</div>
-</div>
-</section>
-
-<!-- S5: INFRASTRUCTURĂ -->
-<section class="S" id="s5">
-<div class="max-w-6xl mx-auto w-full">
-<div class="text-center mb-12 T"><div class="R Ln mx-auto mb-4"></div><h2 class="R text-4xl md:text-5xl font-extrabold tracking-tight mb-4">Infrastructură & <span class="text-pr">Conectivitate</span></h2><p class="R text-ov text-lg max-w-2xl mx-auto">Rețelele care alimentează continentul — trenuri de mare viteză, fibre digitale, noduri aviatice.</p></div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6 T">
-<div class="R HL md:col-span-2 p-8 rounded-3xl bg-sf/50 border border-sr/40">
-<h3 class="text-2xl font-bold text-pr mb-2 flex items-center gap-2"><span class="material-symbols-outlined">train</span> Rețeaua Feroviară de Mare Viteză</h3>
-<p class="text-ov mb-6">Conectarea metropolelor, reducând timpii de călătorie și emisiile de carbon.</p>
-<div class="h-44 rounded-2xl overflow-hidden IO"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJr03UyrAl0tVDZYWNfMSavZbsKVP-Bfgi3yQwDA1bMcl0qM1pSxqz7rXwgM1u3wXe7dxi3nj1YwLMGQ_fc7ZD_31drVIKCz26IXDmbyi_-WgYnx-b2L_ncP6ebCRsFoiDCYyHoQ4DEkFWscdOd8jGCO05uJqEdu6tJO0EuQ4ZSJPGwaeZd78UtwyoaiCyy58_e8MqCpD9g5EfGxLgf_f4am4X_PLHbVO0CG6eGdvuB3o2_IFi8J8qgAeIP4Cn1dcegSDUDUtg7nPO" alt="Tren mare viteză"/></div>
-</div>
-<div class="R HL p-8 rounded-3xl bg-sf/50 border border-sr/40 flex flex-col justify-between">
-<div><div class="flex items-center gap-3 mb-4"><span class="material-symbols-outlined text-tr text-2xl">wifi</span><h3 class="text-xl font-bold">Acoperire 5G</h3></div><p class="text-ov text-sm mb-6">Acoperirea în statele membre atinge noi praguri.</p></div>
-<div class="space-y-4">
-<div><div class="flex justify-between text-sm mb-1"><span>Zone Urbane</span><strong class="text-pr">85%</strong></div><div class="w-full h-2.5 rounded-full bg-bg"><div class="bg-pr h-full rounded-full" style="width:85%"></div></div></div>
-<div><div class="flex justify-between text-sm mb-1"><span>Zone Rurale</span><strong class="text-tr">42%</strong></div><div class="w-full h-2.5 rounded-full bg-bg"><div class="bg-tr h-full rounded-full" style="width:42%"></div></div></div>
-</div>
-</div>
-<div class="R HL p-8 rounded-3xl bg-sf/50 border border-sr/40">
-<div class="flex items-center gap-3 mb-4"><span class="material-symbols-outlined text-pr text-2xl">flight_takeoff</span><h3 class="text-xl font-bold">Noduri Aviație</h3></div>
-<div class="space-y-3">
-<div class="flex justify-between p-3 rounded-xl bg-bg/40 hover:bg-bg/60 transition-colors"><span class="font-medium">Frankfurt (FRA)</span><span class="text-sm text-ov">Nod</span></div>
-<div class="flex justify-between p-3 rounded-xl bg-bg/40 hover:bg-bg/60 transition-colors"><span class="font-medium">Paris (CDG)</span><span class="text-sm text-ov">Nod</span></div>
-<div class="flex justify-between p-3 rounded-xl bg-bg/40 hover:bg-bg/60 transition-colors"><span class="font-medium">Amsterdam (AMS)</span><span class="text-sm text-ov">Nod</span></div>
-</div>
-</div>
-<div class="R HL md:col-span-2 p-8 rounded-3xl bg-sf/50 border border-sr/40">
-<h3 class="text-2xl font-bold text-tr mb-2 flex items-center gap-2"><span class="material-symbols-outlined">cable</span> Fibră Optică</h3>
-<p class="text-ov text-sm mb-6">Cabluri submarine și terestre de mare capacitate pentru suveranitatea digitală.</p>
-<div class="h-36 rounded-2xl overflow-hidden IO"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0aczAYfWp6SGEmA_Ay1vW6cD3xW7cbTpOe3EuzoqZAmTzzXDuf49wQaWnDvLaFzWgoUld6FNFOfRExek8_Fg9OX9bsSszo3PpL_uBTuBwpff_r3BrnZeiUlUYOaJjnybHPGKaWDaPiuM6ncLs1Jgaw2J8DlTOHb9Qzt3QqYoLkoivji5FJMgZUaoS5PCiD8_6MIloJUhV9mijeHC4ljz9TYkovrde-7kJv8-TEEtUNhECQTHESl-1O6FzTy0tmthDllz59JRu_L_n" alt="Fibră optică"/></div>
-</div>
-</div>
-</div>
-</section>
-
-<!-- S6: VIITORUL URBANISMULUI -->
-<section class="S" id="s6">
-<div class="max-w-6xl mx-auto w-full">
-<div class="text-center mb-12 T"><div class="R Ln mx-auto mb-4"></div><div class="R inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pr/10 border border-pr/30 text-pr text-xs font-semibold mb-4 uppercase tracking-wider">Viziune 2050</div><h2 class="R text-4xl md:text-5xl font-extrabold tracking-tight mb-4">Planul pentru <span class="text-pr">Orașele de Mâine</span></h2><p class="R text-ov text-lg max-w-2xl mx-auto">Rețele inteligente, infrastructură verde și obiective de dezvoltare durabilă.</p></div>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10 T">
-<div class="R HL p-8 rounded-3xl bg-sf/50 border border-sr/40">
-<div class="flex items-center gap-3 mb-4"><div class="w-10 h-10 rounded-full bg-tr/10 border border-tr/30 flex items-center justify-center text-tr"><span class="material-symbols-outlined">energy_savings_leaf</span></div><h3 class="text-xl font-bold">Districte cu Emisii Zero</h3></div>
-<p class="text-ov text-sm mb-4">Cartiere alimentate de micro-rețele localizate, integrând sticlă solară și pavaje kinetice pentru amprentă de carbon net-negativă.</p>
-<div class="h-40 rounded-2xl overflow-hidden IO"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBaPlbITTnF2SS0pH3qHL_tFskygVGFKhIQqGGe1zyGwDpjVW_eY_is1GN0aEYgKGf81byDjUTlIrErrdue0dgnRnWXqGnMmdbZh1KlTTnpNwIZcu04TtZ77CSHm5LHbyjS4YsT_3n7iOLcQ1BJ_rAHkXOvNZ4ZxmJNlkoEcIg-rtxBwEU2Qnbhgb2gPiHcmrPbwM7gaa2wzI_2XY78tWWaQgqTcec9vTRX2Ce7iUVQruN52XpZHpjaILu0-9zpebGgl92I5MEysB4H" alt="Oraș verde"/></div>
-</div>
-<div class="R HL p-8 rounded-3xl bg-sf/50 border border-sr/40 flex flex-col gap-4">
-<div class="h-36 rounded-2xl overflow-hidden IO"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBog8zWUni8M8_Qwyg-wShkr-81pYAFDRx0hn4vSgllyFL8e3GSXUCou9hd91z5uB3vvxtrMyMDQZJ-A1a88bSb4Ye_Rt_043SDLCGTwXIOiRVx7u307Oifg6ZZfO7UjST2kziDkAvj6gAcs-4YWIrSysOsgNY_-lS6OPkL7f2R5hz2fPCUEDkjg3KEcfYGHC7u4ggTNpNkugucJq5KCs_2SEhll4-8Gs9fgkMurbP6WKCLSAbOsVpxfiYXU-7VemxFvnf33dT8FsfH" alt="Solar"/></div>
-<div class="flex items-center gap-3 mb-2"><span class="material-symbols-outlined text-pr">solar_power</span><h3 class="font-bold text-lg">Integrare Solară</h3></div>
-<p class="text-ov text-sm">Materiale fotovoltaice țesute în fațadele clădirilor, transformând fiecare structură într-o centrală electrică silențioasă.</p>
-</div>
-</div>
-<div class="R grid grid-cols-2 md:grid-cols-4 gap-4">
-<div class="p-5 rounded-2xl bg-sf/50 border border-sr/40 text-center"><span class="material-symbols-outlined text-2xl text-pr mb-1">wind_power</span><span class="block text-3xl font-extrabold text-ob mb-1">85%</span><span class="text-xs text-ov uppercase tracking-wider">Rețea Regenerabilă</span></div>
-<div class="p-5 rounded-2xl bg-sf/50 border border-sr/40 text-center"><span class="material-symbols-outlined text-2xl text-tr mb-1">recycling</span><span class="block text-3xl font-extrabold text-ob mb-1">92%</span><span class="text-xs text-ov uppercase tracking-wider">Economie Circulară</span></div>
-<div class="p-5 rounded-2xl bg-sf/50 border border-sr/40 text-center"><span class="material-symbols-outlined text-2xl text-pr mb-1">water_drop</span><span class="block text-3xl font-extrabold text-ob mb-1">100%</span><span class="text-xs text-ov uppercase tracking-wider">Reciclare Apă</span></div>
-<div class="p-5 rounded-2xl bg-sf/50 border border-sr/40 text-center"><span class="material-symbols-outlined text-2xl text-tr mb-1">forest</span><span class="block text-3xl font-extrabold text-ob mb-1">45%</span><span class="text-xs text-ov uppercase tracking-wider">Acoperire Verde</span></div>
-</div>
-</div>
-</section>
-
-<!-- S7: METROPOLE EXTENDED - Londra, Milano, Amsterdam -->
-<section class="S" id="s7">
-<div class="max-w-6xl mx-auto w-full">
-<div class="text-center mb-12 T"><div class="R Ln mx-auto mb-4"></div><h2 class="R text-4xl md:text-5xl font-extrabold tracking-tight mb-4">Alte <span class="text-pr">Metropole</span> Cheie</h2><p class="R text-ov text-lg max-w-2xl mx-auto">Centre care definesc economia și cultura europeană.</p></div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6 T">
-<div class="R HL rounded-3xl overflow-hidden bg-sf/50 border border-sr/40">
-<div class="h-44 IO"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/London_Skyline_%2812579181845%29.jpg/800px-London_Skyline_%2812579181845%29.jpg" alt="Londra"/></div>
-<div class="p-5"><h3 class="text-xl font-bold text-pr mb-1">Londra</h3><p class="text-ov text-sm mb-3">Centru financiar global, punct de plecare al Bananei Albastre.</p><div class="grid grid-cols-2 gap-2"><div class="px-2 py-1 rounded-lg bg-bg/50 text-center text-xs"><span class="text-ov">Pop.</span><br><strong>8.98M</strong></div><div class="px-2 py-1 rounded-lg bg-bg/50 text-center text-xs"><span class="text-ov">PIB</span><br><strong>€625B</strong></div></div></div>
-</div>
-<div class="R HL rounded-3xl overflow-hidden bg-sf/50 border border-sr/40">
-<div class="h-44 IO"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Milan_duomo_02.jpg/800px-Milan_duomo_02.jpg" alt="Milano"/></div>
-<div class="p-5"><h3 class="text-xl font-bold text-pr mb-1">Milano</h3><p class="text-ov text-sm mb-3">Capitala modei, capătul sudic al Bananei Albastre.</p><div class="grid grid-cols-2 gap-2"><div class="px-2 py-1 rounded-lg bg-bg/50 text-center text-xs"><span class="text-ov">Pop.</span><br><strong>1.37M</strong></div><div class="px-2 py-1 rounded-lg bg-bg/50 text-center text-xs"><span class="text-ov">PIB</span><br><strong>€196B</strong></div></div></div>
-</div>
-<div class="R HL rounded-3xl overflow-hidden bg-sf/50 border border-sr/40">
-<div class="h-44 IO"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Keizersgrachtcanal_Amsterdam.jpg/800px-Keizersgrachtcanal_Amsterdam.jpg" alt="Amsterdam"/></div>
-<div class="p-5"><h3 class="text-xl font-bold text-pr mb-1">Amsterdam</h3><p class="text-ov text-sm mb-3">Nod logistic și digital, sediul unor corporații majore.</p><div class="grid grid-cols-2 gap-2"><div class="px-2 py-1 rounded-lg bg-bg/50 text-center text-xs"><span class="text-ov">Pop.</span><br><strong>0.92M</strong></div><div class="px-2 py-1 rounded-lg bg-bg/50 text-center text-xs"><span class="text-ov">PIB</span><br><strong>€110B</strong></div></div></div>
-</div>
-</div>
-</div>
-</section>
-
-<!-- S8: QUIZ - TRIVIA -->
-<section class="S" id="s8">
-<div class="max-w-4xl mx-auto w-full">
-<div class="text-center mb-8 T">
-<div class="R Ln mx-auto mb-4"></div>
-<div class="R inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pr/10 border border-pr/30 text-pr text-xs font-semibold mb-4 uppercase tracking-wider"><span class="material-symbols-outlined text-sm">school</span> Test 1</div>
-<h2 class="R text-4xl md:text-5xl font-extrabold tracking-tight mb-2">Istorie & <span class="text-pr">Instituții</span></h2>
-<p class="R text-ov text-lg">Răspunde la întrebări despre istoria și structura Uniunii Europene.</p>
-</div>
-<div class="R p-8 rounded-3xl bg-sf/50 border border-sr/40">
-<div class="flex justify-between items-center mb-4"><span id="triv-prog" class="text-sm text-ov font-semibold">Întrebarea 1 din 5</span><span id="triv-score" class="text-sm text-pr font-bold">Scor: 0</span></div>
-<div class="h-1 rounded-full bg-bg mb-6"><div id="triv-bar" class="bg-pr h-full rounded-full transition-all" style="width:20%"></div></div>
-<p id="triv-q" class="text-xl font-bold mb-2"></p>
-<p id="triv-ctx" class="text-sm text-ov mb-6"></p>
-<div id="triv-opts" class="space-y-3"></div>
-<div id="triv-done" class="hidden text-center py-8">
-<span class="material-symbols-outlined text-6xl text-ok mb-4" style="font-variation-settings:'FILL' 1">verified</span>
-<p class="text-2xl font-extrabold mb-2">Evaluare Completă!</p>
-<p id="triv-final" class="text-lg text-ov mb-6"></p>
-<button onclick="initTrivia()" class="px-6 py-3 rounded-2xl bg-pr/10 border border-pr/30 text-pr font-bold hover:bg-pr/20 transition-all">Reîncearcă</button>
-</div>
-</div>
-</div>
-</section>
-
-<!-- S9: QUIZ - GUESS THE FLAG -->
-<section class="S" id="s9">
-<div class="max-w-4xl mx-auto w-full">
-<div class="text-center mb-8 T">
-<div class="R Ln mx-auto mb-4"></div>
-<div class="R inline-flex items-center gap-2 px-3 py-1 rounded-full bg-tr/10 border border-tr/30 text-tr text-xs font-semibold mb-4 uppercase tracking-wider"><span class="material-symbols-outlined text-sm">flag</span> Test 2</div>
-<h2 class="R text-4xl md:text-5xl font-extrabold tracking-tight mb-2">Ghicește <span class="text-pr">Steagul</span></h2>
-<p class="R text-ov text-lg">Identifică țara după steagul afișat.</p>
-</div>
-<div class="R p-8 rounded-3xl bg-sf/50 border border-sr/40">
-<div class="flex justify-between items-center mb-4"><span id="flag-prog" class="text-sm text-ov font-semibold">Steagul 1</span><span id="flag-score" class="text-sm text-tr font-bold">Scor: 0</span></div>
-<div class="flex justify-center mb-6">
-<div class="w-64 h-44 rounded-2xl overflow-hidden bg-bg border-2 border-sr/60 shadow-lg flex items-center justify-center">
-<img id="flag-img" src="" alt="Steag" class="w-full h-full object-cover transition-opacity duration-300" style="opacity:0"/>
-</div>
-</div>
-<div id="flag-opts" class="grid grid-cols-2 gap-3"></div>
-</div>
-</div>
-</section>
-
-<!-- S10: QUIZ - CAPITAL CITIES -->
-<section class="S" id="s10">
-<div class="max-w-4xl mx-auto w-full">
-<div class="text-center mb-8 T">
-<div class="R Ln mx-auto mb-4"></div>
-<div class="R inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sc/10 border border-sc/30 text-sc text-xs font-semibold mb-4 uppercase tracking-wider"><span class="material-symbols-outlined text-sm">location_city</span> Test 3</div>
-<h2 class="R text-4xl md:text-5xl font-extrabold tracking-tight mb-2">Capitale <span class="text-pr">Europene</span></h2>
-<p class="R text-ov text-lg">Selectează capitala corectă pentru fiecare stat membru.</p>
-</div>
-<div class="R p-8 rounded-3xl bg-sf/50 border border-sr/40">
-<div class="flex justify-between items-center mb-4"><span id="cap-prog" class="text-sm text-ov font-semibold">Întrebarea 1</span><span id="cap-score" class="text-sm text-sc font-bold">Scor: 0</span></div>
-<div class="h-1 rounded-full bg-bg mb-6"><div id="cap-bar" class="bg-sc h-full rounded-full transition-all" style="width:0%"></div></div>
-<p id="cap-q" class="text-2xl font-bold mb-6 text-center"></p>
-<div id="cap-opts" class="grid grid-cols-2 gap-3"></div>
-<div id="cap-done" class="hidden text-center py-8">
-<span class="material-symbols-outlined text-6xl text-ok mb-4" style="font-variation-settings:'FILL' 1">emoji_events</span>
-<p class="text-2xl font-extrabold mb-2">Felicitări!</p>
-<p id="cap-final" class="text-lg text-ov mb-6"></p>
-<button onclick="initCapitals()" class="px-6 py-3 rounded-2xl bg-sc/10 border border-sc/30 text-sc font-bold hover:bg-sc/20 transition-all">Reîncearcă</button>
-</div>
-</div>
-</div>
-</section>
-
-<!-- S11: CREDITS -->
-<section class="S" id="s11">
-<div class="max-w-4xl mx-auto text-center T">
-<div class="R Ln mx-auto mb-6"></div>
-<h2 class="R text-5xl md:text-7xl font-extrabold tracking-tight mb-6">Mulțumim</h2>
-<p class="R text-xl text-ov max-w-2xl mx-auto mb-10 leading-relaxed">Udrea Yannis Andrei, Trandafir Maria, Șerban David<br>Colegiul Național "Ion C. Brătianu"</p>
-<div class="R flex flex-wrap gap-4 justify-center">
-<a onclick="document.getElementById('s8').scrollIntoView({behavior:'smooth'})" class="cursor-pointer px-8 py-4 rounded-2xl bg-pr/10 border border-pr/30 text-pr font-bold text-lg hover:bg-pr/20 transition-all flex items-center gap-2">Testează-ți Cunoștințele <span class="material-symbols-outlined">quiz</span></a>
-</div>
-<div class="R mt-12 text-xs text-ov/40 uppercase tracking-widest">© 2024 Inițiativa Educațională a Uniunii Europene</div>
-</div>
-</section>
-</div>
-<script>
-(function(){
-    const pres=document.getElementById('P');
-    const slides=document.querySelectorAll('.S');
-    const dotsNav=document.getElementById('dots');
-    const pbar=document.getElementById('pb');
-    const snum=document.getElementById('sn');
-    const total=slides.length;
-
-    // Build dot nav
-    slides.forEach((s,i)=>{
-        const a=document.createElement('a');
-        a.href='#s'+i;
-        a.dataset.slide=i;
-        if(i===0)a.classList.add('on');
-        a.addEventListener('click',e=>{
-            e.preventDefault();
-            slides[i].scrollIntoView({behavior:'smooth'});
-        });
-        dotsNav.appendChild(a);
-    });
-
-    // Intersection Observer for reveal animations
-    const revealEls=document.querySelectorAll('.R,.Rl,.Rr,.Rs');
-    const revealObs=new IntersectionObserver((entries)=>{
-        entries.forEach(e=>{
-            if(e.isIntersecting){
-                e.target.classList.add('V');
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>EU Explorer - Prezentare</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+            rel="stylesheet"
+        />
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            bg: "#2e3440",
+                            sf: "#3b4252",
+                            sr: "#434c5e",
+                            pr: "#88c0d0",
+                            sc: "#81a1c1",
+                            tr: "#5e81ac",
+                            ok: "#a3be8c",
+                            er: "#bf616a",
+                            ob: "#eceff4",
+                            os: "#e5e9f0",
+                            ov: "#d8dee9",
+                        },
+                        fontFamily: {
+                            sans: ["Plus Jakarta Sans", "sans-serif"],
+                        },
+                    },
+                },
+            };
+        </script>
+        <style>
+            * {
+                box-sizing: border-box;
             }
-        });
-    },{root:pres,threshold:0.15});
-    revealEls.forEach(el=>revealObs.observe(el));
+            html {
+                scroll-behavior: smooth;
+            }
+            body {
+                margin: 0;
+                background: #2e3440;
+                color: #eceff4;
+                font-family: "Plus Jakarta Sans", sans-serif;
+                overflow-x: hidden;
+            }
+            .P {
+                height: 100vh;
+                overflow-y: scroll;
+                scroll-snap-type: y mandatory;
+                scroll-behavior: smooth;
+            }
+            .S {
+                min-height: 100vh;
+                scroll-snap-align: start;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+                overflow: hidden;
+                padding: 60px 20px;
+            }
+            #pb {
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 3px;
+                background: linear-gradient(90deg, #88c0d0, #5e81ac);
+                z-index: 100;
+                transition: width 0.3s;
+                box-shadow: 0 0 8px rgba(136, 192, 208, 0.5);
+            }
+            .D {
+                position: fixed;
+                right: 18px;
+                top: 50%;
+                transform: translateY(-50%);
+                z-index: 90;
+                display: flex;
+                flex-direction: column;
+                gap: 11px;
+            }
+            .D a {
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background: rgba(136, 192, 208, 0.2);
+                border: 2px solid rgba(136, 192, 208, 0.35);
+                transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            }
+            .D a.on {
+                background: #88c0d0;
+                border-color: #88c0d0;
+                box-shadow: 0 0 8px rgba(136, 192, 208, 0.6);
+                transform: scale(1.5);
+            }
+            .D a:hover {
+                background: rgba(136, 192, 208, 0.5);
+                transform: scale(1.2);
+            }
+            #sn {
+                position: fixed;
+                bottom: 22px;
+                left: 22px;
+                z-index: 90;
+                font-size: 0.7rem;
+                font-weight: 600;
+                color: rgba(136, 192, 208, 0.45);
+                letter-spacing: 2px;
+            }
+            .R {
+                opacity: 0;
+                transform: translateY(45px);
+                transition: all 0.85s cubic-bezier(0.19, 1, 0.22, 1);
+            }
+            .R.V {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            .Rl {
+                opacity: 0;
+                transform: translateX(-50px);
+                transition: all 0.85s cubic-bezier(0.19, 1, 0.22, 1);
+            }
+            .Rl.V {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            .Rr {
+                opacity: 0;
+                transform: translateX(50px);
+                transition: all 0.85s cubic-bezier(0.19, 1, 0.22, 1);
+            }
+            .Rr.V {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            .Rs {
+                opacity: 0;
+                transform: scale(0.85);
+                transition: all 0.85s cubic-bezier(0.19, 1, 0.22, 1);
+            }
+            .Rs.V {
+                opacity: 1;
+                transform: scale(1);
+            }
+            .T > *:nth-child(1) {
+                transition-delay: 0s;
+            }
+            .T > *:nth-child(2) {
+                transition-delay: 0.1s;
+            }
+            .T > *:nth-child(3) {
+                transition-delay: 0.2s;
+            }
+            .T > *:nth-child(4) {
+                transition-delay: 0.3s;
+            }
+            .T > *:nth-child(5) {
+                transition-delay: 0.4s;
+            }
+            .T > *:nth-child(6) {
+                transition-delay: 0.5s;
+            }
+            .Ln {
+                width: 50px;
+                height: 3px;
+                background: linear-gradient(90deg, #88c0d0, #5e81ac);
+                border-radius: 2px;
+            }
+            .HL {
+                transition:
+                    transform 0.4s cubic-bezier(0.19, 1, 0.22, 1),
+                    box-shadow 0.4s;
+            }
+            .HL:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 14px 28px rgba(0, 0, 0, 0.3);
+            }
+            .IO {
+                position: relative;
+                overflow: hidden;
+                border-radius: 1rem;
+            }
+            .IO::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(
+                    135deg,
+                    rgba(46, 52, 64, 0.3),
+                    transparent
+                );
+                pointer-events: none;
+            }
+            .IO img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            }
+            .IO:hover img {
+                transform: scale(1.04);
+            }
+            .TD {
+                width: 14px;
+                height: 14px;
+                border-radius: 50%;
+                border: 3px solid #88c0d0;
+                background: #2e3440;
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 2;
+                animation: PL 2s infinite;
+            }
+            @keyframes PL {
+                0% {
+                    box-shadow: 0 0 0 0 rgba(136, 192, 208, 0.4);
+                }
+                70% {
+                    box-shadow: 0 0 0 10px rgba(136, 192, 208, 0);
+                }
+                100% {
+                    box-shadow: 0 0 0 0 rgba(136, 192, 208, 0);
+                }
+            }
+            @keyframes BN {
+                0%,
+                100% {
+                    transform: translateX(-50%) translateY(0);
+                }
+                50% {
+                    transform: translateX(-50%) translateY(-7px);
+                }
+            }
+            @media (max-width: 768px) {
+                .D {
+                    right: 8px;
+                    gap: 8px;
+                }
+                .D a {
+                    width: 7px;
+                    height: 7px;
+                }
+                #sn {
+                    bottom: 8px;
+                    left: 8px;
+                }
+                .S {
+                    padding: 36px 12px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div id="pb" style="width: 0%"></div>
+        <nav class="D" id="dots"></nav>
+        <div id="sn">01 / 12</div>
+        <div class="P" id="P">
+            <!-- S0: HERO -->
+            <section class="S" id="s0">
+                <div
+                    class="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-12 lg:gap-20 relative z-10"
+                >
+                    <div class="flex-1 text-center lg:text-left T">
+                        <div
+                            class="R inline-flex items-center gap-2 px-4 py-2 rounded-full bg-sf/60 border border-pr/20 text-pr text-sm font-semibold mb-6"
+                        >
+                            <span class="material-symbols-outlined text-sm"
+                                >public</span
+                            >
+                            Megalopolisul European
+                        </div>
+                        <h1
+                            class="R text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.1] mb-6"
+                        >
+                            Unitate în<br /><span class="text-pr"
+                                >Diversitate</span
+                            >
+                        </h1>
+                        <p
+                            class="R text-lg md:text-xl text-ov max-w-xl leading-relaxed mb-8"
+                        >
+                            Explorează bogatul mozaic al Uniunii Europene —
+                            culturi vibrante, istorii împletite și forța unui
+                            continent unit.
+                        </p>
+                        <div
+                            class="R flex flex-wrap gap-4 justify-center lg:justify-start"
+                        >
+                            <a
+                                onclick="
+                                    document
+                                        .getElementById('s8')
+                                        .scrollIntoView({ behavior: 'smooth' })
+                                "
+                                class="cursor-pointer px-8 py-4 rounded-2xl bg-pr/10 border border-pr/30 text-pr font-bold text-lg hover:bg-pr/20 transition-all flex items-center gap-2"
+                                >Testează-ți Cunoștințele
+                                <span class="material-symbols-outlined"
+                                    >quiz</span
+                                ></a
+                            >
+                        </div>
+                    </div>
+                    <div class="flex-1 w-full max-w-lg Rs">
+                        <div
+                            class="aspect-square rounded-3xl overflow-hidden IO border border-sr/50"
+                        >
+                            <img
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbESt1sv5oZf2T6evBu8AKkMhP75xdZ9GZ-YisIeTG-xp8H7Komu5Qp4b4rRhgfrP3UxlfG2qrqom4WnGH9I_oAQhwLwjID23hcqkS9tMwFPCktOtJAdCBTMsqm2yqWKhdwIoXn-ZTp0b_-MGOKF6MPAP2f3qaNDsI1e2B-lOToph541fznGhJxRmM1EFWPaZkOwkvFQ0n6vdVL39At2twOytikH06-sGjmFU5M-qQXRL5M1PHLGro7qs8xrPMyuJRKCHHVbKMzvib"
+                                alt="Harta Europei"
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div
+                    style="
+                        position: absolute;
+                        bottom: 28px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        animation: BN 2s ease-in-out infinite;
+                    "
+                    class="text-ov/40 flex flex-col items-center gap-1"
+                >
+                    <span class="text-xs uppercase tracking-[4px]">Scroll</span
+                    ><span class="material-symbols-outlined text-xl"
+                        >keyboard_arrow_down</span
+                    >
+                </div>
+            </section>
 
-    // Track current slide for dots + progress
-    let currentSlide=0;
-    const slideObs=new IntersectionObserver((entries)=>{
-        entries.forEach(e=>{
-            if(e.isIntersecting){
-                const idx=Array.from(slides).indexOf(e.target);
-                currentSlide=idx;
-                dotsNav.querySelectorAll('a').forEach((d,i)=>{
-                    d.classList.toggle('on',i===idx);
+            <!-- S1: BANANA ALBASTRĂ -->
+            <section class="S" id="s1">
+                <div
+                    class="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-12 lg:gap-20"
+                >
+                    <div class="flex-1 T">
+                        <div class="R Ln mb-4"></div>
+                        <div
+                            class="R inline-flex items-center gap-2 px-3 py-1 rounded-full bg-tr/10 border border-tr/30 text-tr text-xs font-semibold mb-4 uppercase tracking-wider"
+                        >
+                            <span class="material-symbols-outlined text-sm"
+                                >moving</span
+                            >
+                            Coridorul Economic
+                        </div>
+                        <h2
+                            class="R text-4xl md:text-6xl font-extrabold tracking-tight mb-6"
+                        >
+                            Banana <span class="text-pr">Albastră</span>
+                        </h2>
+                        <p
+                            class="R text-ov text-lg leading-relaxed mb-8 max-w-lg"
+                        >
+                            Un coridor discontinuu de urbanizare cu
+                            <strong class="text-ob">111 milioane</strong> de
+                            locuitori — din Nordul Țării Galile, prin Londra,
+                            Benelux, Renania, până în Nordul Italiei.
+                        </p>
+                        <div class="R flex gap-6">
+                            <div
+                                class="px-6 py-4 rounded-2xl bg-sf/60 border border-pr/20 text-center"
+                            >
+                                <span
+                                    class="block text-3xl font-extrabold text-pr"
+                                    >111M+</span
+                                ><span
+                                    class="text-xs text-ov uppercase tracking-wider"
+                                    >Populație</span
+                                >
+                            </div>
+                            <div
+                                class="px-6 py-4 rounded-2xl bg-sf/60 border border-tr/20 text-center"
+                            >
+                                <span
+                                    class="block text-3xl font-extrabold text-tr"
+                                    >Top Tier</span
+                                ><span
+                                    class="text-xs text-ov uppercase tracking-wider"
+                                    >PIB UE</span
+                                >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-1 w-full max-w-lg Rr">
+                        <div
+                            class="aspect-[4/3] rounded-3xl overflow-hidden IO border border-sr/50"
+                        >
+                            <img
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBO_tXZBRg4VJI1l93bRDVJMqIVBE8HRS0yOntAoxeVh0IQLhyGp-Xms-sXmmPKQwWBYCNSve_v6pdB40n28KTxzQ8VO0S1xkfU8x1yFqkJ8Qvqsh8Mc6zveEeXNl24Oy50Tadh4lsejfqm7ewC7vakHEpJk9lF3pHPUuzXla3-ONqACU9_g83UEMPS7QpyELrUmR6qAniV1u2bjZfWunEdW9NyDVI6Kyf73eJxdrJGyVGkpUtFqDvzbdwbbI4Ugc0vZW337nW2Zm3t"
+                                alt="Banana Albastră"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- S2: ANATOMIA CORIDORULUI -->
+            <section class="S" id="s2">
+                <div class="max-w-6xl mx-auto w-full">
+                    <div class="text-center mb-12 T">
+                        <div class="R Ln mx-auto mb-4"></div>
+                        <h2
+                            class="R text-4xl md:text-5xl font-extrabold tracking-tight mb-4"
+                        >
+                            Anatomia Coridorului
+                        </h2>
+                        <p class="R text-ov text-lg max-w-2xl mx-auto">
+                            Factorii care au transformat Banana Albastră în
+                            coloana vertebrală a Europei.
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 T">
+                        <div
+                            class="R HL p-8 rounded-3xl bg-sf/50 border border-sr/40 flex flex-col items-center text-center gap-4"
+                        >
+                            <div
+                                class="w-14 h-14 rounded-2xl bg-pr/10 border border-pr/30 flex items-center justify-center text-pr"
+                            >
+                                <span class="material-symbols-outlined text-2xl"
+                                    >route</span
+                                >
+                            </div>
+                            <h3 class="text-xl font-bold">Infrastructură</h3>
+                            <p class="text-ov text-sm">
+                                Rute comerciale istoric dense, acum rețele de
+                                cale ferată de mare viteză și autostrăzi.
+                            </p>
+                        </div>
+                        <div
+                            class="R HL p-8 rounded-3xl bg-sf/50 border border-sr/40 flex flex-col items-center text-center gap-4"
+                        >
+                            <div
+                                class="w-14 h-14 rounded-2xl bg-sc/10 border border-sc/30 flex items-center justify-center text-sc"
+                            >
+                                <span class="material-symbols-outlined text-2xl"
+                                    >cloud</span
+                                >
+                            </div>
+                            <h3 class="text-xl font-bold">Climă</h3>
+                            <p class="text-ov text-sm">
+                                Climă temperată favorabilă agriculturii,
+                                susținând istoric populații dense.
+                            </p>
+                        </div>
+                        <div
+                            class="R HL p-8 rounded-3xl bg-sf/50 border border-sr/40 flex flex-col items-center text-center gap-4"
+                        >
+                            <div
+                                class="w-14 h-14 rounded-2xl bg-tr/10 border border-tr/30 flex items-center justify-center text-tr"
+                            >
+                                <span class="material-symbols-outlined text-2xl"
+                                    >history_edu</span
+                                >
+                            </div>
+                            <h3 class="text-xl font-bold">Istorie</h3>
+                            <p class="text-ov text-sm">
+                                Industrializarea timpurie în valea Ruhr a
+                                stabilit dominația economică.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- S3: METROPOLE -->
+            <section class="S" id="s3">
+                <div class="max-w-6xl mx-auto w-full">
+                    <div class="text-center mb-12 T">
+                        <div class="R Ln mx-auto mb-4"></div>
+                        <h2
+                            class="R text-4xl md:text-5xl font-extrabold tracking-tight mb-4"
+                        >
+                            Metropole <span class="text-pr">Europene</span>
+                        </h2>
+                        <p class="R text-ov text-lg max-w-2xl mx-auto">
+                            Centrele care propulsează Uniunea Europeană înainte.
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 T">
+                        <div
+                            class="R HL rounded-3xl overflow-hidden bg-sf/50 border border-sr/40"
+                        >
+                            <div class="h-44 IO">
+                                <img
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfcD8KsG7kUjwKlUI3hVXLtesTYlT-FxWSZiD_VI5lIWnmsyjiwt-pHxKM1wJJw1BfbWPHALCa-sRlkEpOeduVBTE05USCixnhf_4IHH1bNZBtzTnGjx44mi-GdtZWP2G_9vOWUm-Mvu4Ur77BgcX_ga2qj4UMyOltZcB-NthWloVQTubkyKH9yaj78XxzTf4qxh2PTHmU_O-HVGQoPwBXmnprNAaqTvewhwbYQjLL-Dwep6lMJccd1d7ELl3mlo62AGdHEB3CYzop"
+                                    alt="Paris"
+                                />
+                            </div>
+                            <div class="p-5">
+                                <h3 class="text-xl font-bold text-pr mb-1">
+                                    Paris
+                                </h3>
+                                <p class="text-ov text-sm mb-3">
+                                    Centru global pentru artă, modă și cultură.
+                                </p>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <div
+                                        class="px-2 py-1 rounded-lg bg-bg/50 text-center text-xs"
+                                    >
+                                        <span class="text-ov">Pop.</span
+                                        ><br /><strong>2.16M</strong>
+                                    </div>
+                                    <div
+                                        class="px-2 py-1 rounded-lg bg-bg/50 text-center text-xs"
+                                    >
+                                        <span class="text-ov">PIB</span
+                                        ><br /><strong>€738B</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="R HL rounded-3xl overflow-hidden bg-sf/50 border border-sr/40"
+                        >
+                            <div class="h-44 IO">
+                                <img
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBsFY_UCADXfvcJKePdjfPzSr1jW9b8rAx6ZHu3HYiEMBTxfqZyuH8plHo85RrwLyJbF9Nygsmz0sIPBN6_WivOFydTh45Lq7g4x9S4kRVCTFPZ9tjvbSWHCoJIp20WnV5MNvDX0EgfK6t8FxjPRrDk9UEZtE8b8mRhAAeiJRKjqFHXsDS-vGnIFRy3V7IlQ-dxFZLVXktJLMXJLosjdyKkHeWnd2lupHzp56H8Eg_hZvzOirrshQ5gQki1UrPbXoV5NQegpwNufCv"
+                                    alt="Berlin"
+                                />
+                            </div>
+                            <div class="p-5">
+                                <h3 class="text-xl font-bold text-pr mb-1">
+                                    Berlin
+                                </h3>
+                                <p class="text-ov text-sm mb-3">
+                                    Scenă culturală vibrantă, centru al
+                                    inovației.
+                                </p>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <div
+                                        class="px-2 py-1 rounded-lg bg-bg/50 text-center text-xs"
+                                    >
+                                        <span class="text-ov">Pop.</span
+                                        ><br /><strong>3.77M</strong>
+                                    </div>
+                                    <div
+                                        class="px-2 py-1 rounded-lg bg-bg/50 text-center text-xs"
+                                    >
+                                        <span class="text-ov">PIB</span
+                                        ><br /><strong>€153B</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="R HL rounded-3xl overflow-hidden bg-sf/50 border border-sr/40"
+                        >
+                            <div class="h-44 IO">
+                                <img
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGDC4pRTvtehpJ9eIBk7qOSkzL5wXEM0b7l6vZhh2N3l24B9agSHyIqRdMfVMrYy7dBmIvv2CP5RcOgwYuIpnX1uv81wKBWmc5ATMw1NCfohaO3uiaxbLrIuiHcXftI1KNip674Hc5LAoe0BQft50wm-tbPl8pF_eSXXXvdh5B_FXoVPBWEK-ubP7BjxDO9606N68Pe-BSt8IiR56GZ7lpOovExGIW1H96_ky4yhqch0M3llju3pGPuDkD6cpMLuOrna6wrENqQNnb"
+                                    alt="Bruxelles"
+                                />
+                            </div>
+                            <div class="p-5">
+                                <h3 class="text-xl font-bold text-pr mb-1">
+                                    Bruxelles
+                                </h3>
+                                <p class="text-ov text-sm mb-3">
+                                    Capitala de facto a UE, instituții majore.
+                                </p>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <div
+                                        class="px-2 py-1 rounded-lg bg-bg/50 text-center text-xs"
+                                    >
+                                        <span class="text-ov">Pop.</span
+                                        ><br /><strong>1.21M</strong>
+                                    </div>
+                                    <div
+                                        class="px-2 py-1 rounded-lg bg-bg/50 text-center text-xs"
+                                    >
+                                        <span class="text-ov">PIB</span
+                                        ><br /><strong>€83B</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- S4: GENEZA + TIMELINE -->
+            <section class="S" id="s4">
+                <div class="max-w-6xl mx-auto w-full">
+                    <div class="text-center mb-10 T">
+                        <div class="R Ln mx-auto mb-4"></div>
+                        <h2
+                            class="R text-4xl md:text-5xl font-extrabold tracking-tight mb-4"
+                        >
+                            Arhitectura Dezvoltării
+                            <span class="text-pr">Europene</span>
+                        </h2>
+                        <p class="R text-ov text-lg max-w-2xl mx-auto">
+                            Forțele care au modelat peisajul urban modern.
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10 T">
+                        <div
+                            class="R HL p-6 rounded-3xl bg-sf/50 border border-sr/40 flex flex-col items-start gap-3"
+                        >
+                            <div
+                                class="w-10 h-10 rounded-xl bg-pr/10 border border-pr/30 flex items-center justify-center text-pr"
+                            >
+                                <span
+                                    class="material-symbols-outlined"
+                                    style="
+                                        font-variation-settings: &quot;FILL&quot;
+                                            1;
+                                    "
+                                    >landscape</span
+                                >
+                            </div>
+                            <h3 class="font-bold">Fundamente Geografice</h3>
+                            <p class="text-ov text-sm">
+                                Râurile și resursele naturale au dictat
+                                așezările și rutele comerciale.
+                            </p>
+                        </div>
+                        <div
+                            class="R HL p-6 rounded-3xl bg-sf/50 border border-sr/40 flex flex-col items-start gap-3"
+                        >
+                            <div
+                                class="w-10 h-10 rounded-xl bg-tr/10 border border-tr/30 flex items-center justify-center text-tr"
+                            >
+                                <span
+                                    class="material-symbols-outlined"
+                                    style="
+                                        font-variation-settings: &quot;FILL&quot;
+                                            1;
+                                    "
+                                    >history_edu</span
+                                >
+                            </div>
+                            <h3 class="font-bold">Continuități Istorice</h3>
+                            <p class="text-ov text-sm">
+                                Drumurile romane și ligile medievale au pus
+                                bazele conectivității moderne.
+                            </p>
+                        </div>
+                        <div
+                            class="R HL p-6 rounded-3xl bg-sf/50 border border-sr/40 flex flex-col items-start gap-3"
+                        >
+                            <div
+                                class="w-10 h-10 rounded-xl bg-pr/10 border border-pr/30 flex items-center justify-center text-pr"
+                            >
+                                <span
+                                    class="material-symbols-outlined"
+                                    style="
+                                        font-variation-settings: &quot;FILL&quot;
+                                            1;
+                                    "
+                                    >euro</span
+                                >
+                            </div>
+                            <h3 class="font-bold">Integrare Economică</h3>
+                            <p class="text-ov text-sm">
+                                Eliminarea frontierelor a accelerat aglomerarea
+                                industrială.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="R relative max-w-3xl mx-auto py-6">
+                        <div
+                            class="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-transparent via-pr to-transparent -translate-x-1/2"
+                        ></div>
+                        <div class="space-y-14">
+                            <div
+                                class="relative flex items-center justify-between"
+                            >
+                                <div class="w-5/12 text-right pr-5 Rl">
+                                    <span
+                                        class="text-2xl font-extrabold text-pr"
+                                        >1951</span
+                                    >
+                                    <p class="text-xs text-ov mt-1">CECO</p>
+                                </div>
+                                <div class="TD"></div>
+                                <div class="w-5/12 pl-5 Rr">
+                                    <div
+                                        class="p-4 rounded-xl bg-sf/50 border border-sr/40"
+                                    >
+                                        <p class="text-sm text-os">
+                                            Gruparea resurselor pentru
+                                            reconstrucție, creând primele
+                                            instituții supranaționale.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="relative flex items-center justify-between flex-row-reverse"
+                            >
+                                <div class="w-5/12 text-left pl-5 Rr">
+                                    <span
+                                        class="text-2xl font-extrabold text-tr"
+                                        >1957</span
+                                    >
+                                    <p class="text-xs text-ov mt-1">
+                                        Tratatele de la Roma
+                                    </p>
+                                </div>
+                                <div class="TD"></div>
+                                <div class="w-5/12 pr-5 text-right Rl">
+                                    <div
+                                        class="p-4 rounded-xl bg-sf/50 border border-sr/40"
+                                    >
+                                        <p class="text-sm text-os">
+                                            Înființarea CEE și bazele pieței
+                                            comune.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="relative flex items-center justify-between"
+                            >
+                                <div class="w-5/12 text-right pr-5 Rl">
+                                    <span
+                                        class="text-2xl font-extrabold text-pr"
+                                        >1992</span
+                                    >
+                                    <p class="text-xs text-ov mt-1">
+                                        Tratatul de la Maastricht
+                                    </p>
+                                </div>
+                                <div class="TD"></div>
+                                <div class="w-5/12 pl-5 Rr">
+                                    <div
+                                        class="p-4 rounded-xl bg-sf/50 border border-sr/40"
+                                    >
+                                        <p class="text-sm text-os">
+                                            Crearea formală a UE, deschizând
+                                            calea pentru Euro.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- S5: INFRASTRUCTURĂ -->
+            <section class="S" id="s5">
+                <div class="max-w-6xl mx-auto w-full">
+                    <div class="text-center mb-12 T">
+                        <div class="R Ln mx-auto mb-4"></div>
+                        <h2
+                            class="R text-4xl md:text-5xl font-extrabold tracking-tight mb-4"
+                        >
+                            Infrastructură &
+                            <span class="text-pr">Conectivitate</span>
+                        </h2>
+                        <p class="R text-ov text-lg max-w-2xl mx-auto">
+                            Rețelele care alimentează continentul — trenuri de
+                            mare viteză, fibre digitale, noduri aviatice.
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 T">
+                        <div
+                            class="R HL md:col-span-2 p-8 rounded-3xl bg-sf/50 border border-sr/40"
+                        >
+                            <h3
+                                class="text-2xl font-bold text-pr mb-2 flex items-center gap-2"
+                            >
+                                <span class="material-symbols-outlined"
+                                    >train</span
+                                >
+                                Rețeaua Feroviară de Mare Viteză
+                            </h3>
+                            <p class="text-ov mb-6">
+                                Conectarea metropolelor, reducând timpii de
+                                călătorie și emisiile de carbon.
+                            </p>
+                            <div class="h-44 rounded-2xl overflow-hidden IO">
+                                <img
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJr03UyrAl0tVDZYWNfMSavZbsKVP-Bfgi3yQwDA1bMcl0qM1pSxqz7rXwgM1u3wXe7dxi3nj1YwLMGQ_fc7ZD_31drVIKCz26IXDmbyi_-WgYnx-b2L_ncP6ebCRsFoiDCYyHoQ4DEkFWscdOd8jGCO05uJqEdu6tJO0EuQ4ZSJPGwaeZd78UtwyoaiCyy58_e8MqCpD9g5EfGxLgf_f4am4X_PLHbVO0CG6eGdvuB3o2_IFi8J8qgAeIP4Cn1dcegSDUDUtg7nPO"
+                                    alt="Tren mare viteză"
+                                />
+                            </div>
+                        </div>
+                        <div
+                            class="R HL p-8 rounded-3xl bg-sf/50 border border-sr/40 flex flex-col justify-between"
+                        >
+                            <div>
+                                <div class="flex items-center gap-3 mb-4">
+                                    <span
+                                        class="material-symbols-outlined text-tr text-2xl"
+                                        >wifi</span
+                                    >
+                                    <h3 class="text-xl font-bold">
+                                        Acoperire 5G
+                                    </h3>
+                                </div>
+                                <p class="text-ov text-sm mb-6">
+                                    Acoperirea în statele membre atinge noi
+                                    praguri.
+                                </p>
+                            </div>
+                            <div class="space-y-4">
+                                <div>
+                                    <div
+                                        class="flex justify-between text-sm mb-1"
+                                    >
+                                        <span>Zone Urbane</span
+                                        ><strong class="text-pr">85%</strong>
+                                    </div>
+                                    <div
+                                        class="w-full h-2.5 rounded-full bg-bg"
+                                    >
+                                        <div
+                                            class="bg-pr h-full rounded-full"
+                                            style="width: 85%"
+                                        ></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div
+                                        class="flex justify-between text-sm mb-1"
+                                    >
+                                        <span>Zone Rurale</span
+                                        ><strong class="text-tr">42%</strong>
+                                    </div>
+                                    <div
+                                        class="w-full h-2.5 rounded-full bg-bg"
+                                    >
+                                        <div
+                                            class="bg-tr h-full rounded-full"
+                                            style="width: 42%"
+                                        ></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="R HL p-8 rounded-3xl bg-sf/50 border border-sr/40"
+                        >
+                            <div class="flex items-center gap-3 mb-4">
+                                <span
+                                    class="material-symbols-outlined text-pr text-2xl"
+                                    >flight_takeoff</span
+                                >
+                                <h3 class="text-xl font-bold">
+                                    Noduri Aviație
+                                </h3>
+                            </div>
+                            <div class="space-y-3">
+                                <div
+                                    class="flex justify-between p-3 rounded-xl bg-bg/40 hover:bg-bg/60 transition-colors"
+                                >
+                                    <span class="font-medium"
+                                        >Frankfurt (FRA)</span
+                                    ><span class="text-sm text-ov">Nod</span>
+                                </div>
+                                <div
+                                    class="flex justify-between p-3 rounded-xl bg-bg/40 hover:bg-bg/60 transition-colors"
+                                >
+                                    <span class="font-medium">Paris (CDG)</span
+                                    ><span class="text-sm text-ov">Nod</span>
+                                </div>
+                                <div
+                                    class="flex justify-between p-3 rounded-xl bg-bg/40 hover:bg-bg/60 transition-colors"
+                                >
+                                    <span class="font-medium"
+                                        >Amsterdam (AMS)</span
+                                    ><span class="text-sm text-ov">Nod</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="R HL md:col-span-2 p-8 rounded-3xl bg-sf/50 border border-sr/40"
+                        >
+                            <h3
+                                class="text-2xl font-bold text-tr mb-2 flex items-center gap-2"
+                            >
+                                <span class="material-symbols-outlined"
+                                    >cable</span
+                                >
+                                Fibră Optică
+                            </h3>
+                            <p class="text-ov text-sm mb-6">
+                                Cabluri submarine și terestre de mare capacitate
+                                pentru suveranitatea digitală.
+                            </p>
+                            <div class="h-36 rounded-2xl overflow-hidden IO">
+                                <img
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0aczAYfWp6SGEmA_Ay1vW6cD3xW7cbTpOe3EuzoqZAmTzzXDuf49wQaWnDvLaFzWgoUld6FNFOfRExek8_Fg9OX9bsSszo3PpL_uBTuBwpff_r3BrnZeiUlUYOaJjnybHPGKaWDaPiuM6ncLs1Jgaw2J8DlTOHb9Qzt3QqYoLkoivji5FJMgZUaoS5PCiD8_6MIloJUhV9mijeHC4ljz9TYkovrde-7kJv8-TEEtUNhECQTHESl-1O6FzTy0tmthDllz59JRu_L_n"
+                                    alt="Fibră optică"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- S6: VIITORUL URBANISMULUI -->
+            <section class="S" id="s6">
+                <div class="max-w-6xl mx-auto w-full">
+                    <div class="text-center mb-12 T">
+                        <div class="R Ln mx-auto mb-4"></div>
+                        <div
+                            class="R inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pr/10 border border-pr/30 text-pr text-xs font-semibold mb-4 uppercase tracking-wider"
+                        >
+                            Viziune 2050
+                        </div>
+                        <h2
+                            class="R text-4xl md:text-5xl font-extrabold tracking-tight mb-4"
+                        >
+                            Planul pentru
+                            <span class="text-pr">Orașele de Mâine</span>
+                        </h2>
+                        <p class="R text-ov text-lg max-w-2xl mx-auto">
+                            Rețele inteligente, infrastructură verde și
+                            obiective de dezvoltare durabilă.
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10 T">
+                        <div
+                            class="R HL p-8 rounded-3xl bg-sf/50 border border-sr/40"
+                        >
+                            <div class="flex items-center gap-3 mb-4">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-tr/10 border border-tr/30 flex items-center justify-center text-tr"
+                                >
+                                    <span class="material-symbols-outlined"
+                                        >energy_savings_leaf</span
+                                    >
+                                </div>
+                                <h3 class="text-xl font-bold">
+                                    Districte cu Emisii Zero
+                                </h3>
+                            </div>
+                            <p class="text-ov text-sm mb-4">
+                                Cartiere alimentate de micro-rețele localizate,
+                                integrând sticlă solară și pavaje kinetice
+                                pentru amprentă de carbon net-negativă.
+                            </p>
+                            <div class="h-40 rounded-2xl overflow-hidden IO">
+                                <img
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBaPlbITTnF2SS0pH3qHL_tFskygVGFKhIQqGGe1zyGwDpjVW_eY_is1GN0aEYgKGf81byDjUTlIrErrdue0dgnRnWXqGnMmdbZh1KlTTnpNwIZcu04TtZ77CSHm5LHbyjS4YsT_3n7iOLcQ1BJ_rAHkXOvNZ4ZxmJNlkoEcIg-rtxBwEU2Qnbhgb2gPiHcmrPbwM7gaa2wzI_2XY78tWWaQgqTcec9vTRX2Ce7iUVQruN52XpZHpjaILu0-9zpebGgl92I5MEysB4H"
+                                    alt="Oraș verde"
+                                />
+                            </div>
+                        </div>
+                        <div
+                            class="R HL p-8 rounded-3xl bg-sf/50 border border-sr/40 flex flex-col gap-4"
+                        >
+                            <div class="h-36 rounded-2xl overflow-hidden IO">
+                                <img
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBog8zWUni8M8_Qwyg-wShkr-81pYAFDRx0hn4vSgllyFL8e3GSXUCou9hd91z5uB3vvxtrMyMDQZJ-A1a88bSb4Ye_Rt_043SDLCGTwXIOiRVx7u307Oifg6ZZfO7UjST2kziDkAvj6gAcs-4YWIrSysOsgNY_-lS6OPkL7f2R5hz2fPCUEDkjg3KEcfYGHC7u4ggTNpNkugucJq5KCs_2SEhll4-8Gs9fgkMurbP6WKCLSAbOsVpxfiYXU-7VemxFvnf33dT8FsfH"
+                                    alt="Solar"
+                                />
+                            </div>
+                            <div class="flex items-center gap-3 mb-2">
+                                <span class="material-symbols-outlined text-pr"
+                                    >solar_power</span
+                                >
+                                <h3 class="font-bold text-lg">
+                                    Integrare Solară
+                                </h3>
+                            </div>
+                            <p class="text-ov text-sm">
+                                Materiale fotovoltaice țesute în fațadele
+                                clădirilor, transformând fiecare structură
+                                într-o centrală electrică silențioasă.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="R grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div
+                            class="p-5 rounded-2xl bg-sf/50 border border-sr/40 text-center"
+                        >
+                            <span
+                                class="material-symbols-outlined text-2xl text-pr mb-1"
+                                >wind_power</span
+                            ><span
+                                class="block text-3xl font-extrabold text-ob mb-1"
+                                >85%</span
+                            ><span
+                                class="text-xs text-ov uppercase tracking-wider"
+                                >Rețea Regenerabilă</span
+                            >
+                        </div>
+                        <div
+                            class="p-5 rounded-2xl bg-sf/50 border border-sr/40 text-center"
+                        >
+                            <span
+                                class="material-symbols-outlined text-2xl text-tr mb-1"
+                                >recycling</span
+                            ><span
+                                class="block text-3xl font-extrabold text-ob mb-1"
+                                >92%</span
+                            ><span
+                                class="text-xs text-ov uppercase tracking-wider"
+                                >Economie Circulară</span
+                            >
+                        </div>
+                        <div
+                            class="p-5 rounded-2xl bg-sf/50 border border-sr/40 text-center"
+                        >
+                            <span
+                                class="material-symbols-outlined text-2xl text-pr mb-1"
+                                >water_drop</span
+                            ><span
+                                class="block text-3xl font-extrabold text-ob mb-1"
+                                >100%</span
+                            ><span
+                                class="text-xs text-ov uppercase tracking-wider"
+                                >Reciclare Apă</span
+                            >
+                        </div>
+                        <div
+                            class="p-5 rounded-2xl bg-sf/50 border border-sr/40 text-center"
+                        >
+                            <span
+                                class="material-symbols-outlined text-2xl text-tr mb-1"
+                                >forest</span
+                            ><span
+                                class="block text-3xl font-extrabold text-ob mb-1"
+                                >45%</span
+                            ><span
+                                class="text-xs text-ov uppercase tracking-wider"
+                                >Acoperire Verde</span
+                            >
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- S7: METROPOLE EXTENDED - Londra, Milano, Amsterdam -->
+            <section class="S" id="s7">
+                <div class="max-w-6xl mx-auto w-full">
+                    <div class="text-center mb-12 T">
+                        <div class="R Ln mx-auto mb-4"></div>
+                        <h2
+                            class="R text-4xl md:text-5xl font-extrabold tracking-tight mb-4"
+                        >
+                            Alte <span class="text-pr">Metropole</span> Cheie
+                        </h2>
+                        <p class="R text-ov text-lg max-w-2xl mx-auto">
+                            Centre care definesc economia și cultura europeană.
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 T">
+                        <div
+                            class="R HL rounded-3xl overflow-hidden bg-sf/50 border border-sr/40"
+                        >
+                            <div class="h-44 IO">
+                                <img src="londra.jpeg" alt="Londra" />
+                            </div>
+                            <div class="p-5">
+                                <h3 class="text-xl font-bold text-pr mb-1">
+                                    Londra
+                                </h3>
+                                <p class="text-ov text-sm mb-3">
+                                    Centru financiar global, punct de plecare al
+                                    Bananei Albastre.
+                                </p>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <div
+                                        class="px-2 py-1 rounded-lg bg-bg/50 text-center text-xs"
+                                    >
+                                        <span class="text-ov">Pop.</span
+                                        ><br /><strong>8.98M</strong>
+                                    </div>
+                                    <div
+                                        class="px-2 py-1 rounded-lg bg-bg/50 text-center text-xs"
+                                    >
+                                        <span class="text-ov">PIB</span
+                                        ><br /><strong>€625B</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="R HL rounded-3xl overflow-hidden bg-sf/50 border border-sr/40"
+                        >
+                            <div class="h-44 IO">
+                                <img src="milano.jpg" alt="Milano" />
+                            </div>
+                            <div class="p-5">
+                                <h3 class="text-xl font-bold text-pr mb-1">
+                                    Milano
+                                </h3>
+                                <p class="text-ov text-sm mb-3">
+                                    Capitala modei, capătul sudic al Bananei
+                                    Albastre.
+                                </p>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <div
+                                        class="px-2 py-1 rounded-lg bg-bg/50 text-center text-xs"
+                                    >
+                                        <span class="text-ov">Pop.</span
+                                        ><br /><strong>1.37M</strong>
+                                    </div>
+                                    <div
+                                        class="px-2 py-1 rounded-lg bg-bg/50 text-center text-xs"
+                                    >
+                                        <span class="text-ov">PIB</span
+                                        ><br /><strong>€196B</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="R HL rounded-3xl overflow-hidden bg-sf/50 border border-sr/40"
+                        >
+                            <div class="h-44 IO">
+                                <img src="amsterdam.jpg" alt="Amsterdam" />
+                            </div>
+                            <div class="p-5">
+                                <h3 class="text-xl font-bold text-pr mb-1">
+                                    Amsterdam
+                                </h3>
+                                <p class="text-ov text-sm mb-3">
+                                    Nod logistic și digital, sediul unor
+                                    corporații majore.
+                                </p>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <div
+                                        class="px-2 py-1 rounded-lg bg-bg/50 text-center text-xs"
+                                    >
+                                        <span class="text-ov">Pop.</span
+                                        ><br /><strong>0.92M</strong>
+                                    </div>
+                                    <div
+                                        class="px-2 py-1 rounded-lg bg-bg/50 text-center text-xs"
+                                    >
+                                        <span class="text-ov">PIB</span
+                                        ><br /><strong>€110B</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- S8: QUIZ - TRIVIA -->
+            <section class="S" id="s8">
+                <div class="max-w-4xl mx-auto w-full">
+                    <div class="text-center mb-8 T">
+                        <div class="R Ln mx-auto mb-4"></div>
+                        <div
+                            class="R inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pr/10 border border-pr/30 text-pr text-xs font-semibold mb-4 uppercase tracking-wider"
+                        >
+                            <span class="material-symbols-outlined text-sm"
+                                >school</span
+                            >
+                            Test 1
+                        </div>
+                        <h2
+                            class="R text-4xl md:text-5xl font-extrabold tracking-tight mb-2"
+                        >
+                            Istorie & <span class="text-pr">Instituții</span>
+                        </h2>
+                        <p class="R text-ov text-lg">
+                            Răspunde la întrebări despre istoria și structura
+                            Uniunii Europene.
+                        </p>
+                    </div>
+                    <div class="R p-8 rounded-3xl bg-sf/50 border border-sr/40">
+                        <div class="flex justify-between items-center mb-4">
+                            <span
+                                id="triv-prog"
+                                class="text-sm text-ov font-semibold"
+                                >Întrebarea 1 din 5</span
+                            ><span
+                                id="triv-score"
+                                class="text-sm text-pr font-bold"
+                                >Scor: 0</span
+                            >
+                        </div>
+                        <div class="h-1 rounded-full bg-bg mb-6">
+                            <div
+                                id="triv-bar"
+                                class="bg-pr h-full rounded-full transition-all"
+                                style="width: 20%"
+                            ></div>
+                        </div>
+                        <p id="triv-q" class="text-xl font-bold mb-2"></p>
+                        <p id="triv-ctx" class="text-sm text-ov mb-6"></p>
+                        <div id="triv-opts" class="space-y-3"></div>
+                        <div id="triv-done" class="hidden text-center py-8">
+                            <span
+                                class="material-symbols-outlined text-6xl text-ok mb-4"
+                                style="
+                                    font-variation-settings: &quot;FILL&quot; 1;
+                                "
+                                >verified</span
+                            >
+                            <p class="text-2xl font-extrabold mb-2">
+                                Evaluare Completă!
+                            </p>
+                            <p id="triv-final" class="text-lg text-ov mb-6"></p>
+                            <button
+                                onclick="initTrivia()"
+                                class="px-6 py-3 rounded-2xl bg-pr/10 border border-pr/30 text-pr font-bold hover:bg-pr/20 transition-all"
+                            >
+                                Reîncearcă
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- S9: QUIZ - GUESS THE FLAG -->
+            <section class="S" id="s9">
+                <div class="max-w-4xl mx-auto w-full">
+                    <div class="text-center mb-8 T">
+                        <div class="R Ln mx-auto mb-4"></div>
+                        <div
+                            class="R inline-flex items-center gap-2 px-3 py-1 rounded-full bg-tr/10 border border-tr/30 text-tr text-xs font-semibold mb-4 uppercase tracking-wider"
+                        >
+                            <span class="material-symbols-outlined text-sm"
+                                >flag</span
+                            >
+                            Test 2
+                        </div>
+                        <h2
+                            class="R text-4xl md:text-5xl font-extrabold tracking-tight mb-2"
+                        >
+                            Ghicește <span class="text-pr">Steagul</span>
+                        </h2>
+                        <p class="R text-ov text-lg">
+                            Identifică țara după steagul afișat.
+                        </p>
+                    </div>
+                    <div class="R p-8 rounded-3xl bg-sf/50 border border-sr/40">
+                        <div class="flex justify-between items-center mb-4">
+                            <span
+                                id="flag-prog"
+                                class="text-sm text-ov font-semibold"
+                                >Steagul 1</span
+                            ><span
+                                id="flag-score"
+                                class="text-sm text-tr font-bold"
+                                >Scor: 0</span
+                            >
+                        </div>
+                        <div class="flex justify-center mb-6">
+                            <div
+                                class="w-64 h-44 rounded-2xl overflow-hidden bg-bg border-2 border-sr/60 shadow-lg flex items-center justify-center"
+                            >
+                                <img
+                                    id="flag-img"
+                                    src=""
+                                    alt="Steag"
+                                    class="w-full h-full object-cover transition-opacity duration-300"
+                                    style="opacity: 0"
+                                />
+                            </div>
+                        </div>
+                        <div
+                            id="flag-opts"
+                            class="grid grid-cols-2 gap-3"
+                        ></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- S10: QUIZ - CAPITAL CITIES -->
+            <section class="S" id="s10">
+                <div class="max-w-4xl mx-auto w-full">
+                    <div class="text-center mb-8 T">
+                        <div class="R Ln mx-auto mb-4"></div>
+                        <div
+                            class="R inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sc/10 border border-sc/30 text-sc text-xs font-semibold mb-4 uppercase tracking-wider"
+                        >
+                            <span class="material-symbols-outlined text-sm"
+                                >location_city</span
+                            >
+                            Test 3
+                        </div>
+                        <h2
+                            class="R text-4xl md:text-5xl font-extrabold tracking-tight mb-2"
+                        >
+                            Capitale <span class="text-pr">Europene</span>
+                        </h2>
+                        <p class="R text-ov text-lg">
+                            Selectează capitala corectă pentru fiecare stat
+                            membru.
+                        </p>
+                    </div>
+                    <div class="R p-8 rounded-3xl bg-sf/50 border border-sr/40">
+                        <div class="flex justify-between items-center mb-4">
+                            <span
+                                id="cap-prog"
+                                class="text-sm text-ov font-semibold"
+                                >Întrebarea 1</span
+                            ><span
+                                id="cap-score"
+                                class="text-sm text-sc font-bold"
+                                >Scor: 0</span
+                            >
+                        </div>
+                        <div class="h-1 rounded-full bg-bg mb-6">
+                            <div
+                                id="cap-bar"
+                                class="bg-sc h-full rounded-full transition-all"
+                                style="width: 0%"
+                            ></div>
+                        </div>
+                        <p
+                            id="cap-q"
+                            class="text-2xl font-bold mb-6 text-center"
+                        ></p>
+                        <div id="cap-opts" class="grid grid-cols-2 gap-3"></div>
+                        <div id="cap-done" class="hidden text-center py-8">
+                            <span
+                                class="material-symbols-outlined text-6xl text-ok mb-4"
+                                style="
+                                    font-variation-settings: &quot;FILL&quot; 1;
+                                "
+                                >emoji_events</span
+                            >
+                            <p class="text-2xl font-extrabold mb-2">
+                                Felicitări!
+                            </p>
+                            <p id="cap-final" class="text-lg text-ov mb-6"></p>
+                            <button
+                                onclick="initCapitals()"
+                                class="px-6 py-3 rounded-2xl bg-sc/10 border border-sc/30 text-sc font-bold hover:bg-sc/20 transition-all"
+                            >
+                                Reîncearcă
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- S11: CREDITS -->
+            <section class="S" id="s11">
+                <div class="max-w-4xl mx-auto text-center T">
+                    <div class="R Ln mx-auto mb-6"></div>
+                    <h2
+                        class="R text-5xl md:text-7xl font-extrabold tracking-tight mb-6"
+                    >
+                        Mulțumim
+                    </h2>
+                    <p
+                        class="R text-xl text-ov max-w-2xl mx-auto mb-10 leading-relaxed"
+                    >
+                        Udrea Yannis Andrei, Trandafir Maria, Șerban David<br />Colegiul
+                        Național "Ion C. Brătianu"
+                    </p>
+                    <div class="R flex flex-wrap gap-4 justify-center">
+                        <a
+                            onclick="
+                                document
+                                    .getElementById('s8')
+                                    .scrollIntoView({ behavior: 'smooth' })
+                            "
+                            class="cursor-pointer px-8 py-4 rounded-2xl bg-pr/10 border border-pr/30 text-pr font-bold text-lg hover:bg-pr/20 transition-all flex items-center gap-2"
+                            >Testează-ți Cunoștințele
+                            <span class="material-symbols-outlined"
+                                >quiz</span
+                            ></a
+                        >
+                    </div>
+                    <div
+                        class="R mt-12 text-xs text-ov/40 uppercase tracking-widest"
+                    >
+                        © 2024 Inițiativa Educațională a Uniunii Europene
+                    </div>
+                </div>
+            </section>
+        </div>
+        <script>
+            (function () {
+                const pres = document.getElementById("P");
+                const slides = document.querySelectorAll(".S");
+                const dotsNav = document.getElementById("dots");
+                const pbar = document.getElementById("pb");
+                const snum = document.getElementById("sn");
+                const total = slides.length;
+
+                // Build dot nav
+                slides.forEach((s, i) => {
+                    const a = document.createElement("a");
+                    a.href = "#s" + i;
+                    a.dataset.slide = i;
+                    if (i === 0) a.classList.add("on");
+                    a.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        slides[i].scrollIntoView({ behavior: "smooth" });
+                    });
+                    dotsNav.appendChild(a);
                 });
-                pbar.style.width=((idx+1)/total*100)+'%';
-                snum.textContent=String(idx+1).padStart(2,'0')+' / '+String(total).padStart(2,'0');
-            }
-        });
-    },{root:pres,threshold:0.5});
-    slides.forEach(s=>slideObs.observe(s));
 
-    // Keyboard navigation
-    document.addEventListener('keydown',e=>{
-        if(e.key==='ArrowDown'||e.key==='PageDown'||e.key===' '){
-            e.preventDefault();
-            const next=Math.min(currentSlide+1,total-1);
-            slides[next].scrollIntoView({behavior:'smooth'});
-        }else if(e.key==='ArrowUp'||e.key==='PageUp'){
-            e.preventDefault();
-            const prev=Math.max(currentSlide-1,0);
-            slides[prev].scrollIntoView({behavior:'smooth'});
-        }else if(e.key==='Home'){
-            e.preventDefault();
-            slides[0].scrollIntoView({behavior:'smooth'});
-        }else if(e.key==='End'){
-            e.preventDefault();
-            slides[total-1].scrollIntoView({behavior:'smooth'});
-        }
-    });
+                // Intersection Observer for reveal animations
+                const revealEls = document.querySelectorAll(".R,.Rl,.Rr,.Rs");
+                const revealObs = new IntersectionObserver(
+                    (entries) => {
+                        entries.forEach((e) => {
+                            if (e.isIntersecting) {
+                                e.target.classList.add("V");
+                            }
+                        });
+                    },
+                    { root: pres, threshold: 0.15 },
+                );
+                revealEls.forEach((el) => revealObs.observe(el));
 
-    // Touch swipe support
-    let touchStartY=0;
-    pres.addEventListener('touchstart',e=>{touchStartY=e.touches[0].clientY},{passive:true});
-    pres.addEventListener('touchend',e=>{
-        const diff=touchStartY-e.changedTouches[0].clientY;
-        if(Math.abs(diff)>50){
-            if(diff>0){
-                const next=Math.min(currentSlide+1,total-1);
-                slides[next].scrollIntoView({behavior:'smooth'});
-            }else{
-                const prev=Math.max(currentSlide-1,0);
-                slides[prev].scrollIntoView({behavior:'smooth'});
-            }
-        }
-    },{passive:true});
+                // Track current slide for dots + progress
+                let currentSlide = 0;
+                const slideObs = new IntersectionObserver(
+                    (entries) => {
+                        entries.forEach((e) => {
+                            if (e.isIntersecting) {
+                                const idx = Array.from(slides).indexOf(
+                                    e.target,
+                                );
+                                currentSlide = idx;
+                                dotsNav
+                                    .querySelectorAll("a")
+                                    .forEach((d, i) => {
+                                        d.classList.toggle("on", i === idx);
+                                    });
+                                pbar.style.width =
+                                    ((idx + 1) / total) * 100 + "%";
+                                snum.textContent =
+                                    String(idx + 1).padStart(2, "0") +
+                                    " / " +
+                                    String(total).padStart(2, "0");
+                            }
+                        });
+                    },
+                    { root: pres, threshold: 0.5 },
+                );
+                slides.forEach((s) => slideObs.observe(s));
 
-    // ========== QUIZ: TRIVIA ==========
-    const triviaQs=[
-        {q:"Care tratat a pus bazele formale ale UE în 1992, stabilind cetățenia europeană?",ctx:"Trecerea de la CEE la uniune politică.",opts:["Tratatul de la Roma","Tratatul de la Lisabona","Tratatul de la Maastricht","Acordul Schengen"],ans:2},
-        {q:"Care instituție europeană este aleasă direct prin votul cetățenilor?",ctx:"Alegerile se desfășoară la fiecare 5 ani.",opts:["Comisia Europeană","Parlamentul European","Consiliul European","Curtea de Justiție"],ans:1},
-        {q:"Care oraș găzduiește sediul central al Comisiei Europene?",ctx:"Parte din nucleul celor 6 state fondatoare.",opts:["Strasbourg","Bruxelles","Frankfurt","Luxemburg"],ans:1},
-        {q:"Ce formațiune urbană este coloana vertebrală economică a Europei (Banana Albastră)?",ctx:"Se întinde de la NW Anglia până la N Italie.",opts:["Axa Paris-Berlin","Megalopolisul Rin-Ruhr","Poligonul Nordic","Arhipelagul Mediteranean"],ans:1},
-        {q:"Câte state membre are Uniunea Europeană în prezent?",ctx:"Ultima aderare a avut loc în 2020.",opts:["25","27","28","30"],ans:1}
-    ];
-    let trivIdx=0,trivScore=0;
+                // Keyboard navigation
+                document.addEventListener("keydown", (e) => {
+                    if (
+                        e.key === "ArrowDown" ||
+                        e.key === "PageDown" ||
+                        e.key === " "
+                    ) {
+                        e.preventDefault();
+                        const next = Math.min(currentSlide + 1, total - 1);
+                        slides[next].scrollIntoView({ behavior: "smooth" });
+                    } else if (e.key === "ArrowUp" || e.key === "PageUp") {
+                        e.preventDefault();
+                        const prev = Math.max(currentSlide - 1, 0);
+                        slides[prev].scrollIntoView({ behavior: "smooth" });
+                    } else if (e.key === "Home") {
+                        e.preventDefault();
+                        slides[0].scrollIntoView({ behavior: "smooth" });
+                    } else if (e.key === "End") {
+                        e.preventDefault();
+                        slides[total - 1].scrollIntoView({
+                            behavior: "smooth",
+                        });
+                    }
+                });
 
-    window.initTrivia=function(){
-        trivIdx=0;trivScore=0;
-        document.getElementById('triv-done').classList.add('hidden');
-        document.getElementById('triv-opts').classList.remove('hidden');
-        document.getElementById('triv-q').classList.remove('hidden');
-        document.getElementById('triv-ctx').classList.remove('hidden');
-        loadTrivQ();
-    };
+                // Touch swipe support
+                let touchStartY = 0;
+                pres.addEventListener(
+                    "touchstart",
+                    (e) => {
+                        touchStartY = e.touches[0].clientY;
+                    },
+                    { passive: true },
+                );
+                pres.addEventListener(
+                    "touchend",
+                    (e) => {
+                        const diff = touchStartY - e.changedTouches[0].clientY;
+                        if (Math.abs(diff) > 50) {
+                            if (diff > 0) {
+                                const next = Math.min(
+                                    currentSlide + 1,
+                                    total - 1,
+                                );
+                                slides[next].scrollIntoView({
+                                    behavior: "smooth",
+                                });
+                            } else {
+                                const prev = Math.max(currentSlide - 1, 0);
+                                slides[prev].scrollIntoView({
+                                    behavior: "smooth",
+                                });
+                            }
+                        }
+                    },
+                    { passive: true },
+                );
 
-    function loadTrivQ(){
-        if(trivIdx>=triviaQs.length){
-            document.getElementById('triv-opts').classList.add('hidden');
-            document.getElementById('triv-q').classList.add('hidden');
-            document.getElementById('triv-ctx').classList.add('hidden');
-            document.getElementById('triv-done').classList.remove('hidden');
-            document.getElementById('triv-final').textContent='Scorul tău: '+trivScore+' din '+triviaQs.length;
-            return;
-        }
-        const q=triviaQs[trivIdx];
-        document.getElementById('triv-prog').textContent='Întrebarea '+(trivIdx+1)+' din '+triviaQs.length;
-        document.getElementById('triv-score').textContent='Scor: '+trivScore;
-        document.getElementById('triv-bar').style.width=((trivIdx+1)/triviaQs.length*100)+'%';
-        document.getElementById('triv-q').textContent=q.q;
-        document.getElementById('triv-ctx').textContent=q.ctx;
-        const c=document.getElementById('triv-opts');
-        c.innerHTML='';
-        q.opts.forEach((opt,i)=>{
-            const b=document.createElement('button');
-            b.className='w-full text-left p-4 rounded-2xl bg-bg/40 border border-sr/40 text-ob font-semibold hover:border-pr/40 transition-all';
-            b.textContent=opt;
-            b.onclick=()=>{
-                Array.from(c.children).forEach(x=>x.onclick=null);
-                if(i===q.ans){
-                    b.style.backgroundColor='#a3be8c';b.style.borderColor='#a3be8c';b.style.color='#2e3440';
-                    trivScore++;
-                }else{
-                    b.style.backgroundColor='#bf616a';b.style.borderColor='#bf616a';b.style.color='#eceff4';
-                    Array.from(c.children)[q.ans].style.borderColor='#a3be8c';Array.from(c.children)[q.ans].style.color='#a3be8c';
+                // ========== QUIZ: TRIVIA ==========
+                const triviaQs = [
+                    {
+                        q: "Care tratat a pus bazele formale ale UE în 1992, stabilind cetățenia europeană?",
+                        ctx: "Trecerea de la CEE la uniune politică.",
+                        opts: [
+                            "Tratatul de la Roma",
+                            "Tratatul de la Lisabona",
+                            "Tratatul de la Maastricht",
+                            "Acordul Schengen",
+                        ],
+                        ans: 2,
+                    },
+                    {
+                        q: "Care instituție europeană este aleasă direct prin votul cetățenilor?",
+                        ctx: "Alegerile se desfășoară la fiecare 5 ani.",
+                        opts: [
+                            "Comisia Europeană",
+                            "Parlamentul European",
+                            "Consiliul European",
+                            "Curtea de Justiție",
+                        ],
+                        ans: 1,
+                    },
+                    {
+                        q: "Care oraș găzduiește sediul central al Comisiei Europene?",
+                        ctx: "Parte din nucleul celor 6 state fondatoare.",
+                        opts: [
+                            "Strasbourg",
+                            "Bruxelles",
+                            "Frankfurt",
+                            "Luxemburg",
+                        ],
+                        ans: 1,
+                    },
+                    {
+                        q: "Ce formațiune urbană este coloana vertebrală economică a Europei (Banana Albastră)?",
+                        ctx: "Se întinde de la NW Anglia până la N Italie.",
+                        opts: [
+                            "Axa Paris-Berlin",
+                            "Megalopolisul Rin-Ruhr",
+                            "Poligonul Nordic",
+                            "Arhipelagul Mediteranean",
+                        ],
+                        ans: 1,
+                    },
+                    {
+                        q: "Câte state membre are Uniunea Europeană în prezent?",
+                        ctx: "Ultima aderare a avut loc în 2020.",
+                        opts: ["25", "27", "28", "30"],
+                        ans: 1,
+                    },
+                ];
+                let trivIdx = 0,
+                    trivScore = 0;
+
+                window.initTrivia = function () {
+                    trivIdx = 0;
+                    trivScore = 0;
+                    document
+                        .getElementById("triv-done")
+                        .classList.add("hidden");
+                    document
+                        .getElementById("triv-opts")
+                        .classList.remove("hidden");
+                    document
+                        .getElementById("triv-q")
+                        .classList.remove("hidden");
+                    document
+                        .getElementById("triv-ctx")
+                        .classList.remove("hidden");
+                    loadTrivQ();
+                };
+
+                function loadTrivQ() {
+                    if (trivIdx >= triviaQs.length) {
+                        document
+                            .getElementById("triv-opts")
+                            .classList.add("hidden");
+                        document
+                            .getElementById("triv-q")
+                            .classList.add("hidden");
+                        document
+                            .getElementById("triv-ctx")
+                            .classList.add("hidden");
+                        document
+                            .getElementById("triv-done")
+                            .classList.remove("hidden");
+                        document.getElementById("triv-final").textContent =
+                            "Scorul tău: " +
+                            trivScore +
+                            " din " +
+                            triviaQs.length;
+                        return;
+                    }
+                    const q = triviaQs[trivIdx];
+                    document.getElementById("triv-prog").textContent =
+                        "Întrebarea " +
+                        (trivIdx + 1) +
+                        " din " +
+                        triviaQs.length;
+                    document.getElementById("triv-score").textContent =
+                        "Scor: " + trivScore;
+                    document.getElementById("triv-bar").style.width =
+                        ((trivIdx + 1) / triviaQs.length) * 100 + "%";
+                    document.getElementById("triv-q").textContent = q.q;
+                    document.getElementById("triv-ctx").textContent = q.ctx;
+                    const c = document.getElementById("triv-opts");
+                    c.innerHTML = "";
+                    q.opts.forEach((opt, i) => {
+                        const b = document.createElement("button");
+                        b.className =
+                            "w-full text-left p-4 rounded-2xl bg-bg/40 border border-sr/40 text-ob font-semibold hover:border-pr/40 transition-all";
+                        b.textContent = opt;
+                        b.onclick = () => {
+                            Array.from(c.children).forEach(
+                                (x) => (x.onclick = null),
+                            );
+                            if (i === q.ans) {
+                                b.style.backgroundColor = "#a3be8c";
+                                b.style.borderColor = "#a3be8c";
+                                b.style.color = "#2e3440";
+                                trivScore++;
+                            } else {
+                                b.style.backgroundColor = "#bf616a";
+                                b.style.borderColor = "#bf616a";
+                                b.style.color = "#eceff4";
+                                Array.from(c.children)[
+                                    q.ans
+                                ].style.borderColor = "#a3be8c";
+                                Array.from(c.children)[q.ans].style.color =
+                                    "#a3be8c";
+                            }
+                            document.getElementById("triv-score").textContent =
+                                "Scor: " + trivScore;
+                            setTimeout(() => {
+                                trivIdx++;
+                                loadTrivQ();
+                            }, 1500);
+                        };
+                        c.appendChild(b);
+                    });
                 }
-                document.getElementById('triv-score').textContent='Scor: '+trivScore;
-                setTimeout(()=>{trivIdx++;loadTrivQ();},1500);
-            };
-            c.appendChild(b);
-        });
-    }
-    initTrivia();
+                initTrivia();
 
-    // ========== QUIZ: GUESS THE FLAG ==========
-    const flagData=[
-        {code:'ro',name:'România'},{code:'fr',name:'Franța'},{code:'de',name:'Germania'},{code:'it',name:'Italia'},
-        {code:'es',name:'Spania'},{code:'gr',name:'Grecia'},{code:'se',name:'Suedia'},{code:'pl',name:'Polonia'},
-        {code:'nl',name:'Olanda'},{code:'be',name:'Belgia'},{code:'at',name:'Austria'},{code:'fi',name:'Finlanda'},
-        {code:'dk',name:'Danemarca'},{code:'pt',name:'Portugalia'},{code:'ie',name:'Irlanda'},{code:'cz',name:'Cehia'}
-    ];
-    let flagScore=0,flagCount=0;
+                // ========== QUIZ: GUESS THE FLAG ==========
+                const flagData = [
+                    { code: "ro", name: "România" },
+                    { code: "fr", name: "Franța" },
+                    { code: "de", name: "Germania" },
+                    { code: "it", name: "Italia" },
+                    { code: "es", name: "Spania" },
+                    { code: "gr", name: "Grecia" },
+                    { code: "se", name: "Suedia" },
+                    { code: "pl", name: "Polonia" },
+                    { code: "nl", name: "Olanda" },
+                    { code: "be", name: "Belgia" },
+                    { code: "at", name: "Austria" },
+                    { code: "fi", name: "Finlanda" },
+                    { code: "dk", name: "Danemarca" },
+                    { code: "pt", name: "Portugalia" },
+                    { code: "ie", name: "Irlanda" },
+                    { code: "cz", name: "Cehia" },
+                ];
+                let flagScore = 0,
+                    flagCount = 0;
 
-    function pickFlag(){
-        flagCount++;
-        const correct=flagData[Math.floor(Math.random()*flagData.length)];
-        const img=document.getElementById('flag-img');
-        img.style.opacity='0';
-        setTimeout(()=>{img.src='https://flagcdn.com/w320/'+correct.code+'.png';img.onload=()=>{img.style.opacity='1';};},200);
-        document.getElementById('flag-prog').textContent='Steagul '+flagCount;
-        document.getElementById('flag-score').textContent='Scor: '+flagScore;
-        let opts=[correct.name];
-        while(opts.length<4){
-            const r=flagData[Math.floor(Math.random()*flagData.length)].name;
-            if(!opts.includes(r))opts.push(r);
-        }
-        opts.sort(()=>Math.random()-0.5);
-        const c=document.getElementById('flag-opts');
-        c.innerHTML='';
-        opts.forEach(opt=>{
-            const b=document.createElement('button');
-            b.className='p-4 rounded-2xl bg-bg/40 border border-sr/40 text-ob font-bold text-lg hover:border-tr/40 transition-all';
-            b.textContent=opt;
-            b.onclick=()=>{
-                if(opt===correct.name){
-                    b.style.backgroundColor='#a3be8c';b.style.borderColor='#a3be8c';b.style.color='#2e3440';
-                    flagScore++;
-                    document.getElementById('flag-score').textContent='Scor: '+flagScore;
-                }else{
-                    b.style.backgroundColor='#bf616a';b.style.borderColor='#bf616a';b.style.color='#eceff4';
+                function pickFlag() {
+                    flagCount++;
+                    const correct =
+                        flagData[Math.floor(Math.random() * flagData.length)];
+                    const img = document.getElementById("flag-img");
+                    img.style.opacity = "0";
+                    setTimeout(() => {
+                        img.src =
+                            "https://flagcdn.com/w320/" + correct.code + ".png";
+                        img.onload = () => {
+                            img.style.opacity = "1";
+                        };
+                    }, 200);
+                    document.getElementById("flag-prog").textContent =
+                        "Steagul " + flagCount;
+                    document.getElementById("flag-score").textContent =
+                        "Scor: " + flagScore;
+                    let opts = [correct.name];
+                    while (opts.length < 4) {
+                        const r =
+                            flagData[
+                                Math.floor(Math.random() * flagData.length)
+                            ].name;
+                        if (!opts.includes(r)) opts.push(r);
+                    }
+                    opts.sort(() => Math.random() - 0.5);
+                    const c = document.getElementById("flag-opts");
+                    c.innerHTML = "";
+                    opts.forEach((opt) => {
+                        const b = document.createElement("button");
+                        b.className =
+                            "p-4 rounded-2xl bg-bg/40 border border-sr/40 text-ob font-bold text-lg hover:border-tr/40 transition-all";
+                        b.textContent = opt;
+                        b.onclick = () => {
+                            if (opt === correct.name) {
+                                b.style.backgroundColor = "#a3be8c";
+                                b.style.borderColor = "#a3be8c";
+                                b.style.color = "#2e3440";
+                                flagScore++;
+                                document.getElementById(
+                                    "flag-score",
+                                ).textContent = "Scor: " + flagScore;
+                            } else {
+                                b.style.backgroundColor = "#bf616a";
+                                b.style.borderColor = "#bf616a";
+                                b.style.color = "#eceff4";
+                            }
+                            Array.from(c.children).forEach(
+                                (x) => (x.onclick = null),
+                            );
+                            setTimeout(pickFlag, 1200);
+                        };
+                        c.appendChild(b);
+                    });
                 }
-                Array.from(c.children).forEach(x=>x.onclick=null);
-                setTimeout(pickFlag,1200);
-            };
-            c.appendChild(b);
-        });
-    }
-    pickFlag();
+                pickFlag();
 
-    // ========== QUIZ: CAPITAL CITIES ==========
-    const capData=[
-        {country:'Franța',capital:'Paris'},{country:'Germania',capital:'Berlin'},{country:'Italia',capital:'Roma'},
-        {country:'Spania',capital:'Madrid'},{country:'România',capital:'București'},{country:'Polonia',capital:'Varșovia'},
-        {country:'Olanda',capital:'Amsterdam'},{country:'Belgia',capital:'Bruxelles'},{country:'Suedia',capital:'Stockholm'},
-        {country:'Austria',capital:'Viena'},{country:'Finlanda',capital:'Helsinki'},{country:'Danemarca',capital:'Copenhaga'},
-        {country:'Grecia',capital:'Atena'},{country:'Portugalia',capital:'Lisabona'},{country:'Irlanda',capital:'Dublin'},
-        {country:'Cehia',capital:'Praga'}
-    ];
-    const allCapitals=capData.map(c=>c.capital);
-    let capIdx=0,capScore=0,capOrder=[];
+                // ========== QUIZ: CAPITAL CITIES ==========
+                const capData = [
+                    { country: "Franța", capital: "Paris" },
+                    { country: "Germania", capital: "Berlin" },
+                    { country: "Italia", capital: "Roma" },
+                    { country: "Spania", capital: "Madrid" },
+                    { country: "România", capital: "București" },
+                    { country: "Polonia", capital: "Varșovia" },
+                    { country: "Olanda", capital: "Amsterdam" },
+                    { country: "Belgia", capital: "Bruxelles" },
+                    { country: "Suedia", capital: "Stockholm" },
+                    { country: "Austria", capital: "Viena" },
+                    { country: "Finlanda", capital: "Helsinki" },
+                    { country: "Danemarca", capital: "Copenhaga" },
+                    { country: "Grecia", capital: "Atena" },
+                    { country: "Portugalia", capital: "Lisabona" },
+                    { country: "Irlanda", capital: "Dublin" },
+                    { country: "Cehia", capital: "Praga" },
+                ];
+                const allCapitals = capData.map((c) => c.capital);
+                let capIdx = 0,
+                    capScore = 0,
+                    capOrder = [];
 
-    window.initCapitals=function(){
-        capIdx=0;capScore=0;
-        capOrder=[...capData].sort(()=>Math.random()-0.5).slice(0,10);
-        document.getElementById('cap-done').classList.add('hidden');
-        document.getElementById('cap-opts').classList.remove('hidden');
-        document.getElementById('cap-q').classList.remove('hidden');
-        loadCapQ();
-    };
+                window.initCapitals = function () {
+                    capIdx = 0;
+                    capScore = 0;
+                    capOrder = [...capData]
+                        .sort(() => Math.random() - 0.5)
+                        .slice(0, 10);
+                    document.getElementById("cap-done").classList.add("hidden");
+                    document
+                        .getElementById("cap-opts")
+                        .classList.remove("hidden");
+                    document.getElementById("cap-q").classList.remove("hidden");
+                    loadCapQ();
+                };
 
-    function loadCapQ(){
-        if(capIdx>=capOrder.length){
-            document.getElementById('cap-opts').classList.add('hidden');
-            document.getElementById('cap-q').classList.add('hidden');
-            document.getElementById('cap-done').classList.remove('hidden');
-            document.getElementById('cap-final').textContent='Scorul tău: '+capScore+' din '+capOrder.length;
-            return;
-        }
-        const q=capOrder[capIdx];
-        document.getElementById('cap-prog').textContent='Întrebarea '+(capIdx+1)+' din '+capOrder.length;
-        document.getElementById('cap-score').textContent='Scor: '+capScore;
-        document.getElementById('cap-bar').style.width=((capIdx+1)/capOrder.length*100)+'%';
-        document.getElementById('cap-q').textContent='Care este capitala '+q.country+'?';
-        let opts=[q.capital];
-        while(opts.length<4){
-            const r=allCapitals[Math.floor(Math.random()*allCapitals.length)];
-            if(!opts.includes(r))opts.push(r);
-        }
-        opts.sort(()=>Math.random()-0.5);
-        const c=document.getElementById('cap-opts');
-        c.innerHTML='';
-        opts.forEach(opt=>{
-            const b=document.createElement('button');
-            b.className='p-4 rounded-2xl bg-bg/40 border border-sr/40 text-ob font-bold text-lg hover:border-sc/40 transition-all';
-            b.textContent=opt;
-            b.onclick=()=>{
-                Array.from(c.children).forEach(x=>x.onclick=null);
-                if(opt===q.capital){
-                    b.style.backgroundColor='#a3be8c';b.style.borderColor='#a3be8c';b.style.color='#2e3440';
-                    capScore++;
-                }else{
-                    b.style.backgroundColor='#bf616a';b.style.borderColor='#bf616a';b.style.color='#eceff4';
-                    Array.from(c.children).forEach(x=>{if(x.textContent===q.capital){x.style.borderColor='#a3be8c';x.style.color='#a3be8c';}});
+                function loadCapQ() {
+                    if (capIdx >= capOrder.length) {
+                        document
+                            .getElementById("cap-opts")
+                            .classList.add("hidden");
+                        document
+                            .getElementById("cap-q")
+                            .classList.add("hidden");
+                        document
+                            .getElementById("cap-done")
+                            .classList.remove("hidden");
+                        document.getElementById("cap-final").textContent =
+                            "Scorul tău: " +
+                            capScore +
+                            " din " +
+                            capOrder.length;
+                        return;
+                    }
+                    const q = capOrder[capIdx];
+                    document.getElementById("cap-prog").textContent =
+                        "Întrebarea " +
+                        (capIdx + 1) +
+                        " din " +
+                        capOrder.length;
+                    document.getElementById("cap-score").textContent =
+                        "Scor: " + capScore;
+                    document.getElementById("cap-bar").style.width =
+                        ((capIdx + 1) / capOrder.length) * 100 + "%";
+                    document.getElementById("cap-q").textContent =
+                        "Care este capitala " + q.country + "?";
+                    let opts = [q.capital];
+                    while (opts.length < 4) {
+                        const r =
+                            allCapitals[
+                                Math.floor(Math.random() * allCapitals.length)
+                            ];
+                        if (!opts.includes(r)) opts.push(r);
+                    }
+                    opts.sort(() => Math.random() - 0.5);
+                    const c = document.getElementById("cap-opts");
+                    c.innerHTML = "";
+                    opts.forEach((opt) => {
+                        const b = document.createElement("button");
+                        b.className =
+                            "p-4 rounded-2xl bg-bg/40 border border-sr/40 text-ob font-bold text-lg hover:border-sc/40 transition-all";
+                        b.textContent = opt;
+                        b.onclick = () => {
+                            Array.from(c.children).forEach(
+                                (x) => (x.onclick = null),
+                            );
+                            if (opt === q.capital) {
+                                b.style.backgroundColor = "#a3be8c";
+                                b.style.borderColor = "#a3be8c";
+                                b.style.color = "#2e3440";
+                                capScore++;
+                            } else {
+                                b.style.backgroundColor = "#bf616a";
+                                b.style.borderColor = "#bf616a";
+                                b.style.color = "#eceff4";
+                                Array.from(c.children).forEach((x) => {
+                                    if (x.textContent === q.capital) {
+                                        x.style.borderColor = "#a3be8c";
+                                        x.style.color = "#a3be8c";
+                                    }
+                                });
+                            }
+                            document.getElementById("cap-score").textContent =
+                                "Scor: " + capScore;
+                            setTimeout(() => {
+                                capIdx++;
+                                loadCapQ();
+                            }, 1500);
+                        };
+                        c.appendChild(b);
+                    });
                 }
-                document.getElementById('cap-score').textContent='Scor: '+capScore;
-                setTimeout(()=>{capIdx++;loadCapQ();},1500);
-            };
-            c.appendChild(b);
-        });
-    }
-    initCapitals();
-})();
-</script>
-</body>
+                initCapitals();
+            })();
+        </script>
+    </body>
 </html>
